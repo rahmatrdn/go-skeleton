@@ -7,8 +7,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/config"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/config"
+	"github.com/rahmatrdn/go-skeleton/entity"
 )
 
 const (

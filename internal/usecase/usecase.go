@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/go-playground/validator/v10"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/entity"
 )
 
 var validate = validator.New()

@@ -5,7 +5,7 @@ import (
 	"sort"
 	"sync"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/helper"
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"gorm.io/gorm/schema"

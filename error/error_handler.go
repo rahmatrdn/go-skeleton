@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/gofiber/fiber/v2"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/entity"
 )
 
 func ErrorHandler(ctx *fiber.Ctx, err error) error {

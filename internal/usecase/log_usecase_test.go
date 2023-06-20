@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/rahmatrdn/go-skeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/internal/usecase"
+	"github.com/rahmatrdn/go-skeleton/tests/mocks"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/usecase"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/tests/mocks"
 )
 
 type LogUsecaseTestSuite struct {

@@ -3,7 +3,7 @@ package factory
 import (
 	"math/rand"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mysql/entity"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
 
 	"github.com/google/uuid"
 )

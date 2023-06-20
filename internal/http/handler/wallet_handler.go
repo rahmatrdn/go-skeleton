@@ -3,11 +3,11 @@ package handler
 import (
 	"net/http"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/http/middleware"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/parser"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/presenter"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/usecase"
+	"github.com/rahmatrdn/go-skeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/internal/http/middleware"
+	"github.com/rahmatrdn/go-skeleton/internal/parser"
+	"github.com/rahmatrdn/go-skeleton/internal/presenter"
+	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 
 	fiber "github.com/gofiber/fiber/v2"
 )

@@ -3,11 +3,11 @@ package mysql
 import (
 	"context"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/config"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/helper"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mysql/entity"
+	"github.com/rahmatrdn/go-skeleton/config"
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
 
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
 
 	errwrap "github.com/pkg/errors"
 	"gorm.io/gorm"

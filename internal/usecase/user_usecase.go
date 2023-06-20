@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/http/auth"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mysql"
+	"github.com/rahmatrdn/go-skeleton/entity"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
+	"github.com/rahmatrdn/go-skeleton/internal/http/auth"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
 	"golang.org/x/crypto/bcrypt"
 )
 

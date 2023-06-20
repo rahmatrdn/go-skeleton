@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"time"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/config"
+	"github.com/rahmatrdn/go-skeleton/config"
 )
 
 func SendNotif(message string) (result string) {

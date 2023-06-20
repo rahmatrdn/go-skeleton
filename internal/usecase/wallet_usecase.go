@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	errwrap "github.com/pkg/errors"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mysql"
-	mentity "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mysql/entity"
+	"github.com/rahmatrdn/go-skeleton/entity"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
+	mentity "github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
 )
 
 type Wallet struct {

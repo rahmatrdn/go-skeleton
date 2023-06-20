@@ -1,14 +1,8 @@
 
-# Skeleton for Golang Project in SPE
-
+# Propper Skeleton for your Golang Project
 
 ## Description
-
-`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). Feel free to contribute to this repository if you'd like!
-
-## Owner
-
-Tribe - Ursa Major
+`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with Fiber Framework. Feel free to contribute to this repository if you'd like!
 
 ## Contact
 | Name              | Email                           | Role       |
@@ -76,7 +70,7 @@ make apidoc
 
 ```sh
 
-go run cmd/apidoc/main.go
+go run cmd/api/main.go
 
 ```
 - Access API Documentation with [browser](http://localhost:<PORT>/docs/index.html)

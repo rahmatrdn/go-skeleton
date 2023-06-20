@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"github.com/gofiber/fiber/v2"
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/http/auth"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
+	"github.com/rahmatrdn/go-skeleton/internal/http/auth"
 )
 
 func VerifyJWTToken(c *fiber.Ctx) error {

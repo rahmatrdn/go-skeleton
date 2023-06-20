@@ -4,8 +4,8 @@ import (
 	"context"
 
 	errwrap "github.com/pkg/errors"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/helper"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mongodb/entity"
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mongodb/entity"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 

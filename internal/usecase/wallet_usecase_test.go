@@ -7,11 +7,11 @@ import (
 	"reflect"
 	"testing"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/usecase"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/tests/fixture/factory"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/tests/mocks"
+	"github.com/rahmatrdn/go-skeleton/internal/usecase"
+	"github.com/rahmatrdn/go-skeleton/tests/fixture/factory"
+	"github.com/rahmatrdn/go-skeleton/tests/mocks"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/entity"
 
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"

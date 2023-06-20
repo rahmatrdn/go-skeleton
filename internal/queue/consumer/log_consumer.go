@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
-	mongoRepo "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mongodb"
-	moentity "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mongodb/entity"
+	"github.com/rahmatrdn/go-skeleton/entity"
+	mongoRepo "github.com/rahmatrdn/go-skeleton/internal/repository/mongodb"
+	moentity "github.com/rahmatrdn/go-skeleton/internal/repository/mongodb/entity"
 )
 
 type LogQueue struct {

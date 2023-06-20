@@ -3,7 +3,7 @@ package error
 import (
 	"net/http"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/entity"
 )
 
 const (

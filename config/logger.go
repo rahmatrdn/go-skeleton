@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
 
 	"github.com/sirupsen/logrus"
 )

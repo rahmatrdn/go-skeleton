@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/helper"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
 )
 
 type WithPathID interface {

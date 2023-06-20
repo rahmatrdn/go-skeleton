@@ -7,7 +7,7 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
 )
 
 func NewRedis(config *Config) *redis.Client {

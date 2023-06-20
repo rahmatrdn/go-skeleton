@@ -5,16 +5,16 @@ import (
 	"log"
 	"strings"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/config"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/config"
+	"github.com/rahmatrdn/go-skeleton/entity"
 
-	pb "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/proto"
+	pb "github.com/rahmatrdn/go-skeleton/proto"
 
 	"github.com/gofiber/fiber/v2"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
 )
 
 func Authenticator(c *fiber.Ctx) error {

@@ -3,7 +3,7 @@ package config
 import (
 	"context"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/queue"
+	"github.com/rahmatrdn/go-skeleton/internal/queue"
 )
 
 func NewRabbitMQInstance(ctx context.Context, cfg *RabbitMQOption) (*queue.RabbitMQ, error) {

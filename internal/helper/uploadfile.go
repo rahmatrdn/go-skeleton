@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/config"
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
+	"github.com/rahmatrdn/go-skeleton/config"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
 )
 
 func CreateDirectory(id_merchant, filename string) string {

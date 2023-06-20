@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/helper"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/queue"
+	"github.com/rahmatrdn/go-skeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
+	"github.com/rahmatrdn/go-skeleton/internal/queue"
 )
 
 type Log struct {

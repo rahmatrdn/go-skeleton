@@ -4,10 +4,10 @@ import (
 	"context"
 
 	errwrap "github.com/pkg/errors"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/config"
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/helper"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mysql/entity"
+	"github.com/rahmatrdn/go-skeleton/config"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
 	"gorm.io/gorm"
 
 	"gorm.io/gorm/clause"

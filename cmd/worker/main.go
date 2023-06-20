@@ -7,11 +7,11 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/rahmatrdn/go-skeleton/config"
+	"github.com/rahmatrdn/go-skeleton/internal/queue"
+	"github.com/rahmatrdn/go-skeleton/internal/queue/consumer"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mongodb"
 	"github.com/subosito/gotenv"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/config"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/queue"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/queue/consumer"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mongodb"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 

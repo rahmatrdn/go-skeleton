@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/entity"
-	apperr "gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/error"
+	"github.com/rahmatrdn/go-skeleton/entity"
+	apperr "github.com/rahmatrdn/go-skeleton/error"
 
 	"github.com/gofiber/fiber/v2"
 )

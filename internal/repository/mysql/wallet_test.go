@@ -5,11 +5,11 @@ import (
 	"database/sql/driver"
 	"testing"
 
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/config"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mysql"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/repository/mysql/entity"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/tests/fixture"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/tests/fixture/factory"
+	"github.com/rahmatrdn/go-skeleton/config"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
+	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
+	"github.com/rahmatrdn/go-skeleton/tests/fixture"
+	"github.com/rahmatrdn/go-skeleton/tests/fixture/factory"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"

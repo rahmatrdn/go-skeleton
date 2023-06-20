@@ -5,11 +5,11 @@ import (
 	"testing"
 
 	fiber "github.com/gofiber/fiber/v2"
+	"github.com/rahmatrdn/go-skeleton/internal/http/handler"
+	"github.com/rahmatrdn/go-skeleton/tests/mocks"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 	"github.com/valyala/fasthttp"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/internal/http/handler"
-	"gitlab.spesolution.net/bni-merchant-management-system/go-sekeleton/tests/mocks"
 )
 
 type AuthHandlerTestSuite struct {
