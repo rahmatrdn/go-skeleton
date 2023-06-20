@@ -11,6 +11,7 @@ Features :
 3. Api Docs with Sweager
 4. Fiber Framework
 5. Example Unit Test!
+6. Authentication with JWT RS512
 
 Feel free to contribute to this repository if you'd like!
 
