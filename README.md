@@ -2,7 +2,8 @@
 # Propper Skeleton for your Golang Project
 
 ## Description
-`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.  "Forget about the complexities of folder structures, and concentrate on growing your project!"
+`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.  
+"Forget about the complexities of folder structures, and concentrate on growing your project!"
 
 Features : 
 1. Rest API
@@ -16,7 +17,7 @@ Feel free to contribute to this repository if you'd like!
 ## Contact
 | Name              | Email                           | Role       |
 | :----------------:|:-------------------------------:|:----------:|
-| Rahmat Ramadhan  | rahmat.putra@spesolution.com    | Inisiator   |
+| Rahmat Ramadhan  | rahmatrdn.dev@gmail.com    | Creator   |
 
 
 ## Development Guide
