@@ -2,7 +2,16 @@
 # Propper Skeleton for your Golang Project
 
 ## Description
-`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with Fiber Framework. Feel free to contribute to this repository if you'd like!
+`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.  "Forget about the complexities of folder structures, and concentrate on growing your project!"
+
+Features : 
+1. Rest API
+2. Worker with RabbitMQ
+3. Api Docs with Sweager
+4. Fiber Framework
+5. Example Unit Test!
+
+Feel free to contribute to this repository if you'd like!
 
 ## Contact
 | Name              | Email                           | Role       |
@@ -67,13 +76,10 @@ go install github.com/swaggo/swag/cmd/swag@latest
 make apidoc
 ```
 - Start API documentations
-
 ```sh
-
 go run cmd/api/main.go
-
 ```
-- Access API Documentation with [browser](http://localhost:<PORT>/docs/index.html)
+- Access API Documentation with  browser http://localhost:PORT/apidoc
 
 ### Unit test
 *tips: if you use `VS Code` as your code editor, you can install extension `golang.go` and follow tutorial [showing code coverage after saving your code](https://dev.to/vuong/golang-in-vscode-show-code-coverage-of-after-saving-test-8g0) to help you create unit test*
