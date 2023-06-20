@@ -1,0 +1,10 @@
+
+version: "3.7"
+services:
+  skeleton-worker-dev:
+    container_name: go-skeleton-worker
+    image: go-skeleton-worker:1.0.1-dev
+    env_file:
+      - ./.env
+    command: ["sync.log"]
+    network_mode: bridge

@@ -1,0 +1,339 @@
+definitions:
+  entity.CustomErrorResponse:
+    properties:
+      code:
+        type: string
+      http_code:
+        type: integer
+      message:
+        type: string
+    type: object
+  entity.GeneralResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  entity.LoginReq:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  entity.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      role_access:
+        type: integer
+      user_id:
+        type: integer
+    required:
+    - access_token
+    - email
+    - name
+    - role_access
+    - user_id
+    type: object
+  entity.WalletReq:
+    properties:
+      balance:
+        type: integer
+      user_name:
+        type: string
+    required:
+    - balance
+    - user_name
+    type: object
+  entity.WalletResponse:
+    properties:
+      balance:
+        type: integer
+      id:
+        type: integer
+      user_name:
+        type: string
+    type: object
+info:
+  contact:
+    email: rahmat.putra@spesolution.com
+    name: API Support
+  description: This is a sample swagger for Go Skeleton
+  license:
+    name: Apache 2.0
+  termsOfService: http://swagger.io/terms/
+  title: Go Skeleton!
+  version: "1.0"
+paths:
+  /v1/api/auth/check-token:
+    get:
+      description: Check Token
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Check Token
+      tags:
+      - Auth
+  /v1/api/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login by using registered account
+      parameters:
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.LoginResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      summary: Login
+      tags:
+      - Auth
+  /v1/api/wallet:
+    get:
+      consumes:
+      - application/json
+      description: Get Wallets by User ID
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.WalletResponse'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get Wallets by User ID
+      tags:
+      - Wallet
+    post:
+      consumes:
+      - application/json
+      description: Create New Wallet
+      parameters:
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.WalletReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.WalletReq'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Create New Wallet
+      tags:
+      - Wallet
+    put:
+      consumes:
+      - application/json
+      description: Update existing Wallet
+      parameters:
+      - description: id of wallet
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.WalletReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Update existing Wallet by ID
+      tags:
+      - Wallet
+  /v1/api/wallet/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete existing Wallet
+      parameters:
+      - description: id of wallet
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Delete existing Wallet by ID
+      tags:
+      - Wallet
+    get:
+      consumes:
+      - application/json
+      description: Get Wallet by ID
+      parameters:
+      - description: id of wallet
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.WalletResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get Wallet by ID
+      tags:
+      - Wallet
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

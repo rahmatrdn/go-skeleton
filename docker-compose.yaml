@@ -1,0 +1,11 @@
+
+version: "3.7"
+services:
+  skeleton-api-dev:
+    container_name: go-skeleton
+    image: go-skeleton:1.0.6-dev
+    ports:
+      - 8760:7011
+    env_file:
+      - ./.env
+    network_mode: bridge

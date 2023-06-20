@@ -1,0 +1,541 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample swagger for Go Skeleton",
+        "title": "Go Skeleton!",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "rahmat.putra@spesolution.com"
+        },
+        "license": {
+            "name": "Apache 2.0"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/v1/api/auth/check-token": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Check Token",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Check Token",
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/entity.GeneralResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Request Body",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/api/auth/login": {
+            "post": {
+                "description": "Login by using registered account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Payload Request Body",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.LoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/entity.GeneralResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/entity.LoginResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Request Body",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/api/wallet": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Get Wallets by User ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Get Wallets by User ID",
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/entity.GeneralResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/entity.WalletResponse"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Request Body",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Update existing Wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Update existing Wallet by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of wallet",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Payload Request Body",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.WalletReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/entity.GeneralResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Request Body",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Create New Wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Create New Wallet",
+                "parameters": [
+                    {
+                        "description": "Payload Request Body",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.WalletReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/entity.GeneralResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/entity.WalletReq"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Request Body",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/api/wallet/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Get Wallet by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Get Wallet by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of wallet",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/entity.GeneralResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/entity.WalletResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Request Body",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete existing Wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Delete existing Wallet by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of wallet",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/entity.GeneralResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Request Body",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "entity.CustomErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "http_code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.GeneralResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.LoginReq": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.LoginResponse": {
+            "type": "object",
+            "required": [
+                "access_token",
+                "email",
+                "name",
+                "role_access",
+                "user_id"
+            ],
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "role_access": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.WalletReq": {
+            "type": "object",
+            "required": [
+                "balance",
+                "user_name"
+            ],
+            "properties": {
+                "balance": {
+                    "type": "integer"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.WalletResponse": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

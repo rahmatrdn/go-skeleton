@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  skeleton-worker-2-dev:
+    container_name: go-skeleton-worker-2-test
+    image: go-skeleton-worker:1.0.1-dev
+    env_file:
+      - ./.env
+    command: ["test.docker"]
+    network_mode: bridge
