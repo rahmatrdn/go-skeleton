@@ -8,6 +8,7 @@ type TodoList struct {
 	Description string    `gorm:"column:description"`
 	DoingAt     string    `gorm:"column:doing_at"`
 	CreatedAt   time.Time `gorm:"column:created_at"`
+	UpdatedAt   time.Time `gorm:"column:updated_at"`
 	ID          int64     `gorm:"column:id"`
 }
 

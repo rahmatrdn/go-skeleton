@@ -16,15 +16,13 @@ import (
 type TodoList struct {
 	validatorUsecase ValidatorUsecase
 	todoListRepo     mysql.TodoListRepository
-	logger           LogUsecase
 }
 
 func NewTodoListUsecase(
 	validatorUsecase ValidatorUsecase,
 	todoListRepo mysql.TodoListRepository,
-	logger LogUsecase,
 ) *TodoList {
-	return &TodoList{validatorUsecase, todoListRepo, logger}
+	return &TodoList{validatorUsecase, todoListRepo}
 }
 
 type TodoListUsecase interface {
@@ -32,7 +30,7 @@ type TodoListUsecase interface {
 	GetByID(ctx context.Context, walletID int64) (*entity.TodoListResponse, error)
 	Create(ctx context.Context, todoListReq *entity.TodoListReq) (*entity.TodoListResponse, error)
 	UpdateByID(ctx context.Context, todoListReq entity.TodoListReq) error
-	// DeleteByID(ctx context.Context, walletID int64) error
+	DeleteByID(ctx context.Context, todoListID int64) error
 }
 
 func (t *TodoList) GetByUserID(ctx context.Context, userID int64) (res []*entity.TodoListResponse, err error) {
@@ -61,13 +59,13 @@ func (t *TodoList) GetByUserID(ctx context.Context, userID int64) (res []*entity
 	return res, nil
 }
 
-func (w *TodoList) GetByID(ctx context.Context, todoListID int64) (*entity.TodoListResponse, error) {
+func (t *TodoList) GetByID(ctx context.Context, todoListID int64) (*entity.TodoListResponse, error) {
 	funcName := "TodoListUsecase.GetByID"
 	captureFieldError := entity.CaptureFields{
 		"user_id": todoListID,
 	}
 
-	data, err := w.todoListRepo.GetByID(ctx, todoListID)
+	data, err := t.todoListRepo.GetByID(ctx, todoListID)
 	if err != nil {
 		helper.LogError("todoListRepo.GetByID", funcName, err, captureFieldError, "")
 
@@ -81,7 +79,7 @@ func (w *TodoList) GetByID(ctx context.Context, todoListID int64) (*entity.TodoL
 	}, nil
 }
 
-func (w *TodoList) Create(ctx context.Context, todoListReq *entity.TodoListReq) (*entity.TodoListResponse, error) {
+func (t *TodoList) Create(ctx context.Context, todoListReq *entity.TodoListReq) (*entity.TodoListResponse, error) {
 	funcName := "TodoListUsecase.Create"
 	captureFieldError := entity.CaptureFields{
 		"user_id": todoListReq.UserID,
@@ -100,7 +98,7 @@ func (w *TodoList) Create(ctx context.Context, todoListReq *entity.TodoListReq) 
 		CreatedAt:   time.Now(),
 	}
 
-	err := w.todoListRepo.Create(ctx, nil, todoListPayload, false)
+	err := t.todoListRepo.Create(ctx, nil, todoListPayload, false)
 	if err != nil {
 		helper.LogError("todoListRepo.Create", funcName, err, captureFieldError, "")
 
@@ -116,49 +114,56 @@ func (w *TodoList) Create(ctx context.Context, todoListReq *entity.TodoListReq) 
 	}, nil
 }
 
-// func (w *TodoList) UpdateByID(ctx context.Context, walletReq entity.WalletReq) error {
-// 	funcName := "TodoListUsecase.UpdateByID"
-// 	walletID := walletReq.ID
+func (t *TodoList) UpdateByID(ctx context.Context, todoListReq entity.TodoListReq) error {
+	funcName := "TodoListUsecase.UpdateByID"
+	todoListID := todoListReq.ID
 
-// 	captureFieldError := map[string]interface{}{"wallet_id": fmt.Sprint(walletID)}
+	captureFieldError := entity.CaptureFields{
+		"user_id": todoListReq.UserID,
+		"payload": todoListReq,
+	}
 
-// 	if err := mysql.DBTransaction(w.walletRepo, func(trx mysql.TrxObj) error {
-// 		lockedWallet, err := w.walletRepo.LockByID(ctx, trx, walletID)
-// 		if err != nil {
-// 			w.logger.Log(entity.LogError, "walletRepo.LockByID", funcName, err, captureFieldError, "")
+	if err := mysql.DBTransaction(t.todoListRepo, func(trx mysql.TrxObj) error {
+		lockedWallet, err := t.todoListRepo.LockByID(ctx, trx, todoListID)
+		if err != nil {
+			helper.LogError("todoListRepo.LockByID", funcName, err, captureFieldError, "")
 
-// 			return err
-// 		}
+			return err
+		}
 
-// 		if err := w.walletRepo.Update(ctx, trx, lockedWallet, &mentity.Wallet{
-// 			UserName: walletReq.UserName,
-// 			Balance:  walletReq.Balance,
-// 		}); err != nil {
-// 			w.logger.Log(entity.LogError, "walletRepo.Update", funcName, err, captureFieldError, "")
+		if err := t.todoListRepo.Update(ctx, trx, lockedWallet, &mentity.TodoList{
+			Title:       todoListReq.Title,
+			Description: todoListReq.Description,
+			DoingAt:     todoListReq.DoingAt,
+			UpdatedAt:   time.Now(),
+		}); err != nil {
+			helper.LogError("todoListRepo.Update", funcName, err, captureFieldError, "")
 
-// 			return err
-// 		}
+			return err
+		}
 
-// 		return nil
-// 	}); err != nil {
-// 		w.logger.Log(entity.LogError, "walletRepo.DBTransaction", funcName, err, captureFieldError, "")
+		return nil
+	}); err != nil {
+		helper.LogError("todoListRepo.DBTransaction", funcName, err, captureFieldError, "")
 
-// 		return err
-// 	}
+		return err
+	}
 
-// 	return nil
-// }
+	return nil
+}
 
-// func (w *TodoList) DeleteByID(ctx context.Context, walletID int64) error {
-// 	funcName := "TodoListUsecase.UpdateByID"
-// 	captureFieldError := map[string]interface{}{"wallet_id": fmt.Sprint(walletID)}
+func (t *TodoList) DeleteByID(ctx context.Context, todoListID int64) error {
+	funcName := "TodoListUsecase.DeleteByID"
+	captureFieldError := entity.CaptureFields{
+		"todo_list_id": todoListID,
+	}
 
-// 	err := w.walletRepo.DeleteByID(ctx, nil, walletID)
-// 	if err != nil {
-// 		w.logger.Log(entity.LogError, "walletRepo.DeleteByID", funcName, err, captureFieldError, "")
+	err := t.todoListRepo.DeleteByID(ctx, nil, todoListID)
+	if err != nil {
+		helper.LogError("todoListRepo.DeleteByID", funcName, err, captureFieldError, "")
 
-// 		return err
-// 	}
+		return err
+	}
 
-// 	return nil
-// }
+	return nil
+}

@@ -76,6 +76,19 @@ definitions:
       user_id:
         type: integer
     type: object
+  entity.TodoListResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      doing_at:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
   entity.WalletReq:
     properties:
       balance:
@@ -211,6 +224,197 @@ paths:
       summary: Create User as Guest
       tags:
       - Auth
+  /v1/api/todo-list:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of Todo Lists belonging to a user by their User
+        ID
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.TodoListResponse'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Retrieve Todo Lists by User ID
+      tags:
+      - Todo List
+    post:
+      consumes:
+      - application/json
+      description: Create a new Todo List
+      parameters:
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.WalletReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.WalletReq'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Create a new Todo List
+      tags:
+      - Todo List
+    put:
+      consumes:
+      - application/json
+      description: Update an existing Todo List
+      parameters:
+      - description: ID of the todo list
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.WalletReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Update an existing Todo List by ID
+      tags:
+      - Todo List
+  /v1/api/todo-lists/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing Todo List by its ID
+      parameters:
+      - description: ID of the todo list
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Delete Todo List by ID
+      tags:
+      - Todo List
+    get:
+      consumes:
+      - application/json
+      description: Get a Todo List by its ID
+      parameters:
+      - description: ID of the wallet
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.TodoListResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get Todo List by ID
+      tags:
+      - Todo List
   /v1/api/wallet:
     get:
       consumes:

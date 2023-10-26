@@ -12,11 +12,16 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type Presenter struct{}
+type Json struct{}
 
 // NewPresenter initialize new JSON presenter that used to hold logic for presenter logic
-func NewPresenter() *Presenter {
-	return &Presenter{}
+func NewJsonPresenter() *Json {
+	return &Json{}
+}
+
+type JsonPresenter interface {
+	BuildSuccess(c *fiber.Ctx, data interface{}, message string, code int) error
+	BuildError(c *fiber.Ctx, err error) error
 }
 
 // SuccessBody is used to define success response body data structure
@@ -26,7 +31,7 @@ type ResponseBody struct {
 	Code    string      `json:"code"`
 }
 
-func (p *Presenter) BuildSuccess(c *fiber.Ctx, data interface{}, message string, code int) error {
+func (p *Json) BuildSuccess(c *fiber.Ctx, data interface{}, message string, code int) error {
 	response := &ResponseBody{
 		Data:    data,
 		Message: message,
@@ -36,7 +41,7 @@ func (p *Presenter) BuildSuccess(c *fiber.Ctx, data interface{}, message string,
 	return c.JSON(response)
 }
 
-func (p *Presenter) BuildError(c *fiber.Ctx, err error) error {
+func (p *Json) BuildError(c *fiber.Ctx, err error) error {
 	unwrappedErr := errors.Unwrap(err)
 
 	if unwrappedErr != nil {

@@ -6,7 +6,7 @@ import (
 	"github.com/rahmatrdn/go-skeleton/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/http/middleware"
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
-	"github.com/rahmatrdn/go-skeleton/internal/presenter"
+	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 
 	fiber "github.com/gofiber/fiber/v2"
@@ -14,13 +14,13 @@ import (
 
 type WalletHandler struct {
 	parser        parser.Parser
-	presenter     presenter.Presenter
+	presenter     json.JsonPresenter
 	walletUsecase usecase.WalletUsecase
 }
 
 func NewWalletHandler(
 	parser parser.Parser,
-	presenter presenter.Presenter,
+	presenter json.JsonPresenter,
 	walletUsecase usecase.WalletUsecase,
 ) *WalletHandler {
 	return &WalletHandler{parser, presenter, walletUsecase}

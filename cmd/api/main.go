@@ -19,7 +19,7 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/http/auth"
 	"github.com/rahmatrdn/go-skeleton/internal/http/handler"
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
-	presenterJson "github.com/rahmatrdn/go-skeleton/internal/presenter/json"
+	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
 	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 
@@ -73,7 +73,7 @@ func main() {
 		EnableStackTrace: true,
 	}))
 
-	presenterJson := presenterJson.NewPresenter()
+	presenterJson := json.NewJsonPresenter()
 	parser := parser.NewParser()
 
 	queue, err := config.NewRabbitMQInstance(context.Background(), &cfg.RabbitMQOption)
@@ -115,7 +115,7 @@ func main() {
 	logUsecase := usecase.NewLogUsecase(queue)
 	walletUsecase := usecase.NewWalletUsecase(validatorUsecase, walletRepo, logUsecase)
 	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
-	todoListUsecase := usecase.NewTodoListUsecase(validatorUsecase, todoListRepo, logUsecase)
+	todoListUsecase := usecase.NewTodoListUsecase(validatorUsecase, todoListRepo)
 
 	api := app.Group("/v1/api")
 
