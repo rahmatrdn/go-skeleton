@@ -1,1 +1,0 @@
-ALTER DROP TABLE IF EXISTS wallets;

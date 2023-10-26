@@ -11,8 +11,8 @@ type WalletResponse struct {
 type WalletReq struct {
 	ID       int64  `json:"id,omitempty" swaggerignore:"true"`
 	UserID   int64  `json:"user_id,omitempty" validate:"required" swaggerignore:"true"`
-	UserName string `json:"user_name" validate:"required"`
-	Balance  int64  `json:"balance" validate:"required"`
+	UserName string `json:"user_name" validate:"required,validate_custom_example" name:"User Name"`
+	Balance  int64  `json:"balance" validate:"required" name:"Saldo"`
 }
 
 func (c *WalletReq) LoadFromMap(m map[string]interface{}) error {

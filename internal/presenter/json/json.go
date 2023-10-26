@@ -40,7 +40,7 @@ func (p *Presenter) BuildError(c *fiber.Ctx, err error) error {
 	unwrappedErr := errors.Unwrap(err)
 
 	if unwrappedErr != nil {
-		errorData := strings.Split(unwrappedErr.Error(), ": ")
+		errorData := strings.Split(unwrappedErr.Error(), "XX: ")
 		errorCode := errorData[1]
 		errorMessage := errorData[0]
 

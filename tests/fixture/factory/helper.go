@@ -2,6 +2,7 @@ package factory
 
 import (
 	"database/sql/driver"
+	"reflect"
 	"sort"
 	"sync"
 
@@ -100,4 +101,18 @@ func GetCols(model any) []string {
 	}
 
 	return columns
+}
+
+func InArray(val interface{}, array interface{}) (found bool) {
+	values := reflect.ValueOf(array)
+
+	if reflect.TypeOf(array).Kind() == reflect.Slice || values.Len() > 0 {
+		for i := 0; i < values.Len(); i++ {
+			if reflect.DeepEqual(val, values.Index(i).Interface()) {
+				return true
+			}
+		}
+	}
+
+	return false
 }

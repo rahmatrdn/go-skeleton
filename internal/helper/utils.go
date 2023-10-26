@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"reflect"
 	"runtime"
@@ -11,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func ArrayIntToString(a []int, delimeter string) string {
@@ -157,4 +160,24 @@ func RemoveFirstChar(input string) string {
 		return ""
 	}
 	return input[1:]
+}
+
+func GetDataInStruct(data interface{}, refColumn string, searchValue interface{}) (interface{}, error) {
+	val := reflect.ValueOf(interface{}(data))
+	if val.Kind() != reflect.Slice {
+		return nil, errors.New("Data is not a slice")
+	}
+
+	for _, v := range val.Interface().([]interface{}) {
+		if reflect.ValueOf(v).FieldByName(refColumn).Interface() == searchValue {
+			return v, nil
+		}
+	}
+
+	return nil, errors.New("Data not found")
+}
+
+func VerifyBcryptHash(plaintext, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(plaintext))
+	return err == nil
 }

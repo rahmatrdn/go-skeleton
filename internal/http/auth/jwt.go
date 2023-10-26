@@ -2,13 +2,14 @@ package auth
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/rahmatrdn/go-skeleton/config"
 	"github.com/rahmatrdn/go-skeleton/entity"
+	mentity "github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
 )
 
 const (
@@ -23,13 +24,13 @@ func NewJWTAuth() *JWT {
 }
 
 type JWTAuth interface {
-	GenerateToken(user entity.LoginResponse) (string, error)
+	GenerateToken(user *mentity.User) (string, error)
 }
 
-func (j *JWT) GenerateToken(user entity.LoginResponse) (string, error) {
+func (j *JWT) GenerateToken(user *mentity.User) (string, error) {
 	cfg := config.NewConfig()
 
-	privateKeyBytes, err := ioutil.ReadFile(privateKeyPath)
+	privateKeyBytes, err := os.ReadFile(privateKeyPath)
 	if err != nil {
 		return "", err
 	}
@@ -44,8 +45,8 @@ func (j *JWT) GenerateToken(user entity.LoginResponse) (string, error) {
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(cfg.JwtExpireDaysCount) * 24 * time.Hour)),
 		},
 		Email:      user.Email,
-		UserID:     user.UserID,
-		RoleAccess: user.RoleAccess,
+		UserID:     user.ID,
+		RoleAccess: user.Role,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodRS512, claims)
@@ -65,7 +66,7 @@ func VerifyToken(c *fiber.Ctx) error {
 
 	token := authHeader[7:]
 
-	publicKeyBytes, err := ioutil.ReadFile(publicKeyPath)
+	publicKeyBytes, err := os.ReadFile(publicKeyPath)
 	if err != nil {
 		return err
 	}

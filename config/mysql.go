@@ -14,7 +14,7 @@ type Mysql struct {
 
 func NewMysql(env string, cfg *MysqlOption, dbLogger glogger.Interface) (*Mysql, error) {
 	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s",
+		"%s:%s@tcp(%s:%s)/%s?parseTime=true",
 		cfg.Username,
 		cfg.Password,
 		cfg.Host,

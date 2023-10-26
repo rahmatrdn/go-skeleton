@@ -23,12 +23,27 @@ type WithPathIDAndUserID interface {
 
 type BodyRequest interface{}
 
+// Parser is an interface that defines methods for parsing user input from HTTP requests.
 type Parser interface {
+	// ParserUserID extracts the user ID from the request context
 	ParserUserID(c *fiber.Ctx) (int64, error)
+
+	// ParserIntIDFromPathParams extracts an integer ID from the request path parameters
 	ParserIntIDFromPathParams(c *fiber.Ctx) (int64, error)
+
+	// ParserBodyRequest parses the request body into the provided struct and returns an error if parsing fails.
 	ParserBodyRequest(c *fiber.Ctx, req BodyRequest) error
+
+	// ParserBodyRequestWithUserID parses the request body into the provided struct and extracts the user ID from the request context.
+	// It returns an error if parsing fails.
 	ParserBodyRequestWithUserID(c *fiber.Ctx, req WithUserID) error
+
+	// ParserBodyWithIntIDPathParams parses the request body into the provided struct and extracts an integer ID from the request path parameters.
+	// It returns an error if parsing fails.
 	ParserBodyWithIntIDPathParams(c *fiber.Ctx, req WithPathID) error
+
+	// ParserBodyWithIntIDPathParamsAndUserID parses the request body into the provided struct, extracts an integer ID from the request path parameters,
+	// and extracts the user ID from the request context. It returns an error if parsing fails.
 	ParserBodyWithIntIDPathParamsAndUserID(c *fiber.Ctx, req WithPathIDAndUserID) error
 }
 

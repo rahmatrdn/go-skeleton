@@ -11,10 +11,6 @@ type ValidationError struct {
 	Error string `json:"error"`
 }
 
-const (
-	StatusUnprocessableEntity = 422
-)
-
 type CustomErrorResponse struct {
 	Message  string `json:"message,omitempty"`
 	ErrCode  string `json:"code,omitempty"`

@@ -2,23 +2,30 @@
 # Propper Skeleton for your Golang Project
 
 ## Description
-`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.  
-"Forget about the complexities of folder structures, and concentrate on growing your project!"
+`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.  "Forget about the complexities of folder structures, and concentrate on growing your project!"
 
 Features : 
 1. Rest API
 2. Worker with RabbitMQ
 3. Api Docs with Sweager
 4. Fiber Framework
-5. Example Unit Test!
+5. Implementation of Unit Test!
 6. Authentication with JWT RS512
+7. GRPC Server! (In Progress Development)
+8. GRPC Server with handle authentication (Soon)
+9. Caching with Redis (Soon)
+10. Dependency Injection with Google Wire (Soon)
 
 Feel free to contribute to this repository if you'd like!
+
+
+## Owner
+Currently, we are implementing it in Tribe - Ursa Major
 
 ## Contact
 | Name              | Email                           | Role       |
 | :----------------:|:-------------------------------:|:----------:|
-| Rahmat Ramadhan  | rahmatrdn.dev@gmail.com    | Creator   |
+| Rahmat Ramadhan Putra  | rahmat.putra@spesolution.com    | Creator   |
 
 
 ## Development Guide
@@ -41,7 +48,7 @@ git clone <repo_url>
 cp env.sample .env
 ```
 - Running Database Migration
-- Generate private_key.pem and public_key.pem. You can generate via [Online RSA Generator](https://travistidwell.com/jsencrypt/demo/) or other tools
+- Generate private_key.pem and public_key.pem. You can generate via [Online RSA Generator](https://travistidwell.com/jsencrypt/demo/) or other tools. Put file in the root project folder.
 - Start API Service
 ```sh
 go run cmd/api/main.go
@@ -83,6 +90,7 @@ go run cmd/api/main.go
 ```
 - Access API Documentation with  browser http://localhost:PORT/apidoc
 
+
 ### Unit test
 *tips: if you use `VS Code` as your code editor, you can install extension `golang.go` and follow tutorial [showing code coverage after saving your code](https://dev.to/vuong/golang-in-vscode-show-code-coverage-of-after-saving-test-8g0) to help you create unit test*
 
@@ -110,5 +118,4 @@ git push origin branch-name
 - Merge Request will be merged only if review phase is passed.
 
 ## More Details Information
-Access this document below for detail information about go skeleton
-[Techinical Guide - GO Skeleton](https://docs.google.com/document/d/1R0xKkQz-iK7Bovx-F9cZkJFUo6yVtAy1j9L8QUeM2tk/edit?usp=sharing )
+Contact Creator!

@@ -7,18 +7,17 @@ var StorageDirectory = "./storage/app/"
 type Config struct {
 	AppEnv                   string   `env:"APP_ENV,default=development"`
 	ApiHost                  string   `env:"API_HOST"`
+	ApiRpcPort               string   `env:"API_RPC_PORT"`
 	ApiPort                  string   `env:"API_PORT,default=8760"`
 	ApiDocPort               uint16   `env:"API_DOC_PORT,default=8761"`
 	ShutdownTimeout          uint     `env:"API_SHUTDOWN_TIMEOUT_SECONDS,default=30"`
 	AllowedCredentialOrigins []string `env:"ALLOWED_CREDENTIAL_ORIGINS"`
 	MiddlewareAddress        string   `env:"MIDDLEWARE_ADDR"`
-	JwtSecret                string   `env:"JWT_SECRET_KEY"`
 	JwtExpireDaysCount       int      `env:"JWT_EXPIRE_DAYS_COUNT"`
 	MysqlOption
 	RedisOption
 	RabbitMQOption
 	MongodbOption
-	TelegramBotOption
 }
 
 // MysqlOption contains mySQL connection options
@@ -51,12 +50,6 @@ type RabbitMQOption struct {
 type MongodbOption struct {
 	Uri          string `env:"MONGODB_URI,required"`
 	DatabaseName string `env:"MONGODB_DATABASE_NAME,required"`
-}
-
-type TelegramBotOption struct {
-	Url    string `env:"TELE_URL"`
-	Token  string `env:"TOKENTELE"`
-	ChatID string `env:"CHATIDTELE"`
 }
 
 func NewConfig() *Config {

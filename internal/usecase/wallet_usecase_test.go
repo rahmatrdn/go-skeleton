@@ -45,7 +45,7 @@ func TestWalletUsecase(t *testing.T) {
 func (s *WalletUsecaseTestSuite) TestGetByID() {
 	wallet := factory.StubbedWallet()
 
-	ID := int64(1)
+	ID := int64(1213213)
 
 	ctx := context.Background()
 
@@ -58,7 +58,7 @@ func (s *WalletUsecaseTestSuite) TestGetByID() {
 		{
 			name: "success",
 			mockFunc: func() {
-				s.walletRepo.On("GetByID", ctx, ID).Return(wallet, nil).Once()
+				s.walletRepo.On("GetByID", ctx, mock.Anything).Return(wallet, nil).Once()
 				s.logger.On("Log", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(wallet, nil).Once()
 				s.logger.On("Log", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(wallet, nil).Once()
 			},

@@ -27,26 +27,38 @@ func NewAuthHandler(
 }
 
 func (w *AuthHandler) Register(app fiber.Router) {
-	app.Get("/auth/check-token", middleware.VerifyJWTToken, w.CheckToken)
+	app.Post("/auth/register", w.CreateAsGuest)
 	app.Post("/auth/login", w.Login)
+	app.Get("/auth/check-token", middleware.VerifyJWTToken, w.CheckToken)
 }
 
-// Check Validation Token
-// @Summary			Check Token
-// @Description		Check Token
+// @Summary			Create User as Guest
+// @Description		Create User for Guest
 // @Tags			Auth
+// @Accept			json
 // @Produce			json
-// @Security 		Bearer
-// @Success			201 {object} entity.GeneralResponse "Success"
-// @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
-// @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
+// @Param			req body entity.CreateUserReq true "Payload Request Body"
+// @Success			201 {object} entity.GeneralResponse{data=entity.CreateUserResponse} "Success"
+// @Failure			401 {object} entity.CustomErrorResponse "Invalid Access Token"
+// @Failure			422 {object} entity.CustomErrorResponse "Invalid Payload Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
-// @Router			/v1/api/auth/check-token [get]
-func (w *AuthHandler) CheckToken(c *fiber.Ctx) error {
-	return w.presenter.BuildSuccess(c, "Token is valid!", "Success", http.StatusOK)
+// @Router			/v1/api/auth/register [post]
+func (w *AuthHandler) CreateAsGuest(c *fiber.Ctx) error {
+	var req *entity.CreateUserReq
+
+	err := w.parser.ParserBodyRequest(c, &req)
+	if err != nil {
+		return w.presenter.BuildError(c, err)
+	}
+
+	login, err := w.userUsecase.CreateAsGuest(c.Context(), req)
+	if err != nil {
+		return w.presenter.BuildError(c, err)
+	}
+
+	return w.presenter.BuildSuccess(c, login, "Success", http.StatusOK)
 }
 
-// Login to validate user and get access token JWT
 // @Summary			Login
 // @Description		Login by using registered account
 // @Tags			Auth
@@ -54,8 +66,8 @@ func (w *AuthHandler) CheckToken(c *fiber.Ctx) error {
 // @Produce			json
 // @Param			req body entity.LoginReq true "Payload Request Body"
 // @Success			201 {object} entity.GeneralResponse{data=entity.LoginResponse} "Success"
-// @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
-// @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
+// @Failure			401 {object} entity.CustomErrorResponse "Invalid Access Token"
+// @Failure			422 {object} entity.CustomErrorResponse "Invalid Payload Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/v1/api/auth/login [post]
 func (w *AuthHandler) Login(c *fiber.Ctx) error {
@@ -72,4 +84,19 @@ func (w *AuthHandler) Login(c *fiber.Ctx) error {
 	}
 
 	return w.presenter.BuildSuccess(c, login, "Success", http.StatusOK)
+}
+
+// Check Validation Token
+// @Summary			Check Token
+// @Description		Check Token
+// @Tags			Auth
+// @Produce			json
+// @Security 		Bearer
+// @Success			201 {object} entity.GeneralResponse "Success"
+// @Failure			401 {object} entity.CustomErrorResponse "Invalid Access Token"
+// @Failure			422 {object} entity.CustomErrorResponse "Invalid Payload Request Body"
+// @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
+// @Router			/v1/api/auth/check-token [get]
+func (w *AuthHandler) CheckToken(c *fiber.Ctx) error {
+	return w.presenter.BuildSuccess(c, "Token is valid!", "Success", http.StatusOK)
 }

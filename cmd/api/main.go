@@ -64,7 +64,6 @@ func main() {
 		Format:     "[${time}] ${status} - ${latency} ${method} ${path}\n",
 		TimeFormat: "02-Jan-2006 15:04:05",
 		TimeZone:   "Asia/Jakarta",
-		// Done:       mdw.Dump,
 	}), recover.New(recover.Config{
 		StackTraceHandler: func(c *fiber.Ctx, e interface{}) {
 			fmt.Println(c.Request().URI())
@@ -109,16 +108,20 @@ func main() {
 	// REPOSITORY : Write code about storing data in Database or Other Storage (Database, 3rd Party API, dll) disini
 	walletRepo := mysql.NewWalletRepository(mysqlDB)
 	userRepo := mysql.NewUserRepository(mysqlDB)
+	todoListRepo := mysql.NewTodoListRepository(mysqlDB)
 
 	// USECASE : Write bussines logic code here
+	validatorUsecase := usecase.NewValidatorUsecase()
 	logUsecase := usecase.NewLogUsecase(queue)
-	walletUsecase := usecase.NewWalletUsecase(walletRepo, logUsecase)
-	userUsecase := usecase.NewUserUsecase(userRepo, logUsecase, *jwtAuth)
+	walletUsecase := usecase.NewWalletUsecase(validatorUsecase, walletRepo, logUsecase)
+	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
+	todoListUsecase := usecase.NewTodoListUsecase(validatorUsecase, todoListRepo, logUsecase)
 
 	api := app.Group("/v1/api")
 
 	handler.NewWalletHandler(parser, presenterJson, walletUsecase).Register(api)
 	handler.NewAuthHandler(parser, presenterJson, userUsecase).Register(api)
+	handler.NewTodoListHandler(parser, presenterJson, todoListUsecase).Register(api)
 
 	app.Get("/metrics", monitor.New())
 

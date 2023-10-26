@@ -21,3 +21,6 @@ test:
 
 apidoc:
 	swag init -d $(APIDOC_BASE),$(APIDOC_INFO) --parseInternal --pd
+
+protob:
+	protoc --go_out=proto/pb --go_opt=paths=source_relative --go-grpc_out=proto/pb --go-grpc_opt=paths=source_relative proto/*.proto

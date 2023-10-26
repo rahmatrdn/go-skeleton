@@ -1,4 +1,41 @@
 definitions:
+  entity.CreateUserReq:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      reenter_password:
+        type: string
+      role_access:
+        type: integer
+    required:
+    - email
+    - name
+    - password
+    - phone
+    - reenter_password
+    - role_access
+    type: object
+  entity.CreateUserResponse:
+    properties:
+      access_token:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      role_access:
+        type: string
+      user_id:
+        type: integer
+    type: object
   entity.CustomErrorResponse:
     properties:
       code:
@@ -38,12 +75,6 @@ definitions:
         type: integer
       user_id:
         type: integer
-    required:
-    - access_token
-    - email
-    - name
-    - role_access
-    - user_id
     type: object
   entity.WalletReq:
     properties:
@@ -86,11 +117,11 @@ paths:
           schema:
             $ref: '#/definitions/entity.GeneralResponse'
         "401":
-          description: Unauthorized
+          description: Invalid Access Token
           schema:
             $ref: '#/definitions/entity.CustomErrorResponse'
         "422":
-          description: Invalid Request Body
+          description: Invalid Payload Request Body
           schema:
             $ref: '#/definitions/entity.CustomErrorResponse'
         "500":
@@ -127,11 +158,11 @@ paths:
                   $ref: '#/definitions/entity.LoginResponse'
               type: object
         "401":
-          description: Unauthorized
+          description: Invalid Access Token
           schema:
             $ref: '#/definitions/entity.CustomErrorResponse'
         "422":
-          description: Invalid Request Body
+          description: Invalid Payload Request Body
           schema:
             $ref: '#/definitions/entity.CustomErrorResponse'
         "500":
@@ -139,6 +170,45 @@ paths:
           schema:
             $ref: '#/definitions/entity.CustomErrorResponse'
       summary: Login
+      tags:
+      - Auth
+  /v1/api/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Create User for Guest
+      parameters:
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.CreateUserReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.CreateUserResponse'
+              type: object
+        "401":
+          description: Invalid Access Token
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Payload Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      summary: Create User as Guest
       tags:
       - Auth
   /v1/api/wallet:

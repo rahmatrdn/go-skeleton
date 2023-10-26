@@ -20,7 +20,7 @@ func NewLogUsecase(
 }
 
 type LogUsecase interface {
-	Log(status entity.LogType, message string, funcName string, err error, logFields map[string]string, processName string)
+	Log(status entity.LogType, message string, funcName string, err error, logFields map[string]interface{}, processName string)
 }
 
 // Process writing log to file.
@@ -31,8 +31,8 @@ type LogUsecase interface {
 //   - err: error response from function
 //   - logFields: additional data to track error (Ex. Indetifier ID, User ID, etc.)
 //   - processName: name of process (optional, this can be use to track bug by process name) and make sure using Type Safety to write process name
-func (w *Log) Log(status entity.LogType, message string, funcName string, err error, logFields map[string]string, processName string) {
-	channel := entity.LogGeneralKey
+func (w *Log) Log(status entity.LogType, message string, funcName string, err error, logFields map[string]interface{}, processName string) {
+	channel := entity.GeneralLogFilePath
 
 	logData := entity.Log{
 		Process:      processName,
@@ -52,8 +52,9 @@ func (w *Log) Log(status entity.LogType, message string, funcName string, err er
 	payload, _ := helper.Serialize(logData)
 	errQueue := w.queue.Publish(queue.ProcessSyncLog, payload, 1)
 
+	// If error when publish to queue, write log to file
 	if errQueue != nil {
-		helper.WriteLog(f, channel)
+		helper.WriteLogToFile(f, channel)
 		return
 	}
 }

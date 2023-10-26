@@ -37,13 +37,13 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "Invalid Access Token",
                         "schema": {
                             "$ref": "#/definitions/entity.CustomErrorResponse"
                         }
                     },
                     "422": {
-                        "description": "Invalid Request Body",
+                        "description": "Invalid Payload Request Body",
                         "schema": {
                             "$ref": "#/definitions/entity.CustomErrorResponse"
                         }
@@ -101,13 +101,77 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "Invalid Access Token",
                         "schema": {
                             "$ref": "#/definitions/entity.CustomErrorResponse"
                         }
                     },
                     "422": {
-                        "description": "Invalid Request Body",
+                        "description": "Invalid Payload Request Body",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/api/auth/register": {
+            "post": {
+                "description": "Create User for Guest",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Create User as Guest",
+                "parameters": [
+                    {
+                        "description": "Payload Request Body",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.CreateUserReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/entity.GeneralResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/entity.CreateUserResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid Access Token",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CustomErrorResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Payload Request Body",
                         "schema": {
                             "$ref": "#/definitions/entity.CustomErrorResponse"
                         }
@@ -433,6 +497,60 @@
         }
     },
     "definitions": {
+        "entity.CreateUserReq": {
+            "type": "object",
+            "required": [
+                "email",
+                "name",
+                "password",
+                "phone",
+                "reenter_password",
+                "role_access"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "reenter_password": {
+                    "type": "string"
+                },
+                "role_access": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.CreateUserResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "role_access": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "entity.CustomErrorResponse": {
             "type": "object",
             "properties": {
@@ -476,13 +594,6 @@
         },
         "entity.LoginResponse": {
             "type": "object",
-            "required": [
-                "access_token",
-                "email",
-                "name",
-                "role_access",
-                "user_id"
-            ],
             "properties": {
                 "access_token": {
                     "type": "string"
