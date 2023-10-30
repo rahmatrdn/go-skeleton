@@ -14,22 +14,20 @@ import (
 )
 
 type TodoList struct {
-	validatorUsecase ValidatorUsecase
-	todoListRepo     mysql.TodoListRepository
+	todoListRepo mysql.TodoListRepository
 }
 
 func NewTodoListUsecase(
-	validatorUsecase ValidatorUsecase,
 	todoListRepo mysql.TodoListRepository,
 ) *TodoList {
-	return &TodoList{validatorUsecase, todoListRepo}
+	return &TodoList{todoListRepo}
 }
 
 type TodoListUsecase interface {
 	GetByUserID(ctx context.Context, userID int64) (res []*entity.TodoListResponse, err error)
 	GetByID(ctx context.Context, walletID int64) (*entity.TodoListResponse, error)
 	Create(ctx context.Context, todoListReq *entity.TodoListReq) (*entity.TodoListResponse, error)
-	UpdateByID(ctx context.Context, todoListReq entity.TodoListReq) error
+	UpdateByID(ctx context.Context, todoListReq *entity.TodoListReq) error
 	DeleteByID(ctx context.Context, todoListID int64) error
 }
 
@@ -53,6 +51,7 @@ func (t *TodoList) GetByUserID(ctx context.Context, userID int64) (res []*entity
 			Description: v.Description,
 			DoingAt:     v.DoingAt,
 			CreatedAt:   v.CreatedAt,
+			UpdatedAt:   v.UpdatedAt,
 		})
 	}
 
@@ -76,6 +75,9 @@ func (t *TodoList) GetByID(ctx context.Context, todoListID int64) (*entity.TodoL
 		ID:          data.ID,
 		Title:       data.Title,
 		Description: data.Description,
+		DoingAt:     data.DoingAt,
+		CreatedAt:   data.CreatedAt,
+		UpdatedAt:   data.UpdatedAt,
 	}, nil
 }
 
@@ -114,7 +116,7 @@ func (t *TodoList) Create(ctx context.Context, todoListReq *entity.TodoListReq) 
 	}, nil
 }
 
-func (t *TodoList) UpdateByID(ctx context.Context, todoListReq entity.TodoListReq) error {
+func (t *TodoList) UpdateByID(ctx context.Context, todoListReq *entity.TodoListReq) error {
 	funcName := "TodoListUsecase.UpdateByID"
 	todoListID := todoListReq.ID
 

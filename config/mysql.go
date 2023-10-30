@@ -20,7 +20,6 @@ func NewMysql(env string, cfg *MysqlOption, dbLogger glogger.Interface) (*Mysql,
 		cfg.Host,
 		cfg.Port,
 		cfg.DatabaseName,
-		// url.QueryEscape(cfg.TimeZone),
 	)
 
 	logLevel := glogger.Warn

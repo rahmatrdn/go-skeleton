@@ -3,7 +3,6 @@ package helper
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
@@ -12,46 +11,13 @@ import (
 func WriteLogToFile(data string, channel string) error {
 	f, err := os.OpenFile(channel,
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Println(err)
-	}
 
 	defer f.Close()
 
-	if _, err := f.WriteString(data); err != nil {
-		log.Println(err)
-	}
+	_, err = f.WriteString(data)
 
 	return err
 }
-
-// func Log(fields logrus.Fields, logType string, logInfo string) {
-
-// 	logger := logrus.New()
-// 	logrus.SetFormatter(&logrus.JSONFormatter{})
-
-// 	logger.SetOutput(os.Stdout)
-// 	// logger.SetReportCaller(true)
-
-// 	f, err := os.OpenFile("logrus.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-// 	if err == nil {
-// 		multi := io.MultiWriter(f, os.Stdout)
-// 		logger.SetOutput(multi)
-// 	} else {
-// 		logger.SetOutput(os.Stdout)
-// 	}
-
-// 	switch logType {
-// 	case "info":
-// 		logger.WithFields(fields).Info(logInfo)
-// 	case "warn":
-// 		logger.WithFields(fields).Warn(logInfo)
-// 	case "error":
-// 		logger.WithFields(fields).Error(logInfo)
-// 	default:
-// 		logger.WithFields(fields).Info(logInfo)
-// 	}
-// }
 
 func Log(status entity.LogType, message string, funcName string, err error, logFields entity.CaptureFields, processName string) {
 	storage := entity.GeneralLogFilePath
@@ -67,12 +33,17 @@ func Log(status entity.LogType, message string, funcName string, err error, logF
 	}
 
 	log, _ := json.Marshal(logData)
+	logFieldsJson, _ := json.Marshal(logFields)
 
 	fmt.Println("=====================")
-	fmt.Println(fmt.Sprintf("[%s] %s:", DatetimeNowJakarta(), status), string(log))
+	fmt.Print(fmt.Sprintf("[%s] %s: ", DatetimeNowJakartaString(), status))
+
+	logString := fmt.Sprintf("func_name='%s' error='%s' process='%s' message='%s' fields='%s'", logData.FuncName, logData.ErrorMessage, logData.Process, logData.Message, string(logFieldsJson))
+
+	fmt.Println(logString)
 	fmt.Println("=====================")
 
-	ts := fmt.Sprintf("[%s] %s:", NowStrUTC(), status)
+	ts := fmt.Sprintf("[%s] %s:", DatetimeNowJakartaString(), status)
 	o := fmt.Sprint(string(log))
 	f := fmt.Sprintf("%s %s \r\n", ts, o)
 

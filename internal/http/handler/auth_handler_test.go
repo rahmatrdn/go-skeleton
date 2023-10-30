@@ -38,6 +38,55 @@ func (s *AuthHandlerTestSuite) TestRegister() {
 	s.handler.Register(app)
 }
 
+func (s *AuthHandlerTestSuite) TestCreateAsGuest() {
+	app := fiber.New()
+	c := app.AcquireCtx(&fasthttp.RequestCtx{})
+
+	defer app.ReleaseCtx(c)
+
+	testCases := []struct {
+		name     string
+		mockFunc func()
+	}{
+		{
+			name: "success",
+			mockFunc: func() {
+				s.parser.On("ParserBodyRequest", mock.Anything, mock.Anything).Return(nil).Once()
+				s.userUsecase.On("CreateAsGuest", mock.Anything, mock.Anything).Return(nil, nil).Once()
+				s.presenter.On("BuildSuccess", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil).Once()
+			},
+		},
+		{
+			name: "fail get id from parser param",
+			mockFunc: func() {
+				s.parser.On("ParserBodyRequest", mock.Anything, mock.Anything).Return(fmt.Errorf("ERROR")).Once()
+				s.presenter.On("BuildError", mock.Anything, mock.Anything).Return(nil).Once()
+			},
+		},
+		{
+			name: "fail usecase",
+			mockFunc: func() {
+				s.parser.On("ParserBodyRequest", mock.Anything, mock.Anything).Return(nil).Once()
+				s.userUsecase.On("CreateAsGuest", mock.Anything, mock.Anything).Return(nil, fmt.Errorf("ERROR")).Once()
+				s.presenter.On("BuildError", mock.Anything, mock.Anything).Return(nil).Once()
+			},
+		},
+	}
+
+	for _, tt := range testCases {
+		s.T().Run(tt.name, func(t *testing.T) {
+			tt.mockFunc()
+
+			err := s.handler.CreateAsGuest(c)
+
+			if err != nil {
+				t.Errorf("Login() error = %v", err)
+				return
+			}
+		})
+	}
+}
+
 func (s *AuthHandlerTestSuite) TestLogin() {
 	app := fiber.New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})

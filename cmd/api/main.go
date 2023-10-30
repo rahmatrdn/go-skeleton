@@ -49,10 +49,12 @@ func init() {
 // @host 						localhost:7011
 // @BasePath /
 func main() {
+	// Initialize config variable from .env file
 	cfg := config.NewConfig()
 
-	// Setup fiber
 	app := fiber.New(config.NewFiberConfiguration())
+
+	// Initialize Swagger for API documentation
 	app.Get("/apidoc/*", swagger.HandlerDefault)
 
 	app.Use(cors.New(cors.Config{
@@ -105,24 +107,22 @@ func main() {
 	// AUTH : Write authetincation mechanism method (JWT, Basic Auth, etc.)
 	jwtAuth := auth.NewJWTAuth()
 
-	// REPOSITORY : Write code about storing data in Database or Other Storage (Database, 3rd Party API, dll) disini
-	walletRepo := mysql.NewWalletRepository(mysqlDB)
+	// REPOSITORY : Write repository code here (database, cache, etc.)
 	userRepo := mysql.NewUserRepository(mysqlDB)
 	todoListRepo := mysql.NewTodoListRepository(mysqlDB)
 
-	// USECASE : Write bussines logic code here
-	validatorUsecase := usecase.NewValidatorUsecase()
-	logUsecase := usecase.NewLogUsecase(queue)
-	walletUsecase := usecase.NewWalletUsecase(validatorUsecase, walletRepo, logUsecase)
+	// USECASE : Write bussines logic code here (validation, business logic, etc.)
+	_ = usecase.NewValidatorUsecase() // ValidatorUsecase is a sample usecase for custom validating request
+	_ = usecase.NewLogUsecase(queue)  // LogUsecase is a sample usecase for sending log to queue (Mongodb, ElasticSearch, etc.)
 	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
-	todoListUsecase := usecase.NewTodoListUsecase(validatorUsecase, todoListRepo)
+	todoListUsecase := usecase.NewTodoListUsecase(todoListRepo)
 
 	api := app.Group("/v1/api")
 
-	handler.NewWalletHandler(parser, presenterJson, walletUsecase).Register(api)
 	handler.NewAuthHandler(parser, presenterJson, userUsecase).Register(api)
 	handler.NewTodoListHandler(parser, presenterJson, todoListUsecase).Register(api)
 
+	app.Get("/health-check", healthCheck)
 	app.Get("/metrics", monitor.New())
 
 	var wg = sync.WaitGroup{}
@@ -158,9 +158,9 @@ func main() {
 	wg.Wait()
 }
 
-var APIOK = func(c *fiber.Ctx) error {
+var healthCheck = func(c *fiber.Ctx) error {
 	return c.JSON(entity.GeneralResponse{
 		Code:    200,
-		Message: "SERVICE MASTER JALAN",
+		Message: "OK!",
 	})
 }

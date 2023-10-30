@@ -131,13 +131,13 @@ func (w *TodoListHandler) Create(c *fiber.Ctx) error {
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/v1/api/todo-list [put]
 func (w *TodoListHandler) Update(c *fiber.Ctx) error {
-	var walletReq entity.TodoListReq
-	err := w.parser.ParserBodyWithIntIDPathParamsAndUserID(c, &walletReq)
+	var req entity.TodoListReq
+	err := w.parser.ParserBodyWithIntIDPathParamsAndUserID(c, &req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.todoListUsecase.UpdateByID(c.Context(), walletReq)
+	err = w.todoListUsecase.UpdateByID(c.Context(), &req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}

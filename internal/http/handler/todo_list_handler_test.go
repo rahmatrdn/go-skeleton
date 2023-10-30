@@ -12,33 +12,33 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-type WalletHandlerTestSuite struct {
+type TodoListHandlerTestSuite struct {
 	suite.Suite
-	walletUsecase *mocks.WalletUsecase
-	presenter     *mocks.Presenter
-	parser        *mocks.Parser
-	handler       *handler.WalletHandler
+	todoListUsecase *mocks.TodoListUsecase
+	presenter       *mocks.Presenter
+	parser          *mocks.Parser
+	handler         *handler.TodoListHandler
 }
 
-func (s *WalletHandlerTestSuite) SetupTest() {
-	s.walletUsecase = &mocks.WalletUsecase{}
+func (s *TodoListHandlerTestSuite) SetupTest() {
+	s.todoListUsecase = &mocks.TodoListUsecase{}
 	s.presenter = &mocks.Presenter{}
 	s.parser = &mocks.Parser{}
 
-	s.handler = handler.NewWalletHandler(s.parser, s.presenter, s.walletUsecase)
+	s.handler = handler.NewTodoListHandler(s.parser, s.presenter, s.todoListUsecase)
 }
 
-func TestWalletHandler(t *testing.T) {
-	suite.Run(t, new(WalletHandlerTestSuite))
+func TestTodoListHandler(t *testing.T) {
+	suite.Run(t, new(TodoListHandlerTestSuite))
 }
 
-func (s *WalletHandlerTestSuite) TestRegister() {
+func (s *TodoListHandlerTestSuite) TestRegister() {
 	app := fiber.New()
 
 	s.handler.Register(app)
 }
 
-func (s *WalletHandlerTestSuite) TestGetByID() {
+func (s *TodoListHandlerTestSuite) TestGetByID() {
 	app := fiber.New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
 
@@ -54,7 +54,7 @@ func (s *WalletHandlerTestSuite) TestGetByID() {
 			name: "success",
 			mockFunc: func() {
 				s.parser.On("ParserIntIDFromPathParams", mock.Anything).Return(ID, nil).Once()
-				s.walletUsecase.On("GetByID", mock.Anything, mock.Anything).Return(nil, nil).Once()
+				s.todoListUsecase.On("GetByID", mock.Anything, mock.Anything).Return(nil, nil).Once()
 				s.presenter.On("BuildSuccess", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
@@ -66,10 +66,10 @@ func (s *WalletHandlerTestSuite) TestGetByID() {
 			},
 		},
 		{
-			name: "fail wallet usecase GetByID",
+			name: "fail usecase GetByID",
 			mockFunc: func() {
 				s.parser.On("ParserIntIDFromPathParams", mock.Anything).Return(ID, nil).Once()
-				s.walletUsecase.On("GetByID", mock.Anything, mock.Anything).Return(nil, fmt.Errorf("ERROR")).Once()
+				s.todoListUsecase.On("GetByID", mock.Anything, mock.Anything).Return(nil, fmt.Errorf("ERROR")).Once()
 				s.presenter.On("BuildError", mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
@@ -89,7 +89,7 @@ func (s *WalletHandlerTestSuite) TestGetByID() {
 	}
 }
 
-func (s *WalletHandlerTestSuite) TestGetByUserID() {
+func (s *TodoListHandlerTestSuite) TestGetByUserID() {
 	app := fiber.New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
 
@@ -105,7 +105,7 @@ func (s *WalletHandlerTestSuite) TestGetByUserID() {
 			name: "success",
 			mockFunc: func() {
 				s.parser.On("ParserUserID", mock.Anything).Return(ID, nil).Once()
-				s.walletUsecase.On("GetByUserID", mock.Anything, mock.Anything).Return(nil, nil).Once()
+				s.todoListUsecase.On("GetByUserID", mock.Anything, mock.Anything).Return(nil, nil).Once()
 				s.presenter.On("BuildSuccess", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
@@ -117,10 +117,10 @@ func (s *WalletHandlerTestSuite) TestGetByUserID() {
 			},
 		},
 		{
-			name: "fail wallet usecase GetByUserID",
+			name: "fail usecase GetByUserID",
 			mockFunc: func() {
 				s.parser.On("ParserUserID", mock.Anything).Return(ID, nil).Once()
-				s.walletUsecase.On("GetByUserID", mock.Anything, mock.Anything).Return(nil, fmt.Errorf("ERROR")).Once()
+				s.todoListUsecase.On("GetByUserID", mock.Anything, mock.Anything).Return(nil, fmt.Errorf("ERROR")).Once()
 				s.presenter.On("BuildError", mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
@@ -140,7 +140,7 @@ func (s *WalletHandlerTestSuite) TestGetByUserID() {
 	}
 }
 
-func (s *WalletHandlerTestSuite) TestCreate() {
+func (s *TodoListHandlerTestSuite) TestCreate() {
 	app := fiber.New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
 
@@ -154,7 +154,7 @@ func (s *WalletHandlerTestSuite) TestCreate() {
 			name: "success",
 			mockFunc: func() {
 				s.parser.On("ParserBodyRequestWithUserID", mock.Anything, mock.Anything).Return(nil).Once()
-				s.walletUsecase.On("Create", mock.Anything, mock.Anything).Return(nil, nil).Once()
+				s.todoListUsecase.On("Create", mock.Anything, mock.Anything).Return(nil, nil).Once()
 				s.presenter.On("BuildSuccess", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
@@ -166,10 +166,10 @@ func (s *WalletHandlerTestSuite) TestCreate() {
 			},
 		},
 		{
-			name: "fail wallet usecase Create",
+			name: "fail usecase Create",
 			mockFunc: func() {
 				s.parser.On("ParserBodyRequestWithUserID", mock.Anything, mock.Anything).Return(nil).Once()
-				s.walletUsecase.On("Create", mock.Anything, mock.Anything).Return(nil, fmt.Errorf("ERROR")).Once()
+				s.todoListUsecase.On("Create", mock.Anything, mock.Anything).Return(nil, fmt.Errorf("ERROR")).Once()
 				s.presenter.On("BuildError", mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
@@ -189,7 +189,7 @@ func (s *WalletHandlerTestSuite) TestCreate() {
 	}
 }
 
-func (s *WalletHandlerTestSuite) TestUpdate() {
+func (s *TodoListHandlerTestSuite) TestUpdate() {
 	app := fiber.New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
 
@@ -203,15 +203,15 @@ func (s *WalletHandlerTestSuite) TestUpdate() {
 			name: "success",
 			mockFunc: func() {
 				s.parser.On("ParserBodyWithIntIDPathParamsAndUserID", mock.Anything, mock.Anything).Return(nil).Once()
-				s.walletUsecase.On("UpdateByID", mock.Anything, mock.Anything).Return(nil).Once()
+				s.todoListUsecase.On("UpdateByID", mock.Anything, mock.Anything).Return(nil).Once()
 				s.presenter.On("BuildSuccess", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
 		{
-			name: "fail wallet usecase UpdateByID",
+			name: "fail usecase UpdateByID",
 			mockFunc: func() {
 				s.parser.On("ParserBodyWithIntIDPathParamsAndUserID", mock.Anything, mock.Anything).Return(nil).Once()
-				s.walletUsecase.On("UpdateByID", mock.Anything, mock.Anything).Return(fmt.Errorf("ERROR")).Once()
+				s.todoListUsecase.On("UpdateByID", mock.Anything, mock.Anything).Return(fmt.Errorf("ERROR")).Once()
 				s.presenter.On("BuildError", mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
@@ -238,7 +238,7 @@ func (s *WalletHandlerTestSuite) TestUpdate() {
 	}
 }
 
-func (s *WalletHandlerTestSuite) TestDelete() {
+func (s *TodoListHandlerTestSuite) TestDelete() {
 	app := fiber.New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
 
@@ -254,7 +254,7 @@ func (s *WalletHandlerTestSuite) TestDelete() {
 			name: "success",
 			mockFunc: func() {
 				s.parser.On("ParserIntIDFromPathParams", mock.Anything).Return(ID, nil).Once()
-				s.walletUsecase.On("DeleteByID", mock.Anything, mock.Anything).Return(nil).Once()
+				s.todoListUsecase.On("DeleteByID", mock.Anything, mock.Anything).Return(nil).Once()
 				s.presenter.On("BuildSuccess", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
@@ -262,7 +262,7 @@ func (s *WalletHandlerTestSuite) TestDelete() {
 			name: "fail usecase",
 			mockFunc: func() {
 				s.parser.On("ParserIntIDFromPathParams", mock.Anything).Return(ID, nil).Once()
-				s.walletUsecase.On("DeleteByID", mock.Anything, mock.Anything).Return(fmt.Errorf("ERROR")).Once()
+				s.todoListUsecase.On("DeleteByID", mock.Anything, mock.Anything).Return(fmt.Errorf("ERROR")).Once()
 				s.presenter.On("BuildError", mock.Anything, mock.Anything).Return(nil).Once()
 			},
 		},
