@@ -29,12 +29,13 @@ Feel free to contribute to this repository if you'd like!
 
 ## Development Guide
 ### Prerequisite
-- Git (See [Git Installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+- Git (See [Git Installation](https://git-scm.com/downloads))
 - Go 1.19 (See [Golang Installation](https://golang.org/doc/install))
 - Go Migrate CLI (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
-- MySQL (See [MySQL Installation](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/))
-- Redis (See [Redis Installation](https://redis.io/docs/getting-started/installation/))
+- MySQL (Download via Docker or Xampp or other sources)
 - Mockery (See [Mockery Installation](https://github.com/vektra/mockery))
+- Redis (Optional based on your requirement) (See [Redis Installation](https://redis.io/docs/getting-started/installation/) or use in Docker)
+- RabbitMQ (Optional based on your requirement) (See [RabbitMQ Installation](https://www.rabbitmq.com/download.html) or use in Docker)
 
 #### Windows OS (for a better development experience)
 
@@ -44,26 +45,45 @@ Feel free to contribute to this repository if you'd like!
 ### Installation
 1. Clone this repo
 ```sh
-git clone <repo_url>
+git clone https://github.com/rahmatrdn/go-skeleton.git
 ```
 2. Copy `example.env` to `.env`
 ```sh
 cp env.sample .env
 ```
-3. Create a MySQL database with the name "go\_skeleton."
-4. Run database migration
+3. Adjust the `.env` file according to the configuration in your local environment, such as the database or other settings 
+4. Create a MySQL database with the name `go_skeleton.`
+5. Run database migration
 ```sh
 make migrate_up
 ```
-- Generate `private_key.pem` and `public_key.pem`. You can generate them using an [Online RSA Generator](https://travistidwell.com/jsencrypt/demo/) or other tools. Place the files in the project's root folder.
-- Start the API Service
+6. Generate `private_key.pem` and `public_key.pem`. You can generate them using an [Online RSA Generator](https://travistidwell.com/jsencrypt/demo/) or other tools. Place the files in the project's root folder.
+7. Start the API Service
 ```sh
 go run cmd/api/main.go
 ```
-- Start the Worker Service (if needed)
+8. Start the Worker Service (if needed)
 ```sh
 go run cmd/worker/main.go
 ```
+
+### Api Documentation
+For API docs, we are using [Swagger](https://swagger.io/) with [Swag](https://github.com/swaggo/swag) Generator
+- Install Swag
+```sh
+go install github.com/swaggo/swag/cmd/swag@latest
+```
+- Generate apidoc
+```sh
+make apidoc
+```
+- Start API documentations
+```sh
+go run cmd/api/main.go
+```
+- Access API Documentation with  browser http://localhost:PORT/apidoc
+
+
 
 ### Running In Docker
 - Docker Build for API
@@ -79,24 +99,6 @@ docker build -t go-skeleton-worker:1.0.1-dev -f ./deploy/docker/worker/Dockerfil
 docker-compose -f docker-compose.yaml -f docker-compose-worker.yaml -f docker-compose-worker-2.yaml up -d
 ```
 
-### Api Documentation
-
-For API docs, we are using [Swagger](https://swagger.io/) with [Swag](https://github.com/swaggo/swag) Generator
-- Install Swag
-```sh
-go install github.com/swaggo/swag/cmd/swag@latest
-```
-
-- Generate apidoc
-```sh
-make apidoc
-```
-- Start API documentations
-```sh
-go run cmd/api/main.go
-```
-- Access API Documentation with  browser http://localhost:PORT/apidoc
-
 
 ### Unit test
 *tips: if you use `VS Code` as your code editor, you can install extension `golang.go` and follow tutorial [showing code coverage after saving your code](https://dev.to/vuong/golang-in-vscode-show-code-coverage-of-after-saving-test-8g0) to help you create unit test*
@@ -110,8 +112,9 @@ make mockery dependency=DependencyClassName
 make test
 ```
 
+
 ## Contributing
-- Create a new branch with a descriptive name that reflects the changes and switch to the new branch. Use the prefix feature/ for new features or fix/ for bug fixes.
+- Create a new branch with a descriptive name that reflects the changes and switch to the new branch. Use the prefix `feature/` for new features or `fix/` for bug fixes.
 ```sh
 git checkout -b <prefix>/branch-name
 ```

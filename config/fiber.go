@@ -15,3 +15,4 @@ func NewFiberConfiguration() fiber.Config {
 		// ErrorHandler:  apperr.ErrorHandler,
 	}
 }
+	

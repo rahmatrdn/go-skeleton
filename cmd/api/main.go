@@ -78,10 +78,11 @@ func main() {
 	presenterJson := json.NewJsonPresenter()
 	parser := parser.NewParser()
 
-	queue, err := config.NewRabbitMQInstance(context.Background(), &cfg.RabbitMQOption)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// RabbitMQ Configuration (if needed)
+	// queue, err := config.NewRabbitMQInstance(context.Background(), &cfg.RabbitMQOption)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	mysqlDBLogger := glogger.New(
 		log.New(
@@ -102,6 +103,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// Redis Configuration (if needed)
 	// redis := config.NewRedis(config)
 
 	// AUTH : Write authetincation mechanism method (JWT, Basic Auth, etc.)
@@ -112,8 +114,7 @@ func main() {
 	todoListRepo := mysql.NewTodoListRepository(mysqlDB)
 
 	// USECASE : Write bussines logic code here (validation, business logic, etc.)
-	_ = usecase.NewValidatorUsecase() // ValidatorUsecase is a sample usecase for custom validating request
-	_ = usecase.NewLogUsecase(queue)  // LogUsecase is a sample usecase for sending log to queue (Mongodb, ElasticSearch, etc.)
+	// _ = usecase.NewLogUsecase(queue)  // LogUsecase is a sample usecase for sending log to queue (Mongodb, ElasticSearch, etc.)
 	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
 	todoListUsecase := usecase.NewTodoListUsecase(todoListRepo)
 
