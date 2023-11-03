@@ -103,9 +103,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Redis Configuration (if needed)
-	// redis := config.NewRedis(config)
-
 	// AUTH : Write authetincation mechanism method (JWT, Basic Auth, etc.)
 	jwtAuth := auth.NewJWTAuth()
 

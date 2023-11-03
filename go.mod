@@ -11,7 +11,6 @@ require (
 	github.com/gofiber/fiber/v2 v2.46.0
 	github.com/gofiber/swagger v0.1.12
 	github.com/golang-jwt/jwt/v4 v4.5.0
-	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
 	github.com/joeshaw/envdecode v0.0.0-20200121155833-099f1fc765bd
 	github.com/pkg/errors v0.9.1
@@ -24,8 +23,6 @@ require (
 	github.com/valyala/fasthttp v1.47.0
 	go.mongodb.org/mongo-driver v1.11.7
 	golang.org/x/crypto v0.10.0
-	google.golang.org/grpc v1.55.0
-	google.golang.org/protobuf v1.30.0
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.1
 )
@@ -42,8 +39,8 @@ require (
 	github.com/go-openapi/spec v0.20.9 // indirect
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
@@ -73,6 +70,5 @@ require (
 	golang.org/x/sys v0.9.0 // indirect
 	golang.org/x/text v0.10.0 // indirect
 	golang.org/x/tools v0.10.0 // indirect
-	google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

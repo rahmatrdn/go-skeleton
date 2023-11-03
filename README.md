@@ -8,15 +8,16 @@
 
 Features : 
 1. Rest API
-2. Worker with RabbitMQ
+2. Fiber Framework
 3. Api Docs with Sweager
-4. Fiber Framework
+4. Worker Queue with RabbitMQ
 5. Implementation of Unit Test (with Testify and Mockery)
 6. Authentication with JWT RS512
 7. GRPC Server! (IN PROGRESS)
-8. GRPC Server with handle authentication (Soon)
-9. Caching with Redis (Soon)
-10. Dependency Injection with Google Wire (Soon)
+8. GRPC Server with handle authentication (Soon!)
+9. Caching with Redis (Soon!)
+10. Dependency Injection with Google Wire (Soon!)
+12. Worker Queue with Kafka (Soon!)
 
 Feel free to contribute to this repository if you'd like!
 
@@ -85,6 +86,19 @@ go run cmd/api/main.go
 
 
 
+### Unit test
+*tips: if you use `VS Code` as your code editor, you can install extension `golang.go` and follow tutorial [showing code coverage after saving your code](https://dev.to/vuong/golang-in-vscode-show-code-coverage-of-after-saving-test-8g0) to help you create unit test*
+
+- Use [Mockery](https://github.com/vektra/mockery) to generate mock class(es)
+```sh
+make mockery dependency=DependencyClassName
+```
+- Run unit test with command below or You can run test per function using Vscode!
+```sh
+make test
+```
+
+
 ### Running In Docker
 - Docker Build for API
 ```sh
@@ -97,19 +111,6 @@ docker build -t go-skeleton-worker:1.0.1-dev -f ./deploy/docker/worker/Dockerfil
 - Run docker compose for API and Workers
 ```sh
 docker-compose -f docker-compose.yaml -f docker-compose-worker.yaml -f docker-compose-worker-2.yaml up -d
-```
-
-
-### Unit test
-*tips: if you use `VS Code` as your code editor, you can install extension `golang.go` and follow tutorial [showing code coverage after saving your code](https://dev.to/vuong/golang-in-vscode-show-code-coverage-of-after-saving-test-8g0) to help you create unit test*
-
-- Use [Mockery](https://github.com/vektra/mockery) to generate mock class(es)
-```sh
-make mockery dependency=DependencyClassName
-```
-- Run unit test with command below or You can run test per function using Vscode!
-```sh
-make test
 ```
 
 
