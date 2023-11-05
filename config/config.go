@@ -15,7 +15,6 @@ type Config struct {
 	MiddlewareAddress        string   `env:"MIDDLEWARE_ADDR"`
 	JwtExpireDaysCount       int      `env:"JWT_EXPIRE_DAYS_COUNT"`
 	MysqlOption
-	RedisOption
 	RabbitMQOption
 	MongodbOption
 }
@@ -30,13 +29,6 @@ type MysqlOption struct {
 	Username     string `env:"MYSQL_USERNAME,required"`
 	Password     string `env:"MYSQL_PASSWORD"`
 	TimeZone     string `env:"MYSQL_TIMEZONE,required"`
-}
-
-type RedisOption struct {
-	Host           string `env:"REDIS_HOST,required"`
-	Password       string `env:"REDIS_PASSWORD"`
-	ReadTimeoutMs  int    `env:"REDIS_READ_TIMEOUT,default=300"`
-	WriteTimeoutMs int    `env:"REDIS_WRITE_TIMEOUT,default=300"`
 }
 
 type RabbitMQOption struct {
