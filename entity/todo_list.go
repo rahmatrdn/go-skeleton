@@ -1,7 +1,5 @@
 package entity
 
-import "time"
-
 type TodoListReq struct {
 	ID          int64  `json:"id,omitempty" swaggerignore:"true"`
 	UserID      int64  `json:"user_id,omitempty" validate:"required"`
@@ -11,12 +9,12 @@ type TodoListReq struct {
 }
 
 type TodoListResponse struct {
-	ID          int64     `json:"id,omitempty"`
-	Title       string    `json:"title"`
-	Description string    `json:"description"`
-	DoingAt     string    `json:"doing_at"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID          int64  `json:"id,omitempty"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	DoingAt     string `json:"doing_at"`
+	CreatedAt   string `json:"created_at"`
+	UpdatedAt   string `json:"updated_at"`
 }
 
 func (r *TodoListReq) SetID(ID int64) {

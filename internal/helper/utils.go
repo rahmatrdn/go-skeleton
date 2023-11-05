@@ -181,3 +181,8 @@ func VerifyBcryptHash(plaintext, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(plaintext))
 	return err == nil
 }
+
+func ConvertToJakartaTime(t time.Time) string {
+	loc, _ := time.LoadLocation("Asia/Jakarta")
+	return t.In(loc).Format("2006-01-02 15:04:05")
+}

@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
@@ -82,9 +81,6 @@ func (w *TodoListHandler) GetByUserID(c *fiber.Ctx) error {
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
-
-	fmt.Println(data)
-	fmt.Println(userID)
 
 	return w.presenter.BuildSuccess(c, data, "Success", http.StatusOK)
 }

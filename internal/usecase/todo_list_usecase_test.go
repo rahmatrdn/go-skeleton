@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 	"github.com/rahmatrdn/go-skeleton/tests/fixture/factory"
 	"github.com/rahmatrdn/go-skeleton/tests/mocks"
@@ -54,8 +55,8 @@ func (s *TodoListUsecaseTestSuite) TestGetByUserID() {
 			Title:       v.Title,
 			Description: v.Description,
 			DoingAt:     v.DoingAt,
-			CreatedAt:   v.CreatedAt,
-			UpdatedAt:   v.UpdatedAt,
+			CreatedAt:   helper.ConvertToJakartaTime(v.CreatedAt),
+			UpdatedAt:   helper.ConvertToJakartaTime(v.UpdatedAt),
 		})
 	}
 
@@ -110,8 +111,8 @@ func (s *TodoListUsecaseTestSuite) TestGetByID() {
 		Title:       todoList.Title,
 		Description: todoList.Description,
 		DoingAt:     todoList.DoingAt,
-		CreatedAt:   todoList.CreatedAt,
-		UpdatedAt:   todoList.UpdatedAt,
+		CreatedAt:   helper.ConvertToJakartaTime(todoList.CreatedAt),
+		UpdatedAt:   helper.ConvertToJakartaTime(todoList.UpdatedAt),
 	}
 
 	testcases := []struct {

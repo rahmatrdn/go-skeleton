@@ -50,8 +50,8 @@ func (t *TodoList) GetByUserID(ctx context.Context, userID int64) (res []*entity
 			Title:       v.Title,
 			Description: v.Description,
 			DoingAt:     v.DoingAt,
-			CreatedAt:   v.CreatedAt,
-			UpdatedAt:   v.UpdatedAt,
+			CreatedAt:   helper.ConvertToJakartaTime(v.CreatedAt),
+			UpdatedAt:   helper.ConvertToJakartaTime(v.UpdatedAt),
 		})
 	}
 
@@ -76,8 +76,8 @@ func (t *TodoList) GetByID(ctx context.Context, todoListID int64) (*entity.TodoL
 		Title:       data.Title,
 		Description: data.Description,
 		DoingAt:     data.DoingAt,
-		CreatedAt:   data.CreatedAt,
-		UpdatedAt:   data.UpdatedAt,
+		CreatedAt:   helper.ConvertToJakartaTime(data.CreatedAt),
+		UpdatedAt:   helper.ConvertToJakartaTime(data.UpdatedAt),
 	}, nil
 }
 
@@ -112,7 +112,7 @@ func (t *TodoList) Create(ctx context.Context, todoListReq *entity.TodoListReq) 
 		Title:       todoListPayload.Title,
 		Description: todoListPayload.Description,
 		DoingAt:     todoListPayload.DoingAt,
-		CreatedAt:   todoListPayload.CreatedAt,
+		CreatedAt:   helper.ConvertToJakartaTime(todoListPayload.CreatedAt),
 	}, nil
 }
 
