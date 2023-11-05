@@ -7,16 +7,17 @@
 "Forget about the complexities of folder structures, and concentrate on growing your project!"
 
 Features : 
-1. Rest API
-2. Fiber Framework
-3. Api Docs with Sweager
-4. Worker Queue with RabbitMQ
-5. Implementation of Unit Test (with Testify and Mockery)
-6. Authentication with JWT RS512
-7. GRPC Server! (IN PROGRESS)
-8. GRPC Server with handle authentication (Soon!)
-9. Caching with Redis (Soon!)
-10. Dependency Injection with Google Wire (Soon!)
+1. REST API
+2. Clean Architecture
+3. Fiber Framework
+4. Api Docs with Sweager
+5. Worker Queue with RabbitMQ
+6. Implementation of Unit Test (with Testify and Mockery)
+7. Authentication with JWT RS512
+8. GRPC Server! (IN PROGRESS)
+9. GRPC Server with handle authentication (Soon!)
+10. Caching with Redis (Soon!)
+11. Dependency Injection with Google Wire (Soon!)
 12. Worker Queue with Kafka (Soon!)
 
 Feel free to contribute to this repository if you'd like!
