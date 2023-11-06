@@ -65,7 +65,6 @@ tmp/
 
 .env
 tmp/*
-storage/*
 coverage.out
 
 *.pem
