@@ -17,13 +17,15 @@ const (
 	INVALID_TOKEN_MSG    = "Invalid Access Token"
 	BAD_REQUEST_CODE     = "30"
 	BAD_REQUEST_MSG      = "Bad Request"
+	DATA_NOT_FOUND_MSG   = "Data not found"
+	USER_NOT_FOUND_MSG   = "User not found"
 
-	GENERAL_ERROR_MESSAGE = "Something went wrong."
+	GENERAL_ERROR_MESSAGE = "Something went wrong. Please try again later."
 )
 
 func ErrRecordNotFound() CustomErrorResponse {
 	return CustomErrorResponse{
-		Message:  "Data not found",
+		Message:  DATA_NOT_FOUND_MSG,
 		ErrCode:  BAD_REQUEST_MSG,
 		HTTPCode: http.StatusNotFound,
 	}
@@ -31,7 +33,7 @@ func ErrRecordNotFound() CustomErrorResponse {
 
 func ErrUserNotFound() CustomErrorResponse {
 	return CustomErrorResponse{
-		Message:  "User not found",
+		Message:  USER_NOT_FOUND_MSG,
 		ErrCode:  BAD_REQUEST_MSG,
 		HTTPCode: http.StatusNotFound,
 	}
