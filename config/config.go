@@ -5,6 +5,8 @@ import "github.com/joeshaw/envdecode"
 var StorageDirectory = "./storage/app/"
 
 type Config struct {
+	AppName                  string   `env:"APP_NAME"`
+	AppVersion               string   `env:"APP_VERSION"`
 	AppEnv                   string   `env:"APP_ENV,default=development"`
 	ApiHost                  string   `env:"API_HOST"`
 	ApiRpcPort               string   `env:"API_RPC_PORT"`

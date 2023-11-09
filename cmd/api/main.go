@@ -52,7 +52,7 @@ func main() {
 	// Initialize config variable from .env file
 	cfg := config.NewConfig()
 
-	app := fiber.New(config.NewFiberConfiguration())
+	app := fiber.New(config.NewFiberConfiguration(cfg))
 
 	// Initialize Swagger for API documentation
 	app.Get("/apidoc/*", swagger.HandlerDefault)
