@@ -9,6 +9,7 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/queue"
 )
 
+// LogUsecase is a usecase for writing log to Queue (Message Broker)
 type Log struct {
 	queue queue.Queue
 }

@@ -12,6 +12,7 @@ import (
 	"github.com/rahmatrdn/go-skeleton/entity"
 )
 
+// ValidatorUsecase is a usecase for custom validating data
 type Validator struct {
 }
 
