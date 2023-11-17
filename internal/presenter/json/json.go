@@ -35,7 +35,7 @@ func (p *Json) BuildSuccess(c *fiber.Ctx, data interface{}, message string, code
 	response := &ResponseBody{
 		Data:    data,
 		Message: message,
-		Code:    apperr.SUCCESS_CODE,
+		Code:    entity.SUCCESS_CODE,
 	}
 
 	return c.JSON(response)
@@ -50,7 +50,7 @@ func (p *Json) BuildError(c *fiber.Ctx, err error) error {
 		errorMessage := errorData[0]
 
 		// Handle error struct validation
-		if errorCode == apperr.INVALID_PAYLOAD_CODE {
+		if errorCode == entity.INVALID_PAYLOAD_CODE {
 			var errResponse []entity.ErrorResponse
 			json.Unmarshal([]byte(errorMessage), &errResponse)
 
@@ -69,7 +69,7 @@ func (p *Json) BuildError(c *fiber.Ctx, err error) error {
 	default:
 		return c.Status(apperr.ErrGeneralInvalid().HTTPCode).
 			JSON(apperr.CustomError(err.Error(),
-				apperr.BAD_REQUEST_CODE,
+				entity.BAD_REQUEST_CODE,
 				http.StatusUnprocessableEntity))
 	}
 }

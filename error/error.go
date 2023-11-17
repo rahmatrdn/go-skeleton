@@ -6,59 +6,42 @@ import (
 	"github.com/rahmatrdn/go-skeleton/entity"
 )
 
-const (
-	SUCCESS_CODE         = "00"
-	SUCCESS_MSG          = "Success"
-	INVALID_AUTH_CODE    = "01"
-	INVALID_AUTH_MSG     = "Invalid Email or Password"
-	INVALID_PAYLOAD_CODE = "02"
-	INVALID_PAYLOAD_MSG  = "Invalid Payload Request Data"
-	INVALID_TOKEN_CODE   = "05"
-	INVALID_TOKEN_MSG    = "Invalid Access Token"
-	BAD_REQUEST_CODE     = "30"
-	BAD_REQUEST_MSG      = "Bad Request"
-	DATA_NOT_FOUND_MSG   = "Data not found"
-	USER_NOT_FOUND_MSG   = "User not found"
-
-	GENERAL_ERROR_MESSAGE = "Something went wrong. Please try again later."
-)
-
 func ErrRecordNotFound() CustomErrorResponse {
 	return CustomErrorResponse{
-		Message:  DATA_NOT_FOUND_MSG,
-		ErrCode:  BAD_REQUEST_MSG,
+		Message:  entity.DATA_NOT_FOUND_MSG,
+		ErrCode:  entity.BAD_REQUEST_MSG,
 		HTTPCode: http.StatusNotFound,
 	}
 }
 
 func ErrUserNotFound() CustomErrorResponse {
 	return CustomErrorResponse{
-		Message:  USER_NOT_FOUND_MSG,
-		ErrCode:  BAD_REQUEST_MSG,
+		Message:  entity.USER_NOT_FOUND_MSG,
+		ErrCode:  entity.BAD_REQUEST_MSG,
 		HTTPCode: http.StatusNotFound,
 	}
 }
 
 func ErrInvalidEmailOrPassword() CustomErrorResponse {
 	return CustomErrorResponse{
-		Message:  INVALID_AUTH_MSG,
-		ErrCode:  INVALID_AUTH_CODE,
+		Message:  entity.INVALID_AUTH_MSG,
+		ErrCode:  entity.INVALID_AUTH_CODE,
 		HTTPCode: http.StatusUnauthorized,
 	}
 }
 
 func ErrInvalidToken() CustomErrorResponse {
 	return CustomErrorResponse{
-		Message:  INVALID_TOKEN_MSG,
-		ErrCode:  INVALID_TOKEN_CODE,
+		Message:  entity.INVALID_TOKEN_MSG,
+		ErrCode:  entity.INVALID_TOKEN_CODE,
 		HTTPCode: http.StatusUnauthorized,
 	}
 }
 
 func ErrInvalidPayload(meta []entity.ErrorResponse) CustomErrorResponseWithMeta {
 	return CustomErrorResponseWithMeta{
-		Message:  INVALID_PAYLOAD_MSG,
-		ErrCode:  INVALID_PAYLOAD_CODE,
+		Message:  entity.INVALID_PAYLOAD_MSG,
+		ErrCode:  entity.INVALID_PAYLOAD_CODE,
 		HTTPCode: http.StatusUnprocessableEntity,
 		Meta:     meta,
 	}
@@ -84,16 +67,16 @@ func (c CustomErrorResponse) Error() string {
 
 func ErrGeneralInvalid() CustomErrorResponse {
 	return CustomErrorResponse{
-		Message:  GENERAL_ERROR_MESSAGE,
-		ErrCode:  BAD_REQUEST_MSG,
+		Message:  entity.GENERAL_ERROR_MESSAGE,
+		ErrCode:  entity.BAD_REQUEST_MSG,
 		HTTPCode: http.StatusUnprocessableEntity,
 	}
 }
 
 func ErrInvalidRequest() CustomErrorResponse {
 	return CustomErrorResponse{
-		Message:  INVALID_PAYLOAD_MSG,
-		ErrCode:  BAD_REQUEST_MSG,
+		Message:  entity.INVALID_PAYLOAD_MSG,
+		ErrCode:  entity.BAD_REQUEST_MSG,
 		HTTPCode: http.StatusUnprocessableEntity,
 	}
 }

@@ -25,7 +25,7 @@ type GormTrxSupportTestSuite struct {
 	suite.Suite
 	mock sqlmock.Sqlmock
 	db   *sql.DB
-	repo *mysql.Wallet
+	repo *mysql.User
 	d    *GormTrxSupportTestData
 }
 
@@ -52,13 +52,13 @@ func (s *GormTrxSupportTestSuite) SetupTest() {
 
 	dialector := gmysql.New(gmysql.Config{Conn: s.db, SkipInitializeWithVersion: true})
 	gormDB, _ := gorm.Open(dialector, &gorm.Config{})
-	s.repo = mysql.NewWalletRepository(&config.Mysql{DB: gormDB})
+	s.repo = mysql.NewUserRepository(&config.Mysql{DB: gormDB})
 	s.d = &GormTrxSupportTestData{}
 }
 
 func (s *GormTrxSupportTestSuite) setupValidData() {
 	s.d.ctx, s.d.cancel = context.WithDeadline(context.Background(), time.Now().Add(time.Hour))
-	fakeData := &entity.Wallet{}
+	fakeData := &entity.User{}
 	if err := faker.FakeData(fakeData); err != nil {
 		s.FailNowf("an error '%s' was no expected when trying to create fake data", err.Error())
 	}
@@ -107,7 +107,7 @@ func (s *GormTrxSupportTestSuite) TestTrx() {
 // DB Transaction Test
 type DBTransactionTestSuite struct {
 	suite.Suite
-	repo *mocks.WalletRepository
+	repo *mocks.UserRepository
 	trx  *mocks.TrxObj
 }
 
@@ -116,7 +116,7 @@ func TestDBTransaction(t *testing.T) {
 }
 
 func (s *DBTransactionTestSuite) SetupTest() {
-	s.repo = &mocks.WalletRepository{}
+	s.repo = &mocks.UserRepository{}
 	s.trx = &mocks.TrxObj{}
 }
 

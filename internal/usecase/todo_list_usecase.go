@@ -7,7 +7,6 @@ import (
 
 	errwrap "github.com/pkg/errors"
 	"github.com/rahmatrdn/go-skeleton/entity"
-	apperr "github.com/rahmatrdn/go-skeleton/error"
 	"github.com/rahmatrdn/go-skeleton/internal/helper"
 	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
 	mentity "github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
@@ -89,7 +88,7 @@ func (t *TodoList) Create(ctx context.Context, todoListReq *entity.TodoListReq) 
 	}
 
 	if errMsg := ValidateStruct(*todoListReq); errMsg != "" {
-		return nil, errwrap.Wrap(fmt.Errorf(apperr.INVALID_PAYLOAD_CODE), errMsg)
+		return nil, errwrap.Wrap(fmt.Errorf(entity.INVALID_PAYLOAD_CODE), errMsg)
 	}
 
 	todoListPayload := &mentity.TodoList{

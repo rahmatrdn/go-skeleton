@@ -32,5 +32,5 @@ coverage:
 	go test ./... -coverprofile cover.out
 	go tool cover -func cover.out
 
-mockery:
+mock:
 	 mockery --name=$(dependency) --recursive=true --output=tests/mocks

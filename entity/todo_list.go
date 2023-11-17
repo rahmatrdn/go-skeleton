@@ -3,7 +3,7 @@ package entity
 type TodoListReq struct {
 	ID          int64  `json:"id,omitempty" swaggerignore:"true"`
 	UserID      int64  `json:"user_id,omitempty" validate:"required"`
-	Title       string `json:"title,omitempty" validate:"required" swaggerignore:"true" name:"Judul"`
+	Title       string `json:"title,omitempty" validate:"required" name:"Judul"`
 	Description string `json:"description" validate:"required" name:"Deskripsi"`
 	DoingAt     string `json:"doing_at" validate:"required" name:"Tanggal Aktifitas"`
 }

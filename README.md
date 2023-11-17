@@ -92,7 +92,7 @@ go run cmd/api/main.go
 
 - Use [Mockery](https://github.com/vektra/mockery) to generate mock class(es)
 ```sh
-make mockery dependency=DependencyClassName
+make mock dependency=DependencyClassName
 ```
 - Run unit test with command below or You can run test per function using Vscode!
 ```sh

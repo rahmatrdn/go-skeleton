@@ -50,14 +50,32 @@ func Log(status entity.LogType, message string, funcName string, err error, logF
 	WriteLogToFile(f, storage)
 }
 
+// Process writing log Error to file and console.
+// Parameters :
+//   - processName : name of process (optional, this can be use to track bug by process name) and make sure using Type Safety to write process name
+//   - funcName : source function that return error (Ex. walletUsecase.Create, etc.)
+//   - err : error response from function
+//   - logFields : additional data to track error (Ex. Indetifier ID, User ID, etc.)
 func LogError(processName string, funcName string, err error, logFields entity.CaptureFields, message string) {
 	Log(entity.LogError, message, funcName, err, logFields, processName)
 }
 
+// Process writing log Info to file and console.
+// Parameters :
+//
+//   - processName : name of process (optional, this can be use to track bug by process name) and make sure using Type Safety to write process name
+//   - funcName : source function that return error (Ex. walletUsecase.Create, etc.)
+//   - logFields : additional data to track error (Ex. Indetifier ID, User ID, etc.)
 func LogInfo(processName string, funcName string, logFields entity.CaptureFields, message string) {
 	Log(entity.LogInfo, message, funcName, fmt.Errorf(""), logFields, processName)
 }
 
+// Process writing log Warning to file and console.
+// Parameters :
+//   - processName : name of process (optional, this can be use to track bug by process name) and make sure using Type Safety to write process name
+//   - funcName : source function that return error (Ex. walletUsecase.Create, etc.)
+//   - err : error response from function
+//   - logFields : additional data to track error (Ex. Indetifier ID, User ID, etc.)
 func LogWarn(processName string, funcName string, err error, logFields entity.CaptureFields, message string) {
 	Log(entity.LogWarning, message, funcName, err, logFields, processName)
 }

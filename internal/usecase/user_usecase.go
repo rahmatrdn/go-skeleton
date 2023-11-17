@@ -76,7 +76,7 @@ func (w *User) CreateAsGuest(ctx context.Context, createUserReq *entity.CreateUs
 	}
 
 	if errMsg := ValidateStruct(*createUserReq); errMsg != "" {
-		return nil, errwrap.Wrap(fmt.Errorf(apperr.INVALID_PAYLOAD_CODE), errMsg)
+		return nil, errwrap.Wrap(fmt.Errorf(entity.INVALID_PAYLOAD_CODE), errMsg)
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(createUserReq.Password), bcrypt.DefaultCost)
