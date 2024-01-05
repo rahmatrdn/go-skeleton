@@ -9,12 +9,12 @@ import (
 )
 
 func WriteLogToFile(data string, channel string) error {
-	f, err := os.OpenFile(channel,
+	f, _ := os.OpenFile(channel,
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	defer f.Close()
 
-	_, err = f.WriteString(data)
+	_, err := f.WriteString(data)
 
 	return err
 }
@@ -33,12 +33,11 @@ func Log(status entity.LogType, message string, funcName string, err error, logF
 	}
 
 	log, _ := json.Marshal(logData)
-	logFieldsJson, _ := json.Marshal(logFields)
 
 	fmt.Println("=====================")
-	fmt.Print(fmt.Sprintf("[%s] %s: ", DatetimeNowJakartaString(), status))
+	fmt.Printf("[%s] %s: ", DatetimeNowJakartaString(), status)
 
-	logString := fmt.Sprintf("func_name='%s' error='%s' process='%s' message='%s' fields='%s'", logData.FuncName, logData.ErrorMessage, logData.Process, logData.Message, string(logFieldsJson))
+	logString := fmt.Sprintf("func_name='%s' error='%s' process='%s' message='%s' fields='%s'", logData.FuncName, logData.ErrorMessage, logData.Process, logData.Message, logFields)
 
 	fmt.Println(logString)
 	fmt.Println("=====================")
