@@ -91,8 +91,8 @@ func (w *TodoListHandler) GetByUserID(c *fiber.Ctx) error {
 // @Accept			json
 // @Produce			json
 // @Security 		Bearer
-// @Param			req body entity.WalletReq true "Payload Request Body"
-// @Success			201 {object} entity.GeneralResponse{data=entity.WalletReq} "Success"
+// @Param			req body entity.TodoListReq true "Payload Request Body"
+// @Success			201 {object} entity.GeneralResponse{data=entity.TodoListReq} "Success"
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
@@ -120,7 +120,7 @@ func (w *TodoListHandler) Create(c *fiber.Ctx) error {
 // @Produce         json
 // @Security        Bearer
 // @Param           id path int true "ID of the todo list"
-// @Param			req body entity.WalletReq true "Payload Request Body"
+// @Param			req body entity.TodoListReq true "Payload Request Body"
 // @Success			201 {object} entity.GeneralResponse "Success"
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"

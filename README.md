@@ -32,7 +32,7 @@ Feel free to contribute to this repository if you'd like!
 ## Development Guide
 ### Prerequisite
 - Git (See [Git Installation](https://git-scm.com/downloads))
-- Go 1.19 (See [Golang Installation](https://golang.org/doc/install))
+- Go 1.19+ (See [Golang Installation](https://golang.org/doc/install))
 - Go Migrate CLI (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
 - MySQL (Download via Docker or Xampp or other sources)
 - Mockery (See [Mockery Installation](https://github.com/vektra/mockery))

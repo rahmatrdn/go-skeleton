@@ -284,7 +284,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entity.WalletReq"
+                            "$ref": "#/definitions/entity.TodoListReq"
                         }
                     }
                 ],
@@ -339,7 +339,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entity.WalletReq"
+                            "$ref": "#/definitions/entity.TodoListReq"
                         }
                     }
                 ],
@@ -355,7 +355,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/entity.WalletReq"
+                                            "$ref": "#/definitions/entity.TodoListReq"
                                         }
                                     }
                                 }
@@ -620,6 +620,29 @@ const docTemplate = `{
                 }
             }
         },
+        "entity.TodoListReq": {
+            "type": "object",
+            "required": [
+                "description",
+                "doing_at",
+                "title",
+                "user_id"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "doing_at": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "entity.TodoListResponse": {
             "type": "object",
             "properties": {
@@ -639,21 +662,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
-        "entity.WalletReq": {
-            "type": "object",
-            "required": [
-                "balance",
-                "user_name"
-            ],
-            "properties": {
-                "balance": {
-                    "type": "integer"
-                },
-                "user_name": {
                     "type": "string"
                 }
             }

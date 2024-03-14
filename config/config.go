@@ -19,6 +19,7 @@ type Config struct {
 	MysqlOption
 	RabbitMQOption
 	MongodbOption
+	RedisOption
 }
 
 // MysqlOption contains mySQL connection options
@@ -44,6 +45,13 @@ type RabbitMQOption struct {
 type MongodbOption struct {
 	Uri          string `env:"MONGODB_URI,required"`
 	DatabaseName string `env:"MONGODB_DATABASE_NAME,required"`
+}
+
+type RedisOption struct {
+	Host           string `env:"REDIS_HOST,required"`
+	Password       string `env:"REDIS_PASSWORD"`
+	ReadTimeoutMs  int16  `env:"REDIS_READ_TIMEOUT,required"`
+	WriteTimeoutMs int16  `env:"REDIS_WRITE_TIMEOUT,required"`
 }
 
 func NewConfig() *Config {

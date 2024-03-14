@@ -76,6 +76,22 @@ definitions:
       user_id:
         type: integer
     type: object
+  entity.TodoListReq:
+    properties:
+      description:
+        type: string
+      doing_at:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - description
+    - doing_at
+    - title
+    - user_id
+    type: object
   entity.TodoListResponse:
     properties:
       created_at:
@@ -90,16 +106,6 @@ definitions:
         type: string
       updated_at:
         type: string
-    type: object
-  entity.WalletReq:
-    properties:
-      balance:
-        type: integer
-      user_name:
-        type: string
-    required:
-    - balance
-    - user_name
     type: object
 info:
   contact:
@@ -264,7 +270,7 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/entity.WalletReq'
+          $ref: '#/definitions/entity.TodoListReq'
       produces:
       - application/json
       responses:
@@ -275,7 +281,7 @@ paths:
             - $ref: '#/definitions/entity.GeneralResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/entity.WalletReq'
+                  $ref: '#/definitions/entity.TodoListReq'
               type: object
         "401":
           description: Unauthorized
@@ -309,7 +315,7 @@ paths:
         name: req
         required: true
         schema:
-          $ref: '#/definitions/entity.WalletReq'
+          $ref: '#/definitions/entity.TodoListReq'
       produces:
       - application/json
       responses:

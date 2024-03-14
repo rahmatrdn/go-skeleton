@@ -1,6 +1,6 @@
 APIDOC_BASE = cmd/api
 APIDOC_INFO = internal/http/handler
-MYSQL_URI   = mysql: //$(MYSQL_USERNAME):$(MYSQL_PASSWORD)@tcp($(MYSQL_HOST):$(MYSQL_PORT))/$(MYSQL_DATABASE_NAME)
+MYSQL_URI   = mysql://$(MYSQL_USERNAME):$(MYSQL_PASSWORD)@tcp($(MYSQL_HOST):$(MYSQL_PORT))/$(MYSQL_DATABASE_NAME)
 
 include .env
 
