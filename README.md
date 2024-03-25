@@ -51,7 +51,7 @@ git clone https://github.com/rahmatrdn/go-skeleton.git
 ```
 2. Copy `example.env` to `.env`
 ```sh
-cp env.sample .env
+cp example.env .env
 ```
 3. Adjust the `.env` file according to the configuration in your local environment, such as the database or other settings 
 4. Create a MySQL database with the name `go_skeleton.`
