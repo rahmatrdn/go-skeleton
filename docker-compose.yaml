@@ -1,4 +1,3 @@
-
 version: "3.7"
 services:
   skeleton-api-dev:
@@ -8,4 +7,20 @@ services:
       - 8760:7011
     env_file:
       - ./.env
+    network_mode: bridge
+
+  skeleton-worker-dev:
+    container_name: go-skeleton-worker
+    image: go-skeleton-worker:1.0.1-dev
+    env_file:
+      - ./.env
+    command: [ "sync.log" ]
+    network_mode: bridge
+
+  skeleton-worker-2-dev:
+    container_name: go-skeleton-worker-2-test
+    image: go-skeleton-worker:1.0.1-dev
+    env_file:
+      - ./.env
+    command: [ "test.docker" ]
     network_mode: bridge

@@ -4,18 +4,27 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
 )
 
 func WriteLogToFile(data string, channel string) error {
-	f, _ := os.OpenFile(channel,
-		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	dir := filepath.Dir(channel)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return err
+		}
+	}
 
+	f, err := os.OpenFile(channel,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
 	defer f.Close()
 
-	_, err := f.WriteString(data)
-
+	_, err = f.WriteString(data)
 	return err
 }
 

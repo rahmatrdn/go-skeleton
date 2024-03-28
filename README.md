@@ -111,7 +111,7 @@ docker build -t go-skeleton-worker:1.0.1-dev -f ./deploy/docker/worker/Dockerfil
 ```
 - Run docker compose for API and Workers
 ```sh
-docker-compose -f docker-compose.yaml -f docker-compose-worker.yaml -f docker-compose-worker-2.yaml up -d
+docker-compose -f docker-compose.yaml up -d
 ```
 
 

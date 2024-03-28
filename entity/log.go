@@ -3,8 +3,8 @@ package entity
 import "encoding/json"
 
 const (
-	GeneralLogFilePath = "./storage/log/general"
-	WorkerLogFilePath  = "./storage/log/worker"
+	GeneralLogFilePath = "/storage/log/general"
+	WorkerLogFilePath  = "/storage/log/worker"
 )
 
 type Log struct {

@@ -26,5 +26,8 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /app/.env ./.env
 COPY --from=builder /app/deploy/worker .
 
+ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo.zip
+ENV ZONEINFO /zoneinfo.zip
+
 #we tell docker what to run when this image is run and run it as executable.
 ENTRYPOINT ["/worker"]
