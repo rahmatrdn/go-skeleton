@@ -380,7 +380,7 @@ paths:
       - application/json
       description: Get a Todo List by its ID
       parameters:
-      - description: ID of the wallet
+      - description: ID of the Todo List
         in: path
         name: id
         required: true

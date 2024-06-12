@@ -404,7 +404,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID of the wallet",
+                        "description": "ID of the Todo List",
                         "name": "id",
                         "in": "path",
                         "required": true
