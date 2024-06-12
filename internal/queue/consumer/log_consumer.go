@@ -3,8 +3,10 @@ package consumer
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
 	mongoRepo "github.com/rahmatrdn/go-skeleton/internal/repository/mongodb"
 	moentity "github.com/rahmatrdn/go-skeleton/internal/repository/mongodb/entity"
 )
@@ -29,12 +31,19 @@ func (l *LogQueue) ProcessSyncLog(payload map[string]interface{}) error {
 	var params entity.Log
 	params.LoadFromMap(payload)
 
+	var executionTime int
+	if params.LogFields["execution_time"] != nil {
+		executionTime = helper.ToInt(params.LogFields["execution_time"])
+	}
+
 	err := l.logMongoRepo.Create(l.ctx, moentity.LogCollection{
-		Status:       string(params.Status),
-		FuncName:     params.FuncName,
-		ErrorMessage: params.ErrorMessage,
-		Process:      params.Process,
-		LogFields:    params.LogFields,
+		Status:        string(params.Status),
+		FuncName:      params.FuncName,
+		ErrorMessage:  params.ErrorMessage,
+		Process:       params.Process,
+		LogFields:     params.LogFields,
+		Created:       time.Now().UTC().Add(7 * time.Hour),
+		ExecutionTime: executionTime,
 	})
 
 	if err != nil {

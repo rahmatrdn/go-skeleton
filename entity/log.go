@@ -35,3 +35,7 @@ func (c *Log) LoadFromMap(m map[string]interface{}) error {
 	}
 	return err
 }
+
+const (
+	PRODUCTION_ENV = "production"
+)

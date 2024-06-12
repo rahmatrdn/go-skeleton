@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"reflect"
 	"runtime"
 	"sort"
@@ -13,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/rahmatrdn/go-skeleton/entity"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -146,6 +148,10 @@ func InArray(val interface{}, array interface{}) (found bool) {
 }
 
 func Dump(array any) {
+	if os.Getenv("APP_ENV") == entity.PRODUCTION_ENV {
+		return
+	}
+
 	s, _ := json.MarshalIndent(array, "", "\t")
 
 	fmt.Println("-------------")
@@ -165,7 +171,7 @@ func RemoveFirstChar(input string) string {
 func GetDataInStruct(data interface{}, refColumn string, searchValue interface{}) (interface{}, error) {
 	val := reflect.ValueOf(interface{}(data))
 	if val.Kind() != reflect.Slice {
-		return nil, errors.New("Data is not a slice")
+		return nil, errors.New("DATA IS NOT A SLICE")
 	}
 
 	for _, v := range val.Interface().([]interface{}) {
@@ -174,7 +180,7 @@ func GetDataInStruct(data interface{}, refColumn string, searchValue interface{}
 		}
 	}
 
-	return nil, errors.New("Data not found")
+	return nil, errors.New("DATA NOT FOUND")
 }
 
 func VerifyBcryptHash(plaintext, hash string) bool {
@@ -185,4 +191,8 @@ func VerifyBcryptHash(plaintext, hash string) bool {
 func ConvertToJakartaTime(t time.Time) string {
 	loc, _ := time.LoadLocation("Asia/Jakarta")
 	return t.In(loc).Format("2006-01-02 15:04:05")
+}
+
+func GetAppEnv() string {
+	return os.Getenv("APP_ENV")
 }
