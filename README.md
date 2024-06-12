@@ -10,7 +10,7 @@ Features :
 1. REST API
 2. Clean Architecture
 3. Fiber Framework
-4. Api Docs with Sweager
+4. Api Docs with Swagger
 5. Worker Queue with RabbitMQ
 6. Implementation of Unit Test (with Testify and Mockery)
 7. Authentication with JWT RS512
