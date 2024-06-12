@@ -68,3 +68,6 @@ tmp/*
 coverage.out
 
 *.pem
+
+# Log
+storage/log/*
