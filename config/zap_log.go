@@ -9,11 +9,11 @@ import (
 )
 
 func NewZapLog(env string) (*zap.Logger, error) {
-	if env != entity.PRODUCTION_ENV {
-		return NewDevelopmentLogger()
+	if env == entity.PRODUCTION_ENV {
+		return NewProductionLogger()
 	}
 
-	return NewProductionLogger()
+	return NewDevelopmentLogger()
 }
 
 // This configuration for Development env, the log will be written to the terminal!
