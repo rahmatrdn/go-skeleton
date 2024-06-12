@@ -14,11 +14,12 @@ Features :
 5. Worker Queue with RabbitMQ
 6. Implementation of Unit Test (with Testify and Mockery)
 7. Authentication with JWT RS512
-8. GRPC Server! (IN PROGRESS)
-9. GRPC Server with handle authentication (Soon!)
-10. Caching with Redis (Soon!)
-11. Dependency Injection with Google Wire (Soon!)
-12. Worker Queue with Kafka (Soon!)
+8. Logging with Zap Log
+9. GRPC Server! (IN PROGRESS)
+10. GRPC Server with handle authentication (Soon!)
+11. Caching with Redis (Soon!)
+12. Dependency Injection with Google Wire (Soon!)
+13. Worker Queue with Kafka (Soon!)
 
 Feel free to contribute to this repository if you'd like!
 
