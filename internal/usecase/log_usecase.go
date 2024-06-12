@@ -1,9 +1,7 @@
 package usecase
 
 import (
-	"encoding/json"
 	"errors"
-	"fmt"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/helper"
@@ -48,22 +46,8 @@ func (w *Log) Log(status entity.LogType, message string, funcName string, err er
 		LogFields:    logFields,
 	}
 
-	log, _ := json.Marshal(logData)
-
-	ts := fmt.Sprintf("[%s] %s:", helper.NowStrUTC(), status)
-	o := fmt.Sprint(string(log))
-
 	payload, _ := helper.Serialize(logData)
 	errQueue := w.queue.Publish(queue.ProcessSyncLog, payload, 1)
-
-	// If error when publish to queue, write log to file
-	if errQueue != nil {
-		channel := "../../storage/log/general"
-		channel = fmt.Sprintf("%s_%s.log", channel, helper.DateNowJakarta())
-		f := fmt.Sprintf("%s %s \r\n", ts, o)
-		helper.WriteLogToFile(f, channel)
-		return
-	}
 
 	// Writing Log with Zap Logger
 	logger := w.zapLogger.WithOptions(zap.AddCallerSkip(1))
@@ -76,11 +60,15 @@ func (w *Log) Log(status entity.LogType, message string, funcName string, err er
 		zap.Any("logFields", logFields),
 	}
 
-	switch status {
-	case entity.LogError:
-		logger.Error(message, fields...)
-	case entity.LogInfo:
-		logger.Info(message, fields...)
+	// If error when publish to queue, write log to file
+	if errQueue != nil || helper.GetAppEnv() != entity.PRODUCTION_ENV {
+		switch status {
+		case entity.LogError:
+			logger.Error(message, fields...)
+		case entity.LogInfo:
+			logger.Info(message, fields...)
+		}
+		return
 	}
 }
 
