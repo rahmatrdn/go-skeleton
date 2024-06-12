@@ -75,6 +75,9 @@ func main() {
 		EnableStackTrace: true,
 	}))
 
+	// logger, _ := config.NewZapLog(cfg.AppEnv)
+	// logger = logger.WithOptions(zap.AddCallerSkip(1))
+
 	presenterJson := json.NewJsonPresenter()
 	parser := parser.NewParser()
 
@@ -85,13 +88,7 @@ func main() {
 	// }
 
 	// Redis Configuration (if needed)
-	redisDB := config.NewRedis(&cfg.RedisOption)
-
-	err := redisDB.Set(context.Background(), "test", "value", 0).Err()
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
+	// redisDB := config.NewRedis(&cfg.RedisOption)
 
 	mysqlDBLogger := glogger.New(
 		log.New(
