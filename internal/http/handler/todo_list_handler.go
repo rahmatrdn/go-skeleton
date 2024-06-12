@@ -40,19 +40,19 @@ func (w *TodoListHandler) Register(app fiber.Router) {
 // @Accept          json
 // @Produce         json
 // @Security        Bearer
-// @Param           id path int true "ID of the wallet"
+// @Param           id path int true "ID of the Todo List"
 // @Success			201 {object} entity.GeneralResponse{data=entity.TodoListResponse} "Success"
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/v1/api/todo-lists/{id} [get]
 func (w *TodoListHandler) GetByID(c *fiber.Ctx) error {
-	walletID, err := w.parser.ParserIntIDFromPathParams(c)
+	id, err := w.parser.ParserIntIDFromPathParams(c)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.todoListUsecase.GetByID(c.Context(), walletID)
+	data, err := w.todoListUsecase.GetByID(c.Context(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -154,12 +154,12 @@ func (w *TodoListHandler) Update(c *fiber.Ctx) error {
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/v1/api/todo-lists/{id} [delete]
 func (w *TodoListHandler) Delete(c *fiber.Ctx) error {
-	walletID, err := w.parser.ParserIntIDFromPathParams(c)
+	id, err := w.parser.ParserIntIDFromPathParams(c)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.todoListUsecase.DeleteByID(c.Context(), walletID)
+	err = w.todoListUsecase.DeleteByID(c.Context(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}

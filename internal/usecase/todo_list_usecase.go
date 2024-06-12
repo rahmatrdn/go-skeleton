@@ -24,7 +24,7 @@ func NewTodoListUsecase(
 
 type TodoListUsecase interface {
 	GetByUserID(ctx context.Context, userID int64) (res []*entity.TodoListResponse, err error)
-	GetByID(ctx context.Context, walletID int64) (*entity.TodoListResponse, error)
+	GetByID(ctx context.Context, todoListID int64) (*entity.TodoListResponse, error)
 	Create(ctx context.Context, todoListReq *entity.TodoListReq) (*entity.TodoListResponse, error)
 	UpdateByID(ctx context.Context, todoListReq *entity.TodoListReq) error
 	DeleteByID(ctx context.Context, todoListID int64) error
@@ -125,14 +125,14 @@ func (t *TodoList) UpdateByID(ctx context.Context, todoListReq *entity.TodoListR
 	}
 
 	if err := mysql.DBTransaction(t.todoListRepo, func(trx mysql.TrxObj) error {
-		lockedWallet, err := t.todoListRepo.LockByID(ctx, trx, todoListID)
+		lockedData, err := t.todoListRepo.LockByID(ctx, trx, todoListID)
 		if err != nil {
 			helper.LogError("todoListRepo.LockByID", funcName, err, captureFieldError, "")
 
 			return err
 		}
 
-		if err := t.todoListRepo.Update(ctx, trx, lockedWallet, &mentity.TodoList{
+		if err := t.todoListRepo.Update(ctx, trx, lockedData, &mentity.TodoList{
 			Title:       todoListReq.Title,
 			Description: todoListReq.Description,
 			DoingAt:     todoListReq.DoingAt,

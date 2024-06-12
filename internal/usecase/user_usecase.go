@@ -36,9 +36,8 @@ func (w *User) VerifyByEmailAndPassword(ctx context.Context, req *entity.LoginRe
 	captureFieldError := map[string]interface{}{"email": fmt.Sprint(req.Email)}
 
 	user, err := w.userRepo.GetByEmail(ctx, req.Email)
-
 	if err != nil {
-		helper.Log(entity.LogError, "walletRepo.GetByEmail", funcName, err, captureFieldError, "")
+		helper.Log(entity.LogError, "userRepo.GetByEmail", funcName, err, captureFieldError, "")
 
 		if err == apperr.ErrUserNotFound() {
 			return nil, apperr.ErrInvalidEmailOrPassword()
@@ -53,7 +52,7 @@ func (w *User) VerifyByEmailAndPassword(ctx context.Context, req *entity.LoginRe
 
 	token, err := w.jwtAuth.GenerateToken(user)
 	if err != nil {
-		helper.Log(entity.LogError, "walletRepo.GenerateToken", funcName, err, captureFieldError, "")
+		helper.Log(entity.LogError, "userRepo.GenerateToken", funcName, err, captureFieldError, "")
 
 		return nil, err
 	}
@@ -96,14 +95,14 @@ func (w *User) CreateAsGuest(ctx context.Context, createUserReq *entity.CreateUs
 
 	err = w.userRepo.Create(ctx, nil, user)
 	if err != nil {
-		helper.LogError("walletRepo.Create", funcName, err, captureFieldError, "")
+		helper.LogError("userRepo.Create", funcName, err, captureFieldError, "")
 
 		return nil, err
 	}
 
 	token, err := w.jwtAuth.GenerateToken(user)
 	if err != nil {
-		helper.LogError("walletRepo.GetByEmail", funcName, err, captureFieldError, "")
+		helper.LogError("userRepo.GetByEmail", funcName, err, captureFieldError, "")
 
 		return nil, err
 	}

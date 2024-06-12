@@ -21,7 +21,7 @@ type TodoListRepository interface {
 	Create(ctx context.Context, dbTrx TrxObj, params *entity.TodoList, nonZeroVal bool) error
 	LockByID(ctx context.Context, dbTrx TrxObj, ID int64) (result *entity.TodoList, err error)
 	Update(ctx context.Context, dbTrx TrxObj, params *entity.TodoList, changes *entity.TodoList) (err error)
-	DeleteByID(ctx context.Context, dbTrx TrxObj, walletID int64) error
+	DeleteByID(ctx context.Context, dbTrx TrxObj, id int64) error
 }
 
 type TodoList struct {
@@ -109,14 +109,14 @@ func (r *TodoList) Update(ctx context.Context, dbTrx TrxObj, params *entity.Todo
 	return nil
 }
 
-func (r *TodoList) DeleteByID(ctx context.Context, dbTrx TrxObj, walletID int64) error {
+func (r *TodoList) DeleteByID(ctx context.Context, dbTrx TrxObj, id int64) error {
 	funcName := "TodoListRepository.DeleteByID"
 
 	if err := helper.CheckDeadline(ctx); err != nil {
 		return errwrap.Wrap(err, funcName)
 	}
 
-	err := r.Trx(dbTrx).Where("id = ?", walletID).Delete(&entity.TodoList{}).Error
+	err := r.Trx(dbTrx).Where("id = ?", id).Delete(&entity.TodoList{}).Error
 	if err != nil {
 		return err
 	}
