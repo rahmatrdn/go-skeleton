@@ -33,4 +33,4 @@ coverage:
 	go tool cover -func cover.out
 
 mock:
-	 mockery --name=$(dependency) --recursive=true --output=tests/mocks
+	 mockery --name=$(d) --recursive=true --output=tests/mocks
