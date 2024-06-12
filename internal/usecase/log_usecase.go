@@ -2,33 +2,39 @@ package usecase
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/helper"
 	"github.com/rahmatrdn/go-skeleton/internal/queue"
+	"go.uber.org/zap"
 )
 
 // LogUsecase is a usecase for writing log to Queue (Message Broker)
 type Log struct {
-	queue queue.Queue
+	queue     queue.Queue
+	zapLogger *zap.Logger
 }
 
 func NewLogUsecase(
 	queue queue.Queue,
+	zapLogger *zap.Logger,
 ) *Log {
-	return &Log{queue}
+	return &Log{queue, zapLogger}
 }
 
 type LogUsecase interface {
 	Log(status entity.LogType, message string, funcName string, err error, logFields map[string]interface{}, processName string)
+	Error(process string, funcName string, err error, logFields map[string]interface{})
+	Info(message string, funcName string, logFields map[string]interface{}, processName string)
 }
 
 // Process writing log to file.
 // Parameters :
 //   - status: status of log (Check entity.LogType)
 //   - message: message to descirbe the error (You can use it to indicate error dependencies/functions)
-//   - funcName: source function that return error (Ex. walletUsecase.Create, etc.)
+//   - funcName: source function that return error (Ex. TodoListUsecase.Create, etc.)
 //   - err: error response from function
 //   - logFields: additional data to track error (Ex. Indetifier ID, User ID, etc.)
 //   - processName: name of process (optional, this can be use to track bug by process name) and make sure using Type Safety to write process name
@@ -58,4 +64,30 @@ func (w *Log) Log(status entity.LogType, message string, funcName string, err er
 		helper.WriteLogToFile(f, channel)
 		return
 	}
+
+	// Writing Log with Zap Logger
+	logger := w.zapLogger.WithOptions(zap.AddCallerSkip(1))
+
+	fields := []zap.Field{
+		zap.String("process", processName),
+		zap.String("funcName", funcName),
+		zap.String("message", message),
+		zap.String("errorMessage", err.Error()),
+		zap.Any("logFields", logFields),
+	}
+
+	switch status {
+	case entity.LogError:
+		logger.Error(message, fields...)
+	case entity.LogInfo:
+		logger.Info(message, fields...)
+	}
+}
+
+func (w *Log) Error(process string, funcName string, err error, logFields map[string]interface{}) {
+	w.Log(entity.LogError, process, funcName, err, logFields, process)
+}
+
+func (w *Log) Info(message string, funcName string, logFields map[string]interface{}, processName string) {
+	w.Log(entity.LogInfo, message, funcName, errors.New(""), logFields, processName)
 }

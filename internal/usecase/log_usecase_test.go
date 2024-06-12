@@ -4,24 +4,28 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/rahmatrdn/go-skeleton/config"
 	"github.com/rahmatrdn/go-skeleton/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 	"github.com/rahmatrdn/go-skeleton/tests/mocks"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
+	"go.uber.org/zap"
 )
 
 type LogUsecaseTestSuite struct {
 	suite.Suite
 
-	usecase usecase.LogUsecase
-	queue   *mocks.Queue
+	usecase   usecase.LogUsecase
+	queue     *mocks.Queue
+	zapLogger *zap.Logger
 }
 
 func (s *LogUsecaseTestSuite) SetupTest() {
 	s.queue = &mocks.Queue{}
+	s.zapLogger, _ = config.NewZapLog("dev")
 
-	s.usecase = usecase.NewLogUsecase(s.queue)
+	s.usecase = usecase.NewLogUsecase(s.queue, s.zapLogger)
 }
 
 func TestLogUsecase(t *testing.T) {
