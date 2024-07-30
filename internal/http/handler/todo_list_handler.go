@@ -45,7 +45,7 @@ func (w *TodoListHandler) Register(app fiber.Router) {
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
-// @Router			/v1/api/todo-lists/{id} [get]
+// @Router			/api/v1/todo-lists/{id} [get]
 func (w *TodoListHandler) GetByID(c *fiber.Ctx) error {
 	id, err := w.parser.ParserIntIDFromPathParams(c)
 	if err != nil {
@@ -70,7 +70,7 @@ func (w *TodoListHandler) GetByID(c *fiber.Ctx) error {
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
-// @Router			/v1/api/todo-list [get]
+// @Router			/api/v1/todo-list [get]
 func (w *TodoListHandler) GetByUserID(c *fiber.Ctx) error {
 	userID, err := w.parser.ParserUserID(c)
 	if err != nil {
@@ -96,7 +96,7 @@ func (w *TodoListHandler) GetByUserID(c *fiber.Ctx) error {
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
-// @Router			/v1/api/todo-list [post]
+// @Router			/api/v1/todo-list [post]
 func (w *TodoListHandler) Create(c *fiber.Ctx) error {
 	var req entity.TodoListReq
 
@@ -125,7 +125,7 @@ func (w *TodoListHandler) Create(c *fiber.Ctx) error {
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
-// @Router			/v1/api/todo-list [put]
+// @Router			/api/v1/todo-list [put]
 func (w *TodoListHandler) Update(c *fiber.Ctx) error {
 	var req entity.TodoListReq
 	err := w.parser.ParserBodyWithIntIDPathParamsAndUserID(c, &req)
@@ -152,7 +152,7 @@ func (w *TodoListHandler) Update(c *fiber.Ctx) error {
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
-// @Router			/v1/api/todo-lists/{id} [delete]
+// @Router			/api/v1/todo-lists/{id} [delete]
 func (w *TodoListHandler) Delete(c *fiber.Ctx) error {
 	id, err := w.parser.ParserIntIDFromPathParams(c)
 	if err != nil {

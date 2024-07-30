@@ -121,7 +121,7 @@ func main() {
 	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
 	todoListUsecase := usecase.NewTodoListUsecase(todoListRepo)
 
-	api := app.Group("/v1/api")
+	api := app.Group("/api/v1")
 
 	handler.NewAuthHandler(parser, presenterJson, userUsecase).Register(api)
 	handler.NewTodoListHandler(parser, presenterJson, todoListUsecase).Register(api)

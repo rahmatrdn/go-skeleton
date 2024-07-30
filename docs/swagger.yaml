@@ -118,7 +118,7 @@ info:
   title: Go Skeleton!
   version: "1.0"
 paths:
-  /v1/api/auth/check-token:
+  /api/v1/auth/check-token:
     get:
       description: Check Token
       produces:
@@ -145,7 +145,7 @@ paths:
       summary: Check Token
       tags:
       - Auth
-  /v1/api/auth/login:
+  /api/v1/auth/login:
     post:
       consumes:
       - application/json
@@ -184,7 +184,7 @@ paths:
       summary: Login
       tags:
       - Auth
-  /v1/api/auth/register:
+  /api/v1/auth/register:
     post:
       consumes:
       - application/json
@@ -223,7 +223,7 @@ paths:
       summary: Create User as Guest
       tags:
       - Auth
-  /v1/api/todo-list:
+  /api/v1/todo-list:
     get:
       consumes:
       - application/json
@@ -340,7 +340,7 @@ paths:
       summary: Update an existing Todo List by ID
       tags:
       - Todo List
-  /v1/api/todo-lists/{id}:
+  /api/v1/todo-lists/{id}:
     delete:
       consumes:
       - application/json

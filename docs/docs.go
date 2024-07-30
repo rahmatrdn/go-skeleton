@@ -22,7 +22,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/api/auth/check-token": {
+        "/api/v1/auth/check-token": {
             "get": {
                 "security": [
                     {
@@ -65,7 +65,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/api/auth/login": {
+        "/api/v1/auth/login": {
             "post": {
                 "description": "Login by using registered account",
                 "consumes": [
@@ -129,7 +129,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/api/auth/register": {
+        "/api/v1/auth/register": {
             "post": {
                 "description": "Create User for Guest",
                 "consumes": [
@@ -193,7 +193,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/api/todo-list": {
+        "/api/v1/todo-list": {
             "get": {
                 "security": [
                     {
@@ -383,7 +383,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/api/todo-lists/{id}": {
+        "/api/v1/todo-lists/{id}": {
             "get": {
                 "security": [
                     {
