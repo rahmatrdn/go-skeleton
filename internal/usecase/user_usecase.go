@@ -33,7 +33,7 @@ type UserUsecase interface {
 
 func (w *User) VerifyByEmailAndPassword(ctx context.Context, req *entity.LoginReq) (loginRes *entity.LoginResponse, err error) {
 	funcName := "UserUsecase.VerifyByEmailAndPassword"
-	captureFieldError := map[string]interface{}{"email": fmt.Sprint(req.Email)}
+	captureFieldError := map[string]string{"email": fmt.Sprint(req.Email)}
 
 	user, err := w.userRepo.GetByEmail(ctx, req.Email)
 	if err != nil {

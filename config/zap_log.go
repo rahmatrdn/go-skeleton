@@ -26,6 +26,12 @@ func NewDevelopmentLogger() (*zap.Logger, error) {
 
 // This configuration for Production env, the log will be written to a File!
 func NewProductionLogger() (*zap.Logger, error) {
+	logDir := "storage/log"
+	err := os.MkdirAll(logDir, 0755)
+	if err != nil {
+		return nil, err
+	}
+
 	config := zap.NewProductionConfig()
 	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder // ISO8601 time format
 	config.EncoderConfig.TimeKey = "timestamp"

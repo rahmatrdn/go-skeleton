@@ -33,7 +33,7 @@ type TodoListUsecase interface {
 func (t *TodoList) GetByUserID(ctx context.Context, userID int64) (res []*entity.TodoListResponse, err error) {
 	funcName := "TodoListUsecase.GetByUserID"
 	captureFieldError := entity.CaptureFields{
-		"user_id": userID,
+		"user_id": helper.ToString(userID),
 	}
 
 	result, err := t.todoListRepo.GetByUserID(ctx, userID)
@@ -60,7 +60,7 @@ func (t *TodoList) GetByUserID(ctx context.Context, userID int64) (res []*entity
 func (t *TodoList) GetByID(ctx context.Context, todoListID int64) (*entity.TodoListResponse, error) {
 	funcName := "TodoListUsecase.GetByID"
 	captureFieldError := entity.CaptureFields{
-		"user_id": todoListID,
+		"user_id": helper.ToString(todoListID),
 	}
 
 	data, err := t.todoListRepo.GetByID(ctx, todoListID)
@@ -83,8 +83,8 @@ func (t *TodoList) GetByID(ctx context.Context, todoListID int64) (*entity.TodoL
 func (t *TodoList) Create(ctx context.Context, todoListReq *entity.TodoListReq) (*entity.TodoListResponse, error) {
 	funcName := "TodoListUsecase.Create"
 	captureFieldError := entity.CaptureFields{
-		"user_id": todoListReq.UserID,
-		"payload": todoListReq,
+		"user_id": helper.ToString(todoListReq.UserID),
+		"payload": helper.ToString(todoListReq),
 	}
 
 	if errMsg := ValidateStruct(*todoListReq); errMsg != "" {
@@ -120,8 +120,8 @@ func (t *TodoList) UpdateByID(ctx context.Context, todoListReq *entity.TodoListR
 	todoListID := todoListReq.ID
 
 	captureFieldError := entity.CaptureFields{
-		"user_id": todoListReq.UserID,
-		"payload": todoListReq,
+		"user_id": helper.ToString(todoListReq.UserID),
+		"payload": helper.ToString(todoListReq),
 	}
 
 	if err := mysql.DBTransaction(t.todoListRepo, func(trx mysql.TrxObj) error {
@@ -156,7 +156,7 @@ func (t *TodoList) UpdateByID(ctx context.Context, todoListReq *entity.TodoListR
 func (t *TodoList) DeleteByID(ctx context.Context, todoListID int64) error {
 	funcName := "TodoListUsecase.DeleteByID"
 	captureFieldError := entity.CaptureFields{
-		"todo_list_id": todoListID,
+		"todo_list_id": helper.ToString(todoListID),
 	}
 
 	err := t.todoListRepo.DeleteByID(ctx, nil, todoListID)

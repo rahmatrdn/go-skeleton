@@ -33,7 +33,7 @@ func TestLogUsecase(t *testing.T) {
 }
 
 func (s *LogUsecaseTestSuite) TestLog() {
-	captureFieldError := map[string]interface{}{"test": "test"}
+	captureFieldError := map[string]string{"test": "test"}
 
 	testcases := []struct {
 		name     string

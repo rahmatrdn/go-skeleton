@@ -23,9 +23,9 @@ func NewLogUsecase(
 }
 
 type LogUsecase interface {
-	Log(status entity.LogType, message string, funcName string, err error, logFields map[string]interface{}, processName string)
-	Error(process string, funcName string, err error, logFields map[string]interface{})
-	Info(message string, funcName string, logFields map[string]interface{}, processName string)
+	Log(status entity.LogType, message string, funcName string, err error, logFields map[string]string, processName string)
+	Error(process string, funcName string, err error, logFields map[string]string)
+	Info(message string, funcName string, logFields map[string]string, processName string)
 }
 
 // Process writing log to file.
@@ -36,7 +36,7 @@ type LogUsecase interface {
 //   - err: error response from function
 //   - logFields: additional data to track error (Ex. Indetifier ID, User ID, etc.)
 //   - processName: name of process (optional, this can be use to track bug by process name) and make sure using Type Safety to write process name
-func (w *Log) Log(status entity.LogType, message string, funcName string, err error, logFields map[string]interface{}, processName string) {
+func (w *Log) Log(status entity.LogType, message string, funcName string, err error, logFields map[string]string, processName string) {
 	logData := entity.Log{
 		Process:      processName,
 		FuncName:     funcName,
@@ -72,10 +72,10 @@ func (w *Log) Log(status entity.LogType, message string, funcName string, err er
 	}
 }
 
-func (w *Log) Error(process string, funcName string, err error, logFields map[string]interface{}) {
+func (w *Log) Error(process string, funcName string, err error, logFields map[string]string) {
 	w.Log(entity.LogError, process, funcName, err, logFields, process)
 }
 
-func (w *Log) Info(message string, funcName string, logFields map[string]interface{}, processName string) {
+func (w *Log) Info(message string, funcName string, logFields map[string]string, processName string) {
 	w.Log(entity.LogInfo, message, funcName, errors.New(""), logFields, processName)
 }

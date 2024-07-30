@@ -26,7 +26,7 @@ const (
 	LogDebug   LogType = "DEBUG"
 )
 
-type CaptureFields map[string]interface{}
+type CaptureFields map[string]string
 
 func (c *Log) LoadFromMap(m map[string]interface{}) error {
 	data, err := json.Marshal(m)

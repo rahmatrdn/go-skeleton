@@ -31,9 +31,9 @@ func (l *LogQueue) ProcessSyncLog(payload map[string]interface{}) error {
 	var params entity.Log
 	params.LoadFromMap(payload)
 
-	var executionTime int
-	if params.LogFields["execution_time"] != nil {
-		executionTime = helper.ToInt(params.LogFields["execution_time"])
+	var executionTime string
+	if params.LogFields["execution_time"] != "" {
+		executionTime = params.LogFields["execution_time"]
 	}
 
 	err := l.logMongoRepo.Create(l.ctx, moentity.LogCollection{
@@ -43,7 +43,7 @@ func (l *LogQueue) ProcessSyncLog(payload map[string]interface{}) error {
 		Process:       params.Process,
 		LogFields:     params.LogFields,
 		Created:       time.Now().UTC().Add(7 * time.Hour),
-		ExecutionTime: executionTime,
+		ExecutionTime: helper.ToInt(executionTime),
 	})
 
 	if err != nil {
