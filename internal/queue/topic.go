@@ -1,6 +1,6 @@
 package queue
 
 var (
-	ProcessSyncLog = "sync.log"
-	ProcessTest    = "test.docker"
+	ProcessSyncLog = "log.insert"
+	ProcessExample = "example.consumer"
 )

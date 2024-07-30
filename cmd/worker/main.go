@@ -72,6 +72,7 @@ func main() {
 
 	// Consumer
 	logConsumer := consumer.NewLogConsumer(context.Background(), logMongoRepo)
+	exampleConsumer := consumer.NewExampleConsumer(context.Background(), logMongoRepo)
 
 	var interrupt = make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
@@ -80,9 +81,9 @@ func main() {
 	case queue.ProcessSyncLog:
 		log.Printf("[Worker] Listening to %v", queue.ProcessSyncLog)
 		go app.queue.HandleConsumedDeliveries(queue.ProcessSyncLog, logConsumer.ProcessSyncLog)
-	case queue.ProcessTest:
-		log.Printf("[Worker] Listening to %v", queue.ProcessTest)
-		go app.queue.HandleConsumedDeliveries(queue.ProcessTest, logConsumer.ProcessSyncLog)
+	case queue.ProcessExample:
+		log.Printf("[Worker] Listening to %v", queue.ProcessExample)
+		go app.queue.HandleConsumedDeliveries(queue.ProcessExample, exampleConsumer.Process)
 	default:
 		log.Fatalf("[Worker] topic not found : %v", os.Args[1])
 	}

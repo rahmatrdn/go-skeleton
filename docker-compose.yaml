@@ -9,18 +9,18 @@ services:
       - ./.env
     network_mode: bridge
 
-  skeleton-worker-dev:
-    container_name: go-skeleton-worker
+  skeleton-worker-log:
+    container_name: go-skeleton-worker-log
     image: go-skeleton-worker:1.0.1-dev
     env_file:
       - ./.env
-    command: [ "sync.log" ]
+    command: [ "log.insert" ]
     network_mode: bridge
 
-  skeleton-worker-2-dev:
-    container_name: go-skeleton-worker-2-test
+  skeleton-worker-example:
+    container_name: go-skeleton-worker-example
     image: go-skeleton-worker:1.0.1-dev
     env_file:
       - ./.env
-    command: [ "test.docker" ]
+    command: [ "example.consumer" ]
     network_mode: bridge
