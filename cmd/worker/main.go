@@ -42,6 +42,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer app.mongoDB.Client().Disconnect(app.ctx)
 
 	// mysqlDBLogger := glogger.New(
 	// 	log.New(
