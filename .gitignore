@@ -71,3 +71,5 @@ coverage.out
 
 # Log
 storage/log/*
+internal/usecase/storage
+internal/usecase/storage/*

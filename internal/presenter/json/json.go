@@ -46,6 +46,14 @@ func (p *Json) BuildError(c *fiber.Ctx, err error) error {
 
 	if unwrappedErr != nil {
 		errorData := strings.Split(unwrappedErr.Error(), "XX: ")
+
+		if len(errorData) < 2 {
+			return c.Status(apperr.ErrGeneralInvalid().HTTPCode).
+				JSON(apperr.CustomError(err.Error(),
+					entity.BAD_REQUEST_CODE,
+					http.StatusUnprocessableEntity))
+		}
+
 		errorCode := errorData[1]
 		errorMessage := errorData[0]
 
@@ -61,10 +69,9 @@ func (p *Json) BuildError(c *fiber.Ctx, err error) error {
 		}
 	}
 
-	switch err.(type) {
+	switch err := err.(type) {
 	case apperr.CustomErrorResponse:
-		httpCode := err.(apperr.CustomErrorResponse).HTTPCode
-
+		httpCode := err.HTTPCode
 		return c.Status(httpCode).JSON(err)
 	default:
 		return c.Status(apperr.ErrGeneralInvalid().HTTPCode).
