@@ -129,6 +129,9 @@ func main() {
 	app.Get("/health-check", healthCheck)
 	app.Get("/metrics", monitor.New())
 
+	// Handle Route not found
+	app.Use(routeNotFound)
+
 	var wg = sync.WaitGroup{}
 	wg.Add(1)
 
@@ -166,5 +169,12 @@ var healthCheck = func(c *fiber.Ctx) error {
 	return c.JSON(entity.GeneralResponse{
 		Code:    200,
 		Message: "OK!",
+	})
+}
+
+var routeNotFound = func(c *fiber.Ctx) error {
+	return c.Status(404).JSON(entity.GeneralResponse{
+		Code:    404,
+		Message: "Route Not Found!",
 	})
 }
