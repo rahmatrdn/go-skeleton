@@ -148,7 +148,7 @@ func InArray(val interface{}, array interface{}) (found bool) {
 }
 
 func Dump(array any) {
-	if os.Getenv("APP_ENV") == entity.PRODUCTION_ENV {
+	if os.Getenv("APP_ENV") == entity.PRODUCTION_ENV && os.Getenv("DEBUG_MODE") == "false" {
 		return
 	}
 
