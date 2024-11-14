@@ -24,14 +24,8 @@ type Config struct {
 
 // MysqlOption contains mySQL connection options
 type MysqlOption struct {
-	Driver       string `env:"MYSQL_DRIVER,default="`
-	Host         string `env:"MYSQL_HOST,required"`
-	Port         string `env:"MYSQL_PORT,required"`
-	Pool         int    `env:"MYSQL_POOL,required"`
-	DatabaseName string `env:"MYSQL_DATABASE_NAME,required"`
-	Username     string `env:"MYSQL_USERNAME,required"`
-	Password     string `env:"MYSQL_PASSWORD"`
-	TimeZone     string `env:"MYSQL_TIMEZONE,required"`
+	URI  string `env:"MYSQL_URI,default="`
+	Pool int    `env:"MYSQL_POOL,required"`
 }
 
 type RabbitMQOption struct {

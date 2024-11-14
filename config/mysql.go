@@ -1,8 +1,6 @@
 package config
 
 import (
-	"fmt"
-
 	gmysql "gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	glogger "gorm.io/gorm/logger"
@@ -13,21 +11,12 @@ type Mysql struct {
 }
 
 func NewMysql(env string, cfg *MysqlOption, dbLogger glogger.Interface) (*Mysql, error) {
-	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?parseTime=true",
-		cfg.Username,
-		cfg.Password,
-		cfg.Host,
-		cfg.Port,
-		cfg.DatabaseName,
-	)
-
 	logLevel := glogger.Warn
 	if env == "local" {
 		logLevel = glogger.Info
 	}
 
-	db, err := gorm.Open(gmysql.Open(dsn), &gorm.Config{
+	db, err := gorm.Open(gmysql.Open(cfg.URI), &gorm.Config{
 		Logger: dbLogger.LogMode(logLevel),
 	})
 	if err != nil {

@@ -158,6 +158,18 @@ func Dump(array any) {
 	fmt.Println(string(s))
 	fmt.Println("-------------")
 }
+func DumpWithTitle(array any, title string) {
+	if os.Getenv("APP_ENV") == entity.PRODUCTION_ENV && os.Getenv("DEBUG_MODE") == "false" {
+		return
+	}
+
+	s, _ := json.MarshalIndent(array, "", "\t")
+
+	fmt.Println("-------------")
+	fmt.Println("check: ", title)
+	fmt.Println(string(s))
+	fmt.Println("-------------")
+}
 
 func String(v string) *string { return &v }
 
