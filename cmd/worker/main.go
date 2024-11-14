@@ -51,7 +51,7 @@ func main() {
 	// 		log.LstdFlags,
 	// 	),
 	// 	glogger.Config{
-	// 		SlowThreshold:             200 * time.Second,
+	// 		SlowThreshold:             300 * time.Millisecond,
 	// 		LogLevel:                  glogger.Warn,
 	// 		Colorful:                  false,
 	// 		IgnoreRecordNotFoundError: true,
