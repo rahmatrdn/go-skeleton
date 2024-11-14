@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"os"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/helper"
@@ -61,7 +62,7 @@ func (w *Log) Log(status entity.LogType, message string, funcName string, err er
 	}
 
 	// If error when publish to queue, write log to file
-	if errQueue != nil || helper.GetAppEnv() != entity.PRODUCTION_ENV {
+	if errQueue != nil || (helper.GetAppEnv() != entity.PRODUCTION_ENV && os.Getenv("DEBUG_MODE") == "true") {
 		switch status {
 		case entity.LogError:
 			logger.Error(message, fields...)
