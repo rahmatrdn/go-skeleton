@@ -104,11 +104,11 @@ make test
 ### Running In Docker
 - Docker Build for API
 ```sh
-docker build -t go-skeleton-api:1.0.1-dev -f ./deploy/docker/api/Dockerfile .
+docker build -t go-skeleton-api:1.0.1 -f ./deploy/docker/api/Dockerfile .
 ```
 - Docker Build for Worker
 ```sh
-docker build -t go-skeleton-worker:1.0.1-dev -f ./deploy/docker/worker/Dockerfile .
+docker build -t go-skeleton-worker:1.0.1 -f ./deploy/docker/worker/Dockerfile .
 ```
 - Run docker compose for API and Workers
 ```sh

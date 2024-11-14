@@ -16,6 +16,7 @@ import (
 	"github.com/rahmatrdn/go-skeleton/config"
 	_ "github.com/rahmatrdn/go-skeleton/docs"
 	"github.com/rahmatrdn/go-skeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/internal/helper"
 	"github.com/rahmatrdn/go-skeleton/internal/http/auth"
 	"github.com/rahmatrdn/go-skeleton/internal/http/handler"
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
@@ -90,7 +91,7 @@ func main() {
 	// Redis Configuration (if needed)
 	// redisDB := config.NewRedis(&cfg.RedisOption)
 
-	mysqlDBLogger := glogger.New(
+	gormLogger := glogger.New(
 		log.New(
 			os.Stdout,
 			"\r\n",
@@ -104,10 +105,16 @@ func main() {
 		},
 	)
 
-	mysqlDB, err := config.NewMysql(cfg.AppEnv, &cfg.MysqlOption, mysqlDBLogger)
+	mysqlDB, err := config.NewMysql(cfg.AppEnv, &cfg.MysqlOption, gormLogger)
 	if err != nil {
 		log.Fatal(err)
 	}
+	postgreDB, err := config.NewPostgreSQL(cfg.AppEnv, &cfg.PostgreSqlOption, gormLogger)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	helper.Dump(postgreDB)
 
 	// AUTH : Write authetincation mechanism method (JWT, Basic Auth, etc.)
 	jwtAuth := auth.NewJWTAuth()
