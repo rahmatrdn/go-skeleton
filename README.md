@@ -35,7 +35,7 @@ Feel free to contribute to this repository if you'd like!
 - Git (See [Git Installation](https://git-scm.com/downloads))
 - Go 1.19+ (See [Golang Installation](https://golang.org/doc/install))
 - Go Migrate CLI (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
-- MySQL (Download via Docker or Xampp or other sources)
+- MySQL / MariaDB / PostgreSQL (Download via Docker or Other sources)
 - Mockery (See [Mockery Installation](https://github.com/vektra/mockery))
 - Redis (Optional based on your requirement) (See [Redis Installation](https://redis.io/docs/getting-started/installation/) or use in Docker)
 - RabbitMQ (Optional based on your requirement) (See [RabbitMQ Installation](https://www.rabbitmq.com/download.html) or use in Docker)
