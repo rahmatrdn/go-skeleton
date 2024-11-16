@@ -28,7 +28,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/subosito/gotenv"
-	glogger "gorm.io/gorm/logger"
 )
 
 func init() {
@@ -90,27 +89,15 @@ func main() {
 	// Redis Configuration (if needed)
 	// redisDB := config.NewRedis(&cfg.RedisOption)
 
-	gormLogger := glogger.New(
-		log.New(
-			os.Stdout,
-			"\r\n",
-			log.LstdFlags,
-		),
-		glogger.Config{
-			SlowThreshold:             300 * time.Millisecond,
-			LogLevel:                  glogger.Warn,
-			Colorful:                  false,
-			IgnoreRecordNotFoundError: true,
-		},
-	)
-
 	// MySQL/MariaDB Initialization
+	gormLogger := config.NewGormLogMysqlConfig(&cfg.MysqlOption)
 	mysqlDB, err := config.NewMysql(cfg.AppEnv, &cfg.MysqlOption, gormLogger)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// PostgreSQL Initialization
+	// gormLogger := config.NewGormLogPostgreConfig(&cfg.MysqlOption)
 	// postgreDB, err := config.NewPostgreSQL(cfg.AppEnv, &cfg.PostgreSqlOption, gormLogger)
 	// if err != nil {
 	// 	log.Fatal(err)

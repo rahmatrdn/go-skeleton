@@ -44,21 +44,8 @@ func main() {
 	}
 	defer app.mongoDB.Client().Disconnect(app.ctx)
 
-	// mysqlDBLogger := glogger.New(
-	// 	log.New(
-	// 		os.Stdout,
-	// 		"\r\n",
-	// 		log.LstdFlags,
-	// 	),
-	// 	glogger.Config{
-	// 		SlowThreshold:             300 * time.Millisecond,
-	// 		LogLevel:                  glogger.Warn,
-	// 		Colorful:                  false,
-	// 		IgnoreRecordNotFoundError: true,
-	// 	},
-	// )
-
-	// mysqlDB, err := config.NewMysql(cfg.AppEnv, &cfg.MysqlOption, mysqlDBLogger)
+	// gormLogger := config.NewGormLogConfig(&cfg.MysqlOption)
+	// mysqlDB, err := config.NewMysql(cfg.AppEnv, &cfg.MysqlOption, gormLogger)
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
