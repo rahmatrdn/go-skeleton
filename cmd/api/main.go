@@ -24,11 +24,9 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/subosito/gotenv"
-	glogger "gorm.io/gorm/logger"
 )
 
 func init() {
@@ -53,27 +51,10 @@ func main() {
 	cfg := config.NewConfig()
 
 	app := fiber.New(config.NewFiberConfiguration(cfg))
-
-	// Initialize Swagger for API documentation
 	app.Get("/apidoc/*", swagger.HandlerDefault)
 
-	app.Use(cors.New(cors.Config{
-		AllowCredentials: true,
-		AllowOrigins:     cfg.AllowedCredentialOrigins[0],
-		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
-		AllowMethods:     "GET,POST,PUT,DELETE,PATCH",
-	}), logger.New(logger.Config{
-		Format:     "[${time}] ${status} - ${latency} ${method} ${path}\n",
-		TimeFormat: "02-Jan-2006 15:04:05",
-		TimeZone:   "Asia/Jakarta",
-	}), recover.New(recover.Config{
-		StackTraceHandler: func(c *fiber.Ctx, e interface{}) {
-			fmt.Println(c.Request().URI())
-			stacks := fmt.Sprintf("panic: %v\n%s\n", e, debug.Stack())
-			log.Println(stacks)
-		},
-		EnableStackTrace: true,
-	}))
+	// Middleware setup
+	setupMiddleware(app, cfg)
 
 	// logger, _ := config.NewZapLog(cfg.AppEnv)
 	// logger = logger.WithOptions(zap.AddCallerSkip(1))
@@ -90,24 +71,19 @@ func main() {
 	// Redis Configuration (if needed)
 	// redisDB := config.NewRedis(&cfg.RedisOption)
 
-	mysqlDBLogger := glogger.New(
-		log.New(
-			os.Stdout,
-			"\r\n",
-			log.LstdFlags,
-		),
-		glogger.Config{
-			SlowThreshold:             300 * time.Millisecond,
-			LogLevel:                  glogger.Warn,
-			Colorful:                  false,
-			IgnoreRecordNotFoundError: true,
-		},
-	)
-
-	mysqlDB, err := config.NewMysql(cfg.AppEnv, &cfg.MysqlOption, mysqlDBLogger)
+	// MySQL/MariaDB Initialization
+	gormLogger := config.NewGormLogMysqlConfig(&cfg.MysqlOption)
+	mysqlDB, err := config.NewMysql(cfg.AppEnv, &cfg.MysqlOption, gormLogger)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// PostgreSQL Initialization
+	// gormLogger := config.NewGormLogPostgreConfig(&cfg.MysqlOption)
+	// postgreDB, err := config.NewPostgreSQL(cfg.AppEnv, &cfg.PostgreSqlOption, gormLogger)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	// AUTH : Write authetincation mechanism method (JWT, Basic Auth, etc.)
 	jwtAuth := auth.NewJWTAuth()
@@ -132,37 +108,72 @@ func main() {
 	// Handle Route not found
 	app.Use(routeNotFound)
 
-	var wg = sync.WaitGroup{}
+	runServerWithGracefulShutdown(app, cfg.ApiPort, 30)
+}
+
+func setupMiddleware(app *fiber.App, cfg *config.Config) {
+	// Enable CORS if API shared in public
+	// if cfg.AppEnv == "production" {
+	// 	app.Use(
+	// 		cors.New(cors.Config{
+	// 			AllowCredentials: true,
+	// 			AllowOrigins:     cfg.AllowedCredentialOrigins,
+	// 			AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+	// 			AllowMethods:     "GET,POST,PUT,DELETE,PATCH",
+	// 		}),
+	// 	)
+	// }
+
+	app.Use(
+		logger.New(logger.Config{
+			Format:     "[${time}] ${status} - ${latency} ${method} ${path}\n",
+			TimeFormat: "02-Jan-2006 15:04:05",
+			TimeZone:   "Asia/Jakarta",
+		}),
+		recover.New(recover.Config{
+			StackTraceHandler: func(c *fiber.Ctx, e interface{}) {
+				fmt.Println(c.Request().URI())
+				stacks := fmt.Sprintf("panic: %v\n%s\n", e, debug.Stack())
+				log.Println(stacks)
+			},
+			EnableStackTrace: true,
+		}),
+	)
+}
+
+func runServerWithGracefulShutdown(app *fiber.App, apiPort string, shutdownTimeout int) {
+	var wg sync.WaitGroup
 	wg.Add(1)
 
-	// Running server in Goroutines
+	// Run server in a goroutine
 	go func() {
 		defer wg.Done()
-
-		log.Printf("Starting REST, listening at %s\n", cfg.ApiPort)
-
-		if err := app.Listen(cfg.ApiPort); err != nil {
-			log.Fatal(err)
+		log.Printf("Starting REST server, listening at %s\n", apiPort)
+		if err := app.Listen(apiPort); err != nil {
+			log.Fatalf("Server failed: %v", err)
 		}
 	}()
 
+	// Capture OS signals for graceful shutdown
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
 	<-quit
 
-	log.Println("Shutting down the REST server...")
+	log.Println("Shutting down REST server...")
 
-	_, cancel := context.WithTimeout(context.Background(), time.Duration(cfg.ShutdownTimeout)*time.Second*time.Second)
+	// Timeout context for shutdown
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(shutdownTimeout)*time.Second)
 	defer cancel()
 
-	if err := app.Shutdown(); err != nil {
-		log.Printf("Fail shutting down REST server: %s\n", err.Error())
-
-		log.Fatal(err)
+	if err := app.ShutdownWithContext(ctx); err != nil {
+		log.Printf("Error during server shutdown: %v", err)
+	} else {
+		log.Println("REST server shut down gracefully")
 	}
 
-	log.Println("REST server successfully shutdown")
+	// Wait for goroutines to exit
 	wg.Wait()
+	log.Println("All tasks completed. Exiting application.")
 }
 
 var healthCheck = func(c *fiber.Ctx) error {

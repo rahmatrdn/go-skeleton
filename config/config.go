@@ -20,12 +20,20 @@ type Config struct {
 	RabbitMQOption
 	MongodbOption
 	RedisOption
+	PostgreSqlOption
 }
 
 // MysqlOption contains mySQL connection options
 type MysqlOption struct {
-	URI  string `env:"MYSQL_URI,default="`
-	Pool int    `env:"MYSQL_POOL,required"`
+	URI           string `env:"MYSQL_URI,default="`
+	Pool          int    `env:"MYSQL_POOL,required"`
+	SlowThreshold int    `env:"MYSQL_SLOW_LOG_THRESHOLD,required"`
+}
+
+type PostgreSqlOption struct {
+	URI           string `env:"POSTGRE_URI,default="`
+	Pool          int    `env:"POSTGRE_POOL,required"`
+	SlowThreshold int    `env:"POSTGRE_SLOW_LOG_THRESHOLD,required"`
 }
 
 type RabbitMQOption struct {
