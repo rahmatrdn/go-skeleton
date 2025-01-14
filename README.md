@@ -33,9 +33,9 @@ Feel free to contribute to this repository if you'd like!
 ## Development Guide
 ### Prerequisite
 - Git (See [Git Installation](https://git-scm.com/downloads))
-- Go 1.19+ (See [Golang Installation](https://golang.org/doc/install))
+- Go 1.23+ (See [Golang Installation](https://golang.org/doc/install))
 - Go Migrate CLI (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
-- MySQL/PostgreSQL (Download via Docker or Xampp or other sources)
+- MySQL / MariaDB / PostgreSQL (Download via Docker or Other sources)
 - Mockery (See [Mockery Installation](https://github.com/vektra/mockery))
 - Redis (Optional based on your requirement) (See [Redis Installation](https://redis.io/docs/getting-started/installation/) or use in Docker)
 - RabbitMQ (Optional based on your requirement) (See [RabbitMQ Installation](https://www.rabbitmq.com/download.html) or use in Docker)
@@ -104,11 +104,11 @@ make test
 ### Running In Docker
 - Docker Build for API
 ```sh
-docker build -t go-skeleton-api:1.0.1-dev -f ./deploy/docker/api/Dockerfile .
+docker build -t go-skeleton-api:1.0.1 -f ./deploy/docker/api/Dockerfile .
 ```
 - Docker Build for Worker
 ```sh
-docker build -t go-skeleton-worker:1.0.1-dev -f ./deploy/docker/worker/Dockerfile .
+docker build -t go-skeleton-worker:1.0.1 -f ./deploy/docker/worker/Dockerfile .
 ```
 - Run docker compose for API and Workers
 ```sh
