@@ -6,12 +6,17 @@
 
 "Forget about the complexities of folder structures, and concentrate on growing your project!"
 
+Principles :
+- Reusable and Maintainable Code
+- Decoupled Code
+- Scalable Development
+
 Features : 
 1. REST API
 2. Clean Architecture
 3. Fiber Framework
 4. Api Docs with Swagger
-5. Worker Queue with RabbitMQ
+5. Worker/Consumer Queue with RabbitMQ
 6. Implementation of Unit Test (with Testify and Mockery)
 7. Authentication with JWT RS512
 8. Logging with Zap Log
@@ -33,7 +38,7 @@ Feel free to contribute to this repository if you'd like!
 ## Development Guide
 ### Prerequisite
 - Git (See [Git Installation](https://git-scm.com/downloads))
-- Go 1.23+ (See [Golang Installation](https://golang.org/doc/install))
+- Go 1.24+ (See [Golang Installation](https://golang.org/doc/install))
 - Go Migrate CLI (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
 - MySQL / MariaDB / PostgreSQL (Download via Docker or Other sources)
 - Mockery (See [Mockery Installation](https://github.com/vektra/mockery))

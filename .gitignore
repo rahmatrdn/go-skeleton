@@ -73,3 +73,6 @@ coverage.out
 storage/log/*
 internal/usecase/storage
 internal/usecase/storage/*
+
+.TODO
+.qodo
