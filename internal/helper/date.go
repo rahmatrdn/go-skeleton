@@ -30,3 +30,8 @@ func DatetimeNowJakarta() time.Time {
 
 	return time.Now().In(jakartaLocation)
 }
+
+func ParseDate(dateStr string) (time.Time, error) {
+	const layout = "2006-01-02"
+	return time.Parse(layout, dateStr)
+}

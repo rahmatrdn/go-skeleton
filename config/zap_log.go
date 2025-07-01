@@ -2,7 +2,10 @@ package config
 
 import (
 	"errors"
+	"fmt"
 	"os"
+	"path/filepath"
+	"time"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
 	"go.uber.org/zap"
@@ -17,7 +20,12 @@ func NewZapLog(env string) (*zap.Logger, error) {
 	return NewDevelopmentLogger()
 }
 
-// This configuration for Development env, the log will be written to the terminal!
+// NewDevelopmentLogger initializes and returns a zap.Logger configured for development use.
+//
+// It creates a structured JSON logger using zap's development configuration,
+// including human-readable ISO8601 timestamps and caller information for easier debugging.
+// Stack traces are disabled to keep the logs cleaner during local development,
+// while the caller key is enabled to display the precise error location in your code.
 func NewDevelopmentLogger() (*zap.Logger, error) {
 	config := zap.NewDevelopmentConfig()
 	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder // ISO8601 time format
@@ -27,34 +35,45 @@ func NewDevelopmentLogger() (*zap.Logger, error) {
 	return config.Build()
 }
 
+// NewProductionLogger initializes and returns a zap.Logger configured for production use.
+//
+// It automatically creates a structured JSON logger with ISO8601 timestamp format,
+// writing logs into daily log files located in a structured year/month folder hierarchy.
+// For example, logs will be written into:
+//
+//	storage/log/2025/07/2025-07-01.log
+//
+// The function ensures that the necessary directories are created before writing,
+// and logs are appended if the file already exists. The logger uses the DebugLevel
+// by default, and includes caller information in each log entry for easier tracing.
 func NewProductionLogger() (*zap.Logger, error) {
 	config := zap.NewProductionConfig()
 	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder // ISO8601 time format
 	config.EncoderConfig.TimeKey = "timestamp"
 
-	// Pastikan direktori ada
-	if err := os.MkdirAll("storage/log", os.ModePerm); err != nil {
-		return nil, err // Kembalikan error jika direktori gagal dibuat
+	now := time.Now()
+	yearMonth := now.Format("2006/01") // "2025/07"
+	date := now.Format("2006-01-02")   // "2025-07-01"
+	folderPath := filepath.Join("storage/log", yearMonth)
+	logFileName := fmt.Sprintf("%s.log", date)
+	fullLogPath := filepath.Join(folderPath, logFileName)
+
+	if err := os.MkdirAll(folderPath, os.ModePerm); err != nil {
+		return nil, err
 	}
 
-	// Coba buka file log
-	logFile, err := os.OpenFile("storage/log/log.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	logFile, err := os.OpenFile(fullLogPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		return nil, err // Kembalikan error jika gagal membuka file
+		return nil, err
 	}
 
 	fileEncoder := zapcore.NewJSONEncoder(config.EncoderConfig)
 	writer := zapcore.AddSync(logFile)
 
-	// Set level log default
 	defaultLogLevel := zapcore.DebugLevel
 
-	// Buat core zap tanpa stacktrace
-	core := zapcore.NewTee(
-		zapcore.NewCore(fileEncoder, writer, defaultLogLevel),
-	)
+	core := zapcore.NewCore(fileEncoder, writer, defaultLogLevel)
 
-	// Inisialisasi logger tanpa stacktrace
 	logger := zap.New(core, zap.AddCaller())
 
 	if logger == nil {

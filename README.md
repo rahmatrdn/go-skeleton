@@ -4,7 +4,7 @@
 ## Description
 `go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.  
 
-"Forget about the complexities of folder structures, and concentrate on growing your project!"
+"Forget about the complexities of folder structures, and concentrate on focus your project!"
 
 Principles :
 - Reusable and Maintainable Code
@@ -30,18 +30,19 @@ Feel free to contribute to this repository if you'd like!
 
 
 ## Contact
-| Name              | Email                           | Role       |
-| :----------------:|:-------------------------------:|:----------:|
-| Rahmat Ramadhan Putra  | rahmat.putra@spesolution.com    | Creator   |
+| Name                   | Email                        | Role    |
+| ---------------------- | ---------------------------- | ------- |
+| Rahmat Ramadhan Putra  | rahmatrdn.dev@gmail.com     | Creator |
+
 
 
 ## Development Guide
 ### Prerequisite
 - Git (See [Git Installation](https://git-scm.com/downloads))
 - Go 1.24+ (See [Golang Installation](https://golang.org/doc/install))
-- Go Migrate CLI (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
 - MySQL / MariaDB / PostgreSQL (Download via Docker or Other sources)
-- Mockery (See [Mockery Installation](https://github.com/vektra/mockery))
+- Mockery (Optional) (See [Mockery Installation](https://github.com/vektra/mockery))
+- Go Migrate CLI (Optional) (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
 - Redis (Optional based on your requirement) (See [Redis Installation](https://redis.io/docs/getting-started/installation/) or use in Docker)
 - RabbitMQ (Optional based on your requirement) (See [RabbitMQ Installation](https://www.rabbitmq.com/download.html) or use in Docker)
 
@@ -57,11 +58,11 @@ git clone https://github.com/rahmatrdn/go-skeleton.git
 ```
 2. Copy `example.env` to `.env`
 ```sh
-cp example.env .env
+cp .env.example .env
 ```
 3. Adjust the `.env` file according to the configuration in your local environment, such as the database or other settings 
-4. Create a MySQL database with the name `go_skeleton.`
-5. Run database migration
+4. Create a MySQL database with the name `go_skeleton`
+5. Run database migration or Manually run in you SQL Client
 ```sh
 make migrate_up
 ```

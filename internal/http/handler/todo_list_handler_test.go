@@ -14,14 +14,14 @@ import (
 
 type TodoListHandlerTestSuite struct {
 	suite.Suite
-	todoListUsecase *mocks.TodoListUsecase
+	todoListUsecase *mocks.ICrudUsecase
 	presenter       *mocks.Presenter
 	parser          *mocks.Parser
 	handler         *handler.TodoListHandler
 }
 
 func (s *TodoListHandlerTestSuite) SetupTest() {
-	s.todoListUsecase = &mocks.TodoListUsecase{}
+	s.todoListUsecase = &mocks.ICrudUsecase{}
 	s.presenter = &mocks.Presenter{}
 	s.parser = &mocks.Parser{}
 

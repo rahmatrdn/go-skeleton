@@ -205,6 +205,11 @@ func ConvertToJakartaTime(t time.Time) string {
 	return t.In(loc).Format("2006-01-02 15:04:05")
 }
 
+func ConvertToJakartaDate(t time.Time) string {
+	loc, _ := time.LoadLocation("Asia/Jakarta")
+	return t.In(loc).Format("2006-01-02")
+}
+
 func GetAppEnv() string {
 	return os.Getenv("APP_ENV")
 }
