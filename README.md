@@ -4,7 +4,7 @@
 ## Description
 `go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.  
 
-"Forget about the complexities of folder structures, and concentrate on focus your project!"
+"Forget about the complexities of folder structures in Go, focus on your project!"
 
 Principles :
 - Reusable and Maintainable Code
