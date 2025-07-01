@@ -71,9 +71,6 @@ func (t *CrudUsecase) GetByID(ctx context.Context, todoListID int64) (*entity.To
 		return nil, err
 	}
 
-	helper.LogInfo("TEST LOG", funcName, captureFieldError, "")
-	helper.DumpWithTitle("test", "test")
-
 	return &entity.TodoListResponse{
 		ID:          data.ID,
 		Title:       data.Title,

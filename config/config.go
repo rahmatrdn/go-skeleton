@@ -32,8 +32,8 @@ type MysqlOption struct {
 
 type PostgreSqlOption struct {
 	URI           string `env:"POSTGRE_URI,default="`
-	Pool          int    `env:"POSTGRE_POOL,required"`
-	SlowThreshold int    `env:"POSTGRE_SLOW_LOG_THRESHOLD,required"`
+	Pool          int    `env:"POSTGRE_POOL,default=1000"`
+	SlowThreshold int    `env:"POSTGRE_SLOW_LOG_THRESHOLD,default=200"`
 }
 
 type RabbitMQOption struct {
