@@ -22,6 +22,7 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
 	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
+	todo_list_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -64,7 +65,7 @@ func main() {
 
 	// RabbitMQ Configuration (if needed)
 	// queue, err := config.NewRabbitMQInstance(context.Background(), &cfg.RabbitMQOption)
-	// if err != nil {
+	// if err != nil {zp
 	// 	log.Fatal(err)
 	// }
 
@@ -95,12 +96,12 @@ func main() {
 	// USECASE : Write bussines logic code here (validation, business logic, etc.)
 	// _ = usecase.NewLogUsecase(queue)  // LogUsecase is a sample usecase for sending log to queue (Mongodb, ElasticSearch, etc.)
 	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
-	todoListUsecase := usecase.NewTodoListUsecase(todoListRepo)
+	todoListCrudUsecase := todo_list_usecase.NewCrudUsecase(todoListRepo)
 
 	api := app.Group("/api/v1")
 
 	handler.NewAuthHandler(parser, presenterJson, userUsecase).Register(api)
-	handler.NewTodoListHandler(parser, presenterJson, todoListUsecase).Register(api)
+	handler.NewTodoListHandler(parser, presenterJson, todoListCrudUsecase).Register(api)
 
 	app.Get("/health-check", healthCheck)
 	app.Get("/metrics", monitor.New())

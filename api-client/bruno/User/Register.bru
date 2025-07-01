@@ -1,0 +1,22 @@
+meta {
+  name: Register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/api/v1/auth/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name" : "Rahmat Ramadhan",
+    "email" : "rahmat@gmail.com",
+    "password" : "qwerty",
+    "reenter_password" : "qwerty",
+    "phone" : "082421342132",
+    "role_access" : 1
+  }
+}

@@ -14,7 +14,7 @@ func StubbedTodoLists() []*entity.TodoList {
 		{
 			Title:       uuid.NewString(),
 			Description: uuid.NewString(),
-			DoingAt:     uuid.NewString(),
+			DoingAt:     time.Now(),
 			CreatedAt:   time.Now(),
 			UpdatedAt:   time.Now(),
 			UserID:      rand.Int63(),

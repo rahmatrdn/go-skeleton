@@ -1,0 +1,20 @@
+meta {
+  name: Update
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{url}}/api/v1/todo-lists/15
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "user_id" : 9,
+    "title" : "Membuat PPT Dokumen xx",
+    "description" : "Membuat PPT Dokumen untuk Meeting",
+    "doing_at" : "2025-06-20"
+  }
+}

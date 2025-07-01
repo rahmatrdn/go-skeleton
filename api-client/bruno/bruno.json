@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "GO-SKELETON",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

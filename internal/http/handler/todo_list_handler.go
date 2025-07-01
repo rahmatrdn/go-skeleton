@@ -7,23 +7,23 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/http/middleware"
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
 	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
-	"github.com/rahmatrdn/go-skeleton/internal/usecase"
+	todo_list_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list"
 
 	fiber "github.com/gofiber/fiber/v2"
 )
 
 type TodoListHandler struct {
-	parser          parser.Parser
-	presenter       json.JsonPresenter
-	todoListUsecase usecase.TodoListUsecase
+	parser              parser.Parser
+	presenter           json.JsonPresenter
+	todoListCrudUsecase todo_list_usecase.ICrudUsecase
 }
 
 func NewTodoListHandler(
 	parser parser.Parser,
 	presenter json.JsonPresenter,
-	todoListUsecase usecase.TodoListUsecase,
+	todoListCrudUsecase todo_list_usecase.ICrudUsecase,
 ) *TodoListHandler {
-	return &TodoListHandler{parser, presenter, todoListUsecase}
+	return &TodoListHandler{parser, presenter, todoListCrudUsecase}
 }
 
 func (w *TodoListHandler) Register(app fiber.Router) {
@@ -52,7 +52,7 @@ func (w *TodoListHandler) GetByID(c *fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.todoListUsecase.GetByID(c.Context(), id)
+	data, err := w.todoListCrudUsecase.GetByID(c.Context(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -77,7 +77,7 @@ func (w *TodoListHandler) GetByUserID(c *fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.todoListUsecase.GetByUserID(c.Context(), userID)
+	data, err := w.todoListCrudUsecase.GetByUserID(c.Context(), userID)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -105,7 +105,7 @@ func (w *TodoListHandler) Create(c *fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.todoListUsecase.Create(c.Context(), &req)
+	data, err := w.todoListCrudUsecase.Create(c.Context(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -133,7 +133,7 @@ func (w *TodoListHandler) Update(c *fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.todoListUsecase.UpdateByID(c.Context(), &req)
+	err = w.todoListCrudUsecase.UpdateByID(c.Context(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -159,7 +159,7 @@ func (w *TodoListHandler) Delete(c *fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.todoListUsecase.DeleteByID(c.Context(), id)
+	err = w.todoListCrudUsecase.DeleteByID(c.Context(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}

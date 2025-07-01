@@ -50,6 +50,8 @@ func Log(status entity.LogType, message string, funcName string, err error, logF
 		logger.Error(message, fields...)
 	case entity.LogInfo:
 		logger.Info(message, fields...)
+	case entity.LogDebug:
+		logger.Debug(message, fields...)
 	}
 
 }
