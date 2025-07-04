@@ -6,11 +6,12 @@ import (
 	"time"
 
 	errwrap "github.com/pkg/errors"
-	"github.com/rahmatrdn/go-skeleton/entity"
+	generalEntity "github.com/rahmatrdn/go-skeleton/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/helper"
 	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
 	mentity "github.com/rahmatrdn/go-skeleton/internal/repository/mysql/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
+	"github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list/entity"
 )
 
 type CrudTodoListUsecase struct {
@@ -33,7 +34,7 @@ type ICrudTodoListUsecase interface {
 
 func (t *CrudTodoListUsecase) GetByUserID(ctx context.Context, userID int64) (res []*entity.TodoListResponse, err error) {
 	funcName := "CrudTodoListUsecase.GetByUserID"
-	captureFieldError := entity.CaptureFields{
+	captureFieldError := generalEntity.CaptureFields{
 		"user_id": helper.ToString(userID),
 	}
 
@@ -60,7 +61,7 @@ func (t *CrudTodoListUsecase) GetByUserID(ctx context.Context, userID int64) (re
 
 func (t *CrudTodoListUsecase) GetByID(ctx context.Context, todoListID int64) (*entity.TodoListResponse, error) {
 	funcName := "CrudTodoListUsecase.GetByID"
-	captureFieldError := entity.CaptureFields{
+	captureFieldError := generalEntity.CaptureFields{
 		"user_id": helper.ToString(todoListID),
 	}
 
@@ -86,13 +87,13 @@ func (t *CrudTodoListUsecase) GetByID(ctx context.Context, todoListID int64) (*e
 
 func (t *CrudTodoListUsecase) Create(ctx context.Context, todoListReq entity.TodoListReq) (*entity.TodoListResponse, error) {
 	funcName := "CrudTodoListUsecase.Create"
-	captureFieldError := entity.CaptureFields{
+	captureFieldError := generalEntity.CaptureFields{
 		"user_id": helper.ToString(todoListReq.UserID),
 		"payload": helper.ToString(todoListReq),
 	}
 
 	if errMsg := usecase.ValidateStruct(todoListReq); errMsg != "" {
-		return nil, errwrap.Wrap(fmt.Errorf(entity.INVALID_PAYLOAD_CODE), errMsg)
+		return nil, errwrap.Wrap(fmt.Errorf(generalEntity.INVALID_PAYLOAD_CODE), errMsg)
 	}
 
 	doingAt, _ := helper.ParseDate(todoListReq.DoingAt)
@@ -125,7 +126,7 @@ func (t *CrudTodoListUsecase) UpdateByID(ctx context.Context, todoListReq entity
 	funcName := "CrudTodoListUsecase.UpdateByID"
 	todoListID := todoListReq.ID
 
-	captureFieldError := entity.CaptureFields{
+	captureFieldError := generalEntity.CaptureFields{
 		"user_id": helper.ToString(todoListReq.UserID),
 		"payload": helper.ToString(todoListReq),
 	}
@@ -165,7 +166,7 @@ func (t *CrudTodoListUsecase) UpdateByID(ctx context.Context, todoListReq entity
 
 func (t *CrudTodoListUsecase) DeleteByID(ctx context.Context, todoListID int64) error {
 	funcName := "CrudTodoListUsecase.DeleteByID"
-	captureFieldError := entity.CaptureFields{
+	captureFieldError := generalEntity.CaptureFields{
 		"todo_list_id": helper.ToString(todoListID),
 	}
 
