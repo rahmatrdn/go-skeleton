@@ -31,34 +31,34 @@ func NewTodoListRepository(mysql *config.Mysql) *TodoListRepository {
 	return &TodoListRepository{GormTrxSupport{db: mysql.DB}}
 }
 
-func (r *TodoListRepository) GetByUserID(ctx context.Context, userID int64) (e []*entity.TodoList, err error) {
+func (r *TodoListRepository) GetByUserID(ctx context.Context, userID int64) (result []*entity.TodoList, err error) {
 	funcName := "TodoListRepository.GetByUserID"
 
 	if err := helper.CheckDeadline(ctx); err != nil {
 		return nil, errwrap.Wrap(err, funcName)
 	}
 
-	err = r.db.Raw("SELECT * FROM todo_lists WHERE user_id = ?", userID).Scan(&e).Error
+	err = r.db.Raw("SELECT * FROM todo_lists WHERE user_id = ?", userID).Scan(&result).Error
 	if errwrap.Is(err, gorm.ErrRecordNotFound) {
 		return nil, apperr.ErrRecordNotFound()
 	}
 
-	return e, err
+	return result, err
 }
 
-func (r *TodoListRepository) GetByID(ctx context.Context, ID int64) (e *entity.TodoList, err error) {
+func (r *TodoListRepository) GetByID(ctx context.Context, ID int64) (result *entity.TodoList, err error) {
 	funcName := "TodoListRepository.GetByID"
 
 	if err := helper.CheckDeadline(ctx); err != nil {
 		return nil, errwrap.Wrap(err, funcName)
 	}
 
-	err = r.db.Raw("SELECT * FROM todo_lists WHERE id = ? LIMIT 1", ID).Scan(&e).Error
+	err = r.db.Raw("SELECT * FROM todo_lists WHERE id = ? LIMIT 1", ID).Scan(&result).Error
 	if errwrap.Is(err, gorm.ErrRecordNotFound) {
 		return nil, apperr.ErrRecordNotFound()
 	}
 
-	return e, err
+	return result, err
 }
 
 func (r *TodoListRepository) Create(ctx context.Context, dbTrx TrxObj, params *entity.TodoList, nonZeroVal bool) error {
