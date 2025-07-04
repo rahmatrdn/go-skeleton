@@ -15,13 +15,13 @@ import (
 type TodoListHandler struct {
 	parser              parser.Parser
 	presenter           json.JsonPresenter
-	todoListCrudUsecase todo_list_usecase.ICrudUsecase
+	todoListCrudUsecase todo_list_usecase.ICrudTodoListUsecase
 }
 
 func NewTodoListHandler(
 	parser parser.Parser,
 	presenter json.JsonPresenter,
-	todoListCrudUsecase todo_list_usecase.ICrudUsecase,
+	todoListCrudUsecase todo_list_usecase.ICrudTodoListUsecase,
 ) *TodoListHandler {
 	return &TodoListHandler{parser, presenter, todoListCrudUsecase}
 }

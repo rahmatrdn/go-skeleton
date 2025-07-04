@@ -96,12 +96,12 @@ func main() {
 	// USECASE : Write bussines logic code here (validation, business logic, etc.)
 	// _ = usecase.NewLogUsecase(queue)  // LogUsecase is a sample usecase for sending log to queue (Mongodb, ElasticSearch, etc.)
 	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
-	todoListCrudUsecase := todo_list_usecase.NewCrudUsecase(todoListRepo)
+	crudTodoListUsecase := todo_list_usecase.NewCrudTodoListUsecase(todoListRepo)
 
 	api := app.Group("/api/v1")
 
 	handler.NewAuthHandler(parser, presenterJson, userUsecase).Register(api)
-	handler.NewTodoListHandler(parser, presenterJson, todoListCrudUsecase).Register(api)
+	handler.NewTodoListHandler(parser, presenterJson, crudTodoListUsecase).Register(api)
 
 	app.Get("/health-check", healthCheck)
 	app.Get("/metrics", monitor.New())

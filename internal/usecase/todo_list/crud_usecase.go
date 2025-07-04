@@ -13,17 +13,17 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 )
 
-type CrudUsecase struct {
-	todoListRepo mysql.TodoListRepository
+type CrudTodoListUsecase struct {
+	todoListRepo mysql.ITodoListRepository
 }
 
-func NewCrudUsecase(
-	todoListRepo mysql.TodoListRepository,
-) *CrudUsecase {
-	return &CrudUsecase{todoListRepo}
+func NewCrudTodoListUsecase(
+	todoListRepo mysql.ITodoListRepository,
+) *CrudTodoListUsecase {
+	return &CrudTodoListUsecase{todoListRepo}
 }
 
-type ICrudUsecase interface {
+type ICrudTodoListUsecase interface {
 	GetByUserID(ctx context.Context, userID int64) (res []*entity.TodoListResponse, err error)
 	GetByID(ctx context.Context, todoListID int64) (*entity.TodoListResponse, error)
 	Create(ctx context.Context, todoListReq entity.TodoListReq) (*entity.TodoListResponse, error)
@@ -31,8 +31,8 @@ type ICrudUsecase interface {
 	DeleteByID(ctx context.Context, todoListID int64) error
 }
 
-func (t *CrudUsecase) GetByUserID(ctx context.Context, userID int64) (res []*entity.TodoListResponse, err error) {
-	funcName := "CrudUsecase.GetByUserID"
+func (t *CrudTodoListUsecase) GetByUserID(ctx context.Context, userID int64) (res []*entity.TodoListResponse, err error) {
+	funcName := "CrudTodoListUsecase.GetByUserID"
 	captureFieldError := entity.CaptureFields{
 		"user_id": helper.ToString(userID),
 	}
@@ -58,8 +58,8 @@ func (t *CrudUsecase) GetByUserID(ctx context.Context, userID int64) (res []*ent
 	return res, nil
 }
 
-func (t *CrudUsecase) GetByID(ctx context.Context, todoListID int64) (*entity.TodoListResponse, error) {
-	funcName := "CrudUsecase.GetByID"
+func (t *CrudTodoListUsecase) GetByID(ctx context.Context, todoListID int64) (*entity.TodoListResponse, error) {
+	funcName := "CrudTodoListUsecase.GetByID"
 	captureFieldError := entity.CaptureFields{
 		"user_id": helper.ToString(todoListID),
 	}
@@ -69,6 +69,9 @@ func (t *CrudUsecase) GetByID(ctx context.Context, todoListID int64) (*entity.To
 		helper.LogError("todoListRepo.GetByID", funcName, err, captureFieldError, "")
 
 		return nil, err
+	}
+	if data == nil {
+		return nil, nil
 	}
 
 	return &entity.TodoListResponse{
@@ -81,8 +84,8 @@ func (t *CrudUsecase) GetByID(ctx context.Context, todoListID int64) (*entity.To
 	}, nil
 }
 
-func (t *CrudUsecase) Create(ctx context.Context, todoListReq entity.TodoListReq) (*entity.TodoListResponse, error) {
-	funcName := "CrudUsecase.Create"
+func (t *CrudTodoListUsecase) Create(ctx context.Context, todoListReq entity.TodoListReq) (*entity.TodoListResponse, error) {
+	funcName := "CrudTodoListUsecase.Create"
 	captureFieldError := entity.CaptureFields{
 		"user_id": helper.ToString(todoListReq.UserID),
 		"payload": helper.ToString(todoListReq),
@@ -118,8 +121,8 @@ func (t *CrudUsecase) Create(ctx context.Context, todoListReq entity.TodoListReq
 	}, nil
 }
 
-func (t *CrudUsecase) UpdateByID(ctx context.Context, todoListReq entity.TodoListReq) error {
-	funcName := "CrudUsecase.UpdateByID"
+func (t *CrudTodoListUsecase) UpdateByID(ctx context.Context, todoListReq entity.TodoListReq) error {
+	funcName := "CrudTodoListUsecase.UpdateByID"
 	todoListID := todoListReq.ID
 
 	captureFieldError := entity.CaptureFields{
@@ -133,6 +136,9 @@ func (t *CrudUsecase) UpdateByID(ctx context.Context, todoListReq entity.TodoLis
 			helper.LogError("todoListRepo.LockByID", funcName, err, captureFieldError, "")
 
 			return err
+		}
+		if lockedData == nil {
+			return fmt.Errorf("DATA IS NOT EXIST")
 		}
 
 		doingAt, _ := helper.ParseDate(todoListReq.DoingAt)
@@ -157,8 +163,8 @@ func (t *CrudUsecase) UpdateByID(ctx context.Context, todoListReq entity.TodoLis
 	return nil
 }
 
-func (t *CrudUsecase) DeleteByID(ctx context.Context, todoListID int64) error {
-	funcName := "CrudUsecase.DeleteByID"
+func (t *CrudTodoListUsecase) DeleteByID(ctx context.Context, todoListID int64) error {
+	funcName := "CrudTodoListUsecase.DeleteByID"
 	captureFieldError := entity.CaptureFields{
 		"todo_list_id": helper.ToString(todoListID),
 	}
