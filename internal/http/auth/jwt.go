@@ -89,3 +89,53 @@ func VerifyToken(c *fiber.Ctx) error {
 
 	return nil
 }
+
+func RefreshToken(c *fiber.Ctx) (string, error) {
+	authHeader := c.Get("Authorization")
+	if authHeader == "" {
+		return "", fmt.Errorf("EMPTY TOKEN")
+	}
+
+	oldToken := authHeader[7:]
+
+	cfg := config.NewConfig()
+
+	publicKeyBytes, err := os.ReadFile(publicKeyPath)
+	if err != nil {
+		return "", err
+	}
+
+	publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyBytes)
+	if err != nil {
+		return "", err
+	}
+
+	claims := &entity.Claims{}
+	tkn, err := jwt.ParseWithClaims(oldToken, claims, func(t *jwt.Token) (interface{}, error) {
+		return publicKey, nil
+	})
+	if err != nil || !tkn.Valid {
+		return "", fmt.Errorf("invalid token: %w", err)
+	}
+
+	// Update expiry
+	claims.RegisteredClaims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(time.Duration(cfg.JwtExpireDaysCount) * 24 * time.Hour))
+
+	privateKeyBytes, err := os.ReadFile(privateKeyPath)
+	if err != nil {
+		return "", err
+	}
+
+	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKeyBytes)
+	if err != nil {
+		return "", err
+	}
+
+	newToken := jwt.NewWithClaims(jwt.SigningMethodRS512, claims)
+	signedToken, err := newToken.SignedString(privateKey)
+	if err != nil {
+		return "", err
+	}
+
+	return signedToken, nil
+}

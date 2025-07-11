@@ -131,7 +131,9 @@ func (t *CrudTodoListUsecase) UpdateByID(ctx context.Context, todoListReq entity
 		"payload": helper.ToString(todoListReq),
 	}
 
+	// Start DB Transaction
 	if err := mysql.DBTransaction(t.todoListRepo, func(trx mysql.TrxObj) error {
+		// Locking Data
 		lockedData, err := t.todoListRepo.LockByID(ctx, trx, todoListID)
 		if err != nil {
 			helper.LogError("todoListRepo.LockByID", funcName, err, captureFieldError, "")
@@ -142,6 +144,7 @@ func (t *CrudTodoListUsecase) UpdateByID(ctx context.Context, todoListReq entity
 			return fmt.Errorf("DATA IS NOT EXIST")
 		}
 
+		// Process Update
 		doingAt, _ := helper.ParseDate(todoListReq.DoingAt)
 		if err := t.todoListRepo.Update(ctx, trx, lockedData, &mentity.TodoList{
 			Title:       todoListReq.Title,

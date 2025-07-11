@@ -15,8 +15,8 @@ import (
 
 type ITodoListRepository interface {
 	TrxSupportRepo
-	GetByUserID(ctx context.Context, ID int64) (e []*entity.TodoList, err error)
-	GetByID(ctx context.Context, ID int64) (e *entity.TodoList, err error)
+	GetByUserID(ctx context.Context, ID int64) (result []*entity.TodoList, err error)
+	GetByID(ctx context.Context, ID int64) (result *entity.TodoList, err error)
 	Create(ctx context.Context, dbTrx TrxObj, params *entity.TodoList, nonZeroVal bool) error
 	LockByID(ctx context.Context, dbTrx TrxObj, ID int64) (result *entity.TodoList, err error)
 	Update(ctx context.Context, dbTrx TrxObj, params *entity.TodoList, changes *entity.TodoList) (err error)

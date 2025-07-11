@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/rahmatrdn/go-skeleton/entity"
+	"github.com/rahmatrdn/go-skeleton/internal/http/auth"
 	"github.com/rahmatrdn/go-skeleton/internal/http/middleware"
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
 	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
@@ -30,6 +31,7 @@ func (w *AuthHandler) Register(app fiber.Router) {
 	app.Post("/auth/register", w.CreateAsGuest)
 	app.Post("/auth/login", w.Login)
 	app.Get("/auth/check-token", middleware.VerifyJWTToken, w.CheckToken)
+	app.Get("/auth/refresh-token", middleware.VerifyJWTToken, w.RefreshToken)
 }
 
 // @Summary			Create User as Guest
@@ -99,4 +101,13 @@ func (w *AuthHandler) Login(c *fiber.Ctx) error {
 // @Router			/api/v1/auth/check-token [get]
 func (w *AuthHandler) CheckToken(c *fiber.Ctx) error {
 	return w.presenter.BuildSuccess(c, "Token is valid!", "Success", http.StatusOK)
+}
+
+func (w *AuthHandler) RefreshToken(c *fiber.Ctx) error {
+	newToken, err := auth.RefreshToken(c)
+	if err != nil {
+		return w.presenter.BuildError(c, err)
+	}
+
+	return w.presenter.BuildSuccess(c, newToken, "Success", http.StatusOK)
 }
