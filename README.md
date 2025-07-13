@@ -74,7 +74,7 @@ cp .env.example .env
 make migrate_up
 ```
 
-6. Generate `private_key.pem` and `public_key.pem`.You can generate them using an [Online RSA Generator](https://cryptotools.net/rsagen), using OpenSSL or other tools. Place the files in the `internal/http/auth/` folder (required for go:embed).
+6. Generate `private_key.pem` and `public_key.pem`.You can generate them using an [Online RSA Generator](https://travistidwell.com/jsencrypt/demo/), using OpenSSL or other tools. Place the files in the `internal/http/auth/` folder (required for go:embed).
 
    #### Generate RSA keys with OpenSSL:
 
