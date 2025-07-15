@@ -11,6 +11,15 @@ The table below outlines the supported topics and their purposes:
 | `ProcessSyncLog`   | `log.insert`       | Handles log synchronization insert events. |
 | `ProcessExample`   | `example.consumer` | Example consumer for demonstration/testing.|
 
+
+## Consumer Process
+
+All consumer processing logic is located in: `internal/queue/consumer/`.
+
+IMPORTANT: For more complex business logic, it is recommended to use the **Usecase Layer** to separate concerns and maintain clean architecture. This helps in improving code readability, testability, and scalability.
+
+
+
 ## How to Run
 
 Make sure the required dependencies and environment configurations are properly set, then run the worker:
