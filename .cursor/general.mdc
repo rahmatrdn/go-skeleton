@@ -1,0 +1,375 @@
+---
+description: Core architecture and quality rules
+globs: 
+alwaysApply: true
+---
+
+# Go Skeleton Project Cursor Rules
+
+## Project Overview
+This is a Go REST API skeleton following Clean Architecture principles with Fiber framework, MySQL/PostgreSQL, RabbitMQ, Redis, MongoDB support, and comprehensive testing.
+
+## Architecture & Structure
+
+### Clean Architecture Layers
+- **Entity**: Business entities and response models (`/entity/`)
+- **Repository**: Data access layer (`/internal/repository/`)
+- **Usecase**: Business logic layer (`/internal/usecase/`)
+- **Handler**: HTTP handlers (`/internal/http/handler/`)
+- **Presenter**: Response formatting (`/internal/presenter/`)
+- **Middleware**: HTTP middleware (`/internal/http/middleware/`)
+
+### Directory Structure
+```
+cmd/           # Application entry points (api, worker, scheduler)
+config/        # Configuration management
+entity/        # Domain entities and response models
+internal/      # Private application code
+  ├── helper/  # Utility functions
+  ├── http/    # HTTP layer (handlers, middleware, auth)
+  ├── parser/  # Request parsing utilities
+  ├── presenter/ # Response formatting
+  ├── queue/   # Message queue handling
+  ├── repository/ # Data access layer
+  └── usecase/ # Business logic layer
+tests/         # Test utilities and mocks
+database/migration/ # Database migrations
+api-client/    # API testing with Bruno
+```
+
+## Code Patterns & Conventions
+
+### Naming Conventions
+- **Files**: snake_case (e.g., `todo_list_handler.go`)
+- **Packages**: lowercase, single word (e.g., `handler`, `usecase`)
+- **Interfaces**: PascalCase with 'I' prefix (e.g., `ICrudTodoListUsecase`)
+- **Structs**: PascalCase (e.g., `TodoListHandler`)
+- **Functions**: PascalCase for public, camelCase for private
+- **Variables**: camelCase
+- **Constants**: UPPER_SNAKE_CASE
+
+### Interface Patterns
+- Always define interfaces for dependencies (Repository, Usecase, Presenter, Parser)
+- Use interface segregation principle
+- Place interfaces in the same package as the consumer
+
+### Error Handling
+- Use `github.com/pkg/errors` for error wrapping
+- Always wrap errors with context: `errwrap.Wrap(err, funcName)`
+- Use custom error types in `/error/error.go`
+- Log errors with structured logging using Zap
+
+### Logging Patterns
+```go
+funcName := "PackageName.FunctionName"
+captureFieldError := generalEntity.CaptureFields{
+    "field_name": helper.ToString(value),
+}
+helper.LogError("operation", funcName, err, captureFieldError, "")
+```
+
+### Context Handling
+- Always pass `context.Context` as first parameter
+- Check deadline: `helper.CheckDeadline(ctx)`
+- Use context for cancellation and timeouts
+
+## Database Patterns
+
+### Repository Interface Structure
+```go
+type IRepositoryName interface {
+    TrxSupportRepo
+    GetByID(ctx context.Context, ID int64) (*entity.Model, error)
+    Create(ctx context.Context, dbTrx TrxObj, params *entity.Model, nonZeroVal bool) error
+    Update(ctx context.Context, dbTrx TrxObj, params *entity.Model, changes *entity.Model) error
+    DeleteByID(ctx context.Context, dbTrx TrxObj, id int64) error
+}
+```
+
+### Transaction Support
+- All repositories must implement `TrxSupportRepo`
+- Use `mysql.DBTransaction()` for complex operations
+- Lock records with `FOR UPDATE` when needed
+
+### Entity Structure
+```go
+type Model struct {
+    ID        int64     `gorm:"column:id"`
+    CreatedAt time.Time `gorm:"column:created_at"`
+    UpdatedAt time.Time `gorm:"column:updated_at"`
+    // other fields
+}
+
+func (Model) TableName() string {
+    return "table_name"
+}
+```
+
+## HTTP Layer Patterns
+
+### Handler Structure
+```go
+type HandlerName struct {
+    parser    parser.Parser
+    presenter json.JsonPresenter
+    usecase   IUseCaseInterface
+}
+
+func NewHandlerName(parser parser.Parser, presenter json.JsonPresenter, usecase IUseCaseInterface) *HandlerName {
+    return &HandlerName{parser, presenter, usecase}
+}
+
+func (h *HandlerName) Register(app fiber.Router) {
+    // Route registration with middleware
+}
+```
+
+### Route Registration
+- Use middleware for authentication: `middleware.VerifyJWTToken`
+- Group routes under `/api/v1`
+- Follow RESTful conventions
+
+### Swagger Documentation
+- Use Swagger annotations for all endpoints
+- Include `@Summary`, `@Description`, `@Tags`, `@Security`, `@Param`, `@Success`, `@Failure`
+- Document request/response models
+
+### Request/Response Handling
+- Parse requests using `parser` package
+- Format responses using `presenter` package
+- Always return structured JSON responses
+
+## Usecase Patterns
+
+### Usecase Interface
+```go
+type IUsecaseName interface {
+    MethodName(ctx context.Context, param ParamType) (result ResultType, err error)
+}
+```
+
+### Usecase Implementation
+- Validate input using `usecase.ValidateStruct()`
+- Log function name and capture fields for errors
+- Transform entities to response models
+- Handle business logic and validation
+
+## Testing Patterns
+
+### Test Suite Structure
+```go
+type HandlerTestSuite struct {
+    suite.Suite
+    usecase   *mocks.IUseCaseInterface
+    presenter *mocks.Presenter
+    parser    *mocks.Parser
+    handler   *handler.HandlerName
+}
+
+func (s *HandlerTestSuite) SetupTest() {
+    // Initialize mocks
+}
+```
+
+### Mock Usage
+- Generate mocks using Mockery: `make mock d=DependencyName`
+- Use `mock.Anything` for flexible matching
+- Test both success and failure scenarios
+- Use table-driven tests with `testCases`
+
+### Test Organization
+- One test suite per handler/usecase
+- Group related tests in methods
+- Use descriptive test case names
+- Mock external dependencies completely
+
+## Configuration Management
+
+### Environment Variables
+- Use `github.com/joeshaw/envdecode` for configuration
+- Define config structs with env tags
+- Provide sensible defaults where appropriate
+- Use required tags for critical config
+
+### Database Configuration
+- Support multiple databases (MySQL, PostgreSQL)
+- Configure connection pools and timeouts
+- Use GORM with custom logging
+
+## Dependency Injection
+
+### Constructor Pattern
+```go
+func NewServiceName(dependency IDependencyInterface) *ServiceName {
+    return &ServiceName{dependency: dependency}
+}
+```
+
+### Main Function Setup
+- Initialize config first
+- Set up database connections
+- Create repositories
+- Create usecases with dependencies
+- Register handlers
+- Set up middleware
+
+## File Organization Rules
+
+### Package Structure
+- One main type per file
+- Related types in same package
+- Separate interfaces from implementations
+- Keep packages focused and cohesive
+
+### Import Organization
+```go
+import (
+    // Standard library
+    "context"
+    "fmt"
+    
+    // Third-party packages
+    "github.com/gofiber/fiber/v2"
+    
+    // Project packages
+    "github.com/rahmatrdn/go-skeleton/entity"
+    "github.com/rahmatrdn/go-skeleton/internal/helper"
+)
+```
+
+## API Documentation
+
+### Swagger Annotations
+- Document all endpoints with proper annotations
+- Include authentication requirements
+- Specify request/response models
+- Use consistent HTTP status codes
+
+### Response Models
+- Use `entity.GeneralResponse` for standard responses
+- Define specific response models for complex data
+- Include proper validation tags
+
+## Security Patterns
+
+### Authentication
+- Use JWT with RS512 algorithm
+- Implement token verification middleware
+- Store private/public keys as PEM files
+- Support token refresh mechanism
+
+### Input Validation
+- Validate all input using struct tags
+- Use `github.com/go-playground/validator/v10`
+- Sanitize user input
+- Return validation errors in structured format
+
+## Performance & Monitoring
+
+### Database Optimization
+- Use connection pooling
+- Implement query logging for slow queries
+- Use transactions for data consistency
+- Lock records when necessary
+
+### Logging & Monitoring
+- Use structured logging with Zap
+- Log errors with context and stack traces
+- Implement health check endpoints
+- Use Fiber's monitor middleware for metrics
+
+## Development Workflow
+
+### Code Generation
+- Use Swag for API documentation: `make apidoc`
+- Generate mocks with Mockery: `make mock d=InterfaceName`
+- Use Makefile for common tasks
+
+### Testing
+- Run tests with coverage: `make test`
+- Generate coverage reports: `make coverage`
+- Use testify/suite for organized tests
+
+### Database Migrations
+- Use golang-migrate for database changes
+- Create migrations: `make migrate create=description`
+- Apply migrations: `make migrate_up`
+
+## Code Quality Rules
+
+### Error Handling
+- Never ignore errors
+- Wrap errors with context
+- Use custom error types for business logic
+- Log errors with structured data
+
+### Resource Management
+- Always close resources (defer statements)
+- Use context for cancellation
+- Implement graceful shutdown
+- Handle panics with recovery middleware
+
+### Concurrency
+- Use proper synchronization primitives
+- Avoid race conditions
+- Use context for goroutine lifecycle management
+- Implement proper shutdown procedures
+
+## API Client Testing
+
+### Bruno Collection
+- Use Bruno for API testing
+- Organize requests by feature
+- Use environment variables for configuration
+- Include authentication setup
+
+### Test Data
+- Use factory patterns for test data
+- Create fixtures for common test scenarios
+- Use faker for generating test data
+- Clean up test data after tests
+
+## Deployment & DevOps
+
+### Docker Support
+- Provide Dockerfiles for API and Worker
+- Use multi-stage builds for optimization
+- Use docker-compose for local development
+- Support environment-specific configurations
+
+### Environment Management
+- Use .env files for configuration
+- Support multiple environments (dev, staging, prod)
+- Use secrets management for sensitive data
+- Implement proper logging levels per environment
+
+## Best Practices
+
+1. **Always use interfaces** for dependencies to enable testing
+2. **Follow the dependency rule** - dependencies point inward in Clean Architecture
+3. **Use dependency injection** in constructors
+4. **Implement proper error handling** with context and logging
+5. **Write comprehensive tests** with mocks
+6. **Document APIs** with Swagger annotations
+7. **Use structured logging** for observability
+8. **Implement graceful shutdown** for production readiness
+9. **Follow RESTful conventions** for API design
+10. **Use transactions** for data consistency
+11. **Validate all inputs** before processing
+12. **Use context** for request lifecycle management
+13. **Implement proper authentication** and authorization
+14. **Use environment-based configuration** management
+15. **Follow Go naming conventions** and idioms
+
+## Common Patterns to Follow
+
+- Repository pattern for data access
+- Usecase pattern for business logic
+- Handler pattern for HTTP endpoints
+- Presenter pattern for response formatting
+- Parser pattern for request handling
+- Factory pattern for object creation
+- Builder pattern for complex object construction
+- Strategy pattern for different implementations
+- Observer pattern for event handling
+- Dependency injection for loose coupling
