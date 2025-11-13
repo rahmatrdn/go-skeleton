@@ -1,0 +1,86 @@
+{
+  "name": "Go Skeleton Development",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "1.24"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "moby": true
+    },
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "uid": "1000",
+      "gid": "1000"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go",
+        "ms-azuretools.vscode-docker",
+        "streetsidesoftware.code-spell-checker",
+        "eamodio.gitlens",
+        "mongodb.mongodb-vscode",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-mysql",
+        "mtxr.sqltools-driver-pg"
+      ],
+      "settings": {
+        "go.toolsManagement.checkForUpdates": "local",
+        "go.useLanguageServer": true,
+        "go.gopath": "/go",
+        "go.goroot": "/usr/local/go",
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  },
+
+  "forwardPorts": [
+    7011,
+    3306,
+    5432,
+    6379,
+    5672,
+    15672,
+    27017
+  ],
+
+  "portsAttributes": {
+    "7011": {
+      "label": "API Server",
+      "onAutoForward": "notify"
+    },
+    "3306": {
+      "label": "MySQL"
+    },
+    "5432": {
+      "label": "PostgreSQL"
+    },
+    "6379": {
+      "label": "Redis"
+    },
+    "5672": {
+      "label": "RabbitMQ AMQP"
+    },
+    "15672": {
+      "label": "RabbitMQ Management UI",
+      "onAutoForward": "notify"
+    },
+    "27017": {
+      "label": "MongoDB"
+    }
+  },
+
+  "postCreateCommand": "go mod download && go install github.com/swaggo/swag/cmd/swag@latest",
+
+  "remoteUser": "vscode"
+}
