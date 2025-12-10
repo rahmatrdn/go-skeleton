@@ -1,0 +1,21 @@
+all: false
+force-file-write: true
+formatter: goimports
+generate: true
+include-auto-generated: false
+log-level: info
+recursive: false
+require-template-schema-exists: true
+template: testify
+template-schema: "{{.Template}}.schema.json"
+
+packages:
+  github.com/rahmatrdn/go-skeleton:
+    config:
+      all: true
+      recursive: true
+      dir: ./tests/mocks
+      pkgname: mocks
+
+      filename: "{{.InterfaceName}}.go"
+      structname: "{{.InterfaceName}}"
