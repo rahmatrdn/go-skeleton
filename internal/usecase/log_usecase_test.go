@@ -63,3 +63,26 @@ func (s *LogUsecaseTestSuite) TestLog() {
 		})
 	}
 }
+
+func (s *LogUsecaseTestSuite) TestError() {
+	captureFieldError := map[string]string{"test": "test"}
+
+	s.T().Run("Success", func(t *testing.T) {
+		s.queue.On("Publish", mock.Anything, mock.Anything, mock.Anything).Return(nil).Once()
+		s.usecase.Error("TestProcess", "TestFunc", fmt.Errorf("error"), captureFieldError)
+	})
+}
+
+func (s *LogUsecaseTestSuite) TestInfo() {
+	captureFieldError := map[string]string{"test": "test"}
+
+	s.T().Run("Success", func(t *testing.T) {
+		s.queue.On("Publish", mock.Anything, mock.Anything, mock.Anything).Return(nil).Once()
+		s.usecase.Info("Test Message", "TestFunc", captureFieldError, "TestProcess")
+	})
+
+	s.T().Run("Queue Error", func(t *testing.T) {
+		s.queue.On("Publish", mock.Anything, mock.Anything, mock.Anything).Return(fmt.Errorf("queue error")).Once()
+		s.usecase.Info("Test Info Error", "TestFunc", captureFieldError, "TestProcess")
+	})
+}
