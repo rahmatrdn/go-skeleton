@@ -1,26 +1,28 @@
-
 # Propper Skeleton for your Golang Project
 
 [![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/rahmatrdn/go-skeleton)
 
 ## Description
-`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.  
+
+`go-skeleton` is a boilerplate for Golang projects. The project structure follows the Clean Code Architecture ([Read here](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)). This Skeleton made with **Fiber Framework**.
 
 "Forget about the complexities of folder structures in Go, focus on your project!"
 
 Principles :
+
 - Reusable and Maintainable Code
 - Decoupled Code
 - Scalable Development
 
-Features : 
+Features :
+
 1. REST API
 2. Clean Architecture
 3. Fiber Framework
 4. Api Docs with Swagger
 5. Worker/Consumer Queue with RabbitMQ
 6. Implementation of Unit Test (with Testify and Mockery)
-7. Authentication with JWT RS512
+7. Authentication with JWT RS512 (using go:embed for private/public key)
 8. Logging with Zap Log
 9. GRPC Server! (IN PROGRESS)
 10. GRPC Server with handle authentication (Soon!)
@@ -30,16 +32,16 @@ Features :
 
 Feel free to contribute to this repository if you'd like!
 
-
 ## Contact
-| Name                   | Email                        | Role    |
-| ---------------------- | ---------------------------- | ------- |
-| Rahmat Ramadhan Putra  | rahmatrdn.dev@gmail.com     | Creator |
 
-
+| Name                  | Email                   | Role    |
+| --------------------- | ----------------------- | ------- |
+| Rahmat Ramadhan Putra | rahmatrdn.dev@gmail.com | Creator |
 
 ## Development Guide
+
 ### Prerequisite
+
 - Git (See [Git Installation](https://git-scm.com/downloads))
 - Go 1.24+ (See [Golang Installation](https://golang.org/doc/install))
 - MySQL / MariaDB / PostgreSQL (Download via Docker or Other sources)
@@ -50,93 +52,135 @@ Feel free to contribute to this repository if you'd like!
 
 #### Windows OS (for a better development experience)
 
-*   Install [Make](https://www.gnu.org/software/make/) (See [Make Installation](https://leangaurav.medium.com/how-to-setup-install-gnu-make-on-windows-324480f1da69)).
-
+- Install [Make](https://www.gnu.org/software/make/) (See [Make Installation](https://leangaurav.medium.com/how-to-setup-install-gnu-make-on-windows-324480f1da69)).
 
 ### Installation
+
 1. Clone this repo
+
 ```sh
 git clone https://github.com/rahmatrdn/go-skeleton.git
 ```
+
 2. Copy `example.env` to `.env`
+
 ```sh
 cp .env.example .env
 ```
-3. Adjust the `.env` file according to the configuration in your local environment, such as the database or other settings 
+
+3. Adjust the `.env` file according to the configuration in your local environment, such as the database or other settings
 4. Create a MySQL database with the name `go_skeleton`
 5. Run database migration or Manually run in you SQL Client
+
 ```sh
 make migrate_up
 ```
-6. Generate `private_key.pem` and `public_key.pem`. You can generate them using an [Online RSA Generator](https://travistidwell.com/jsencrypt/demo/) or other tools. Place the files in the project's root folder.
+
+6. Generate `private_key.pem` and `public_key.pem`.You can generate them using an [Online RSA Generator](https://travistidwell.com/jsencrypt/demo/), using OpenSSL or other tools. Place the files in the `internal/http/auth/` folder (required for go:embed).
+
+   #### Generate RSA keys with OpenSSL:
+
+```sh
+# Generate private key
+openssl genpkey -algorithm RSA -out internal/http/auth/private_key.pem -pkeyopt rsa_keygen_bits:2048
+
+# Generate public key from private key
+openssl rsa -pubout -in internal/http/auth/private_key.pem -out internal/http/auth/public_key.pem
+```
+
+> The project uses [go:embed](https://pkg.go.dev/embed) to embed the RSA key files directly into the binary for JWT authentication. Ensure the key files are present in the correct folder before building/running the project.
+
 7. Start the API Service
+
 ```sh
 go run cmd/api/main.go
 ```
+
 8. Start the Worker Service (if needed)
+
 ```sh
 go run cmd/worker/main.go
 ```
 
 ### Api Documentation
+
 For API docs, we are using [Swagger](https://swagger.io/) with [Swag](https://github.com/swaggo/swag) Generator
+
 - Install Swag
+
 ```sh
 go install github.com/swaggo/swag/cmd/swag@latest
 ```
+
 - Generate apidoc
+
 ```sh
 make apidoc
 ```
+
 - Start API documentations
+
 ```sh
 go run cmd/api/main.go
 ```
-- Access API Documentation with  browser http://localhost:PORT/apidoc
 
-
+- Access API Documentation with browser http://localhost:PORT/apidoc
 
 ### Unit test
-*tips: if you use `VS Code` as your code editor, you can install extension `golang.go` and follow tutorial [showing code coverage after saving your code](https://dev.to/vuong/golang-in-vscode-show-code-coverage-of-after-saving-test-8g0) to help you create unit test*
+
+_tips: if you use `VS Code` as your code editor, you can install extension `golang.go` and follow tutorial [showing code coverage after saving your code](https://dev.to/vuong/golang-in-vscode-show-code-coverage-of-after-saving-test-8g0) to help you create unit test_
 
 - Use [Mockery](https://github.com/vektra/mockery) to generate mock class(es)
+
 ```sh
 make mock d=DependencyClassName
 ```
+
 - Run unit test with command below or You can run test per function using Vscode!
+
 ```sh
 make test
 ```
 
-
 ### Running In Docker
+
 - Docker Build for API
+
 ```sh
 docker build -t go-skeleton-api:1.0.1 -f ./deploy/docker/api/Dockerfile .
 ```
+
 - Docker Build for Worker
+
 ```sh
 docker build -t go-skeleton-worker:1.0.1 -f ./deploy/docker/worker/Dockerfile .
 ```
+
 - Run docker compose for API and Workers
+
 ```sh
 docker-compose -f docker-compose.yaml up -d
 ```
 
-
 ## Contributing
+
 - Create a new branch with a descriptive name that reflects the changes and switch to the new branch. Use the prefix `feature/` for new features or `fix/` for bug fixes.
+
 ```sh
 git checkout -b <prefix>/branch-name
 ```
+
 - Make your change(s) and make the test(s)
 - Commit and push your change to upstream repository
+
 ```sh
 git commit -m "[Type] a meaningful commit message"
 git push origin branch-name
 ```
+
 - Open Merge Request in Repository (Reviewer Check Contact Info)
 - Merge Request will be merged only if review phase is passed.
 
 ## More Details Information
+
 Contact Creator!
