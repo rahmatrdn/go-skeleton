@@ -33,4 +33,4 @@ coverage:
 	go tool cover -func cover.out
 
 mock:
-	 mockery
+	mockery
