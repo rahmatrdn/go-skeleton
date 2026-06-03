@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	fiber "github.com/gofiber/fiber/v2"
+	fiber "github.com/gofiber/fiber/v3"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -13,11 +13,11 @@ type Presenter struct {
 }
 
 // BuildError provides a mock function with given fields: c, err
-func (_m *Presenter) BuildError(c *fiber.Ctx, err error) error {
+func (_m *Presenter) BuildError(c fiber.Ctx, err error) error {
 	ret := _m.Called(c, err)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(*fiber.Ctx, error) error); ok {
+	if rf, ok := ret.Get(0).(func(fiber.Ctx, error) error); ok {
 		r0 = rf(c, err)
 	} else {
 		r0 = ret.Error(0)
@@ -27,11 +27,11 @@ func (_m *Presenter) BuildError(c *fiber.Ctx, err error) error {
 }
 
 // BuildSuccess provides a mock function with given fields: c, data, message, code
-func (_m *Presenter) BuildSuccess(c *fiber.Ctx, data interface{}, message string, code int) error {
+func (_m *Presenter) BuildSuccess(c fiber.Ctx, data interface{}, message string, code int) error {
 	ret := _m.Called(c, data, message, code)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(*fiber.Ctx, interface{}, string, int) error); ok {
+	if rf, ok := ret.Get(0).(func(fiber.Ctx, interface{}, string, int) error); ok {
 		r0 = rf(c, data, message, code)
 	} else {
 		r0 = ret.Error(0)
