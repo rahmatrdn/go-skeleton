@@ -19,8 +19,8 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
 	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
 	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
-	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 	todo_list_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list"
+	user_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/user"
 
 	swaggo "github.com/gofiber/contrib/v3/swaggo"
 	"github.com/gofiber/fiber/v3"
@@ -94,13 +94,13 @@ func main() {
 
 	// USECASE : Write bussines logic code here (validation, business logic, etc.)
 	// _ = usecase.NewLogUsecase(queue)  // LogUsecase is a sample usecase for sending log to queue (Mongodb, ElasticSearch, etc.)
-	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
-	crudTodoListUsecase := todo_list_usecase.NewTodoListUsecase(todoListRepo)
+	userUsecase := user_usecase.NewUserUsecase(userRepo, jwtAuth)
+	todoListUsecase := todo_list_usecase.NewTodoListUsecase(todoListRepo)
 
 	api := app.Group("/api/v1")
 
 	handler.NewAuthHandler(parser, presenterJson, userUsecase).Register(api)
-	handler.NewTodoListHandler(parser, presenterJson, crudTodoListUsecase).Register(api)
+	handler.NewTodoListHandler(parser, presenterJson, todoListUsecase).Register(api)
 
 	app.Get("/health-check", healthCheck)
 

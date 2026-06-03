@@ -7,7 +7,7 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/http/middleware"
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
 	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
-	"github.com/rahmatrdn/go-skeleton/internal/usecase"
+	user_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/user"
 
 	fiber "github.com/gofiber/fiber/v3"
 )
@@ -15,13 +15,13 @@ import (
 type AuthHandler struct {
 	parser      parser.Parser
 	presenter   json.JsonPresenter
-	userUsecase usecase.UserUsecase
+	userUsecase user_usecase.IUserUsecase
 }
 
 func NewAuthHandler(
 	parser parser.Parser,
 	presenter json.JsonPresenter,
-	userUsecase usecase.UserUsecase,
+	userUsecase user_usecase.IUserUsecase,
 ) *AuthHandler {
 	return &AuthHandler{parser, presenter, userUsecase}
 }
