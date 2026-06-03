@@ -11,8 +11,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gofiber/fiber/v2/middleware/monitor"
-	"github.com/gofiber/swagger"
 	"github.com/rahmatrdn/go-skeleton/config"
 	_ "github.com/rahmatrdn/go-skeleton/docs"
 	"github.com/rahmatrdn/go-skeleton/entity"
@@ -24,9 +22,10 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 	todo_list_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/fiber/v2/middleware/recover"
+	swaggo "github.com/gofiber/contrib/v3/swaggo"
+	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/logger"
+	"github.com/gofiber/fiber/v3/middleware/recover"
 	"github.com/subosito/gotenv"
 )
 
@@ -52,7 +51,7 @@ func main() {
 	cfg := config.NewConfig()
 
 	app := fiber.New(config.NewFiberConfiguration(cfg))
-	app.Get("/apidoc/*", swagger.HandlerDefault)
+	app.Get("/apidoc/*", swaggo.HandlerDefault)
 
 	// Middleware setup
 	setupMiddleware(app, cfg)
@@ -96,7 +95,7 @@ func main() {
 	// USECASE : Write bussines logic code here (validation, business logic, etc.)
 	// _ = usecase.NewLogUsecase(queue)  // LogUsecase is a sample usecase for sending log to queue (Mongodb, ElasticSearch, etc.)
 	userUsecase := usecase.NewUserUsecase(userRepo, jwtAuth)
-	crudTodoListUsecase := todo_list_usecase.NewCrudTodoListUsecase(todoListRepo)
+	crudTodoListUsecase := todo_list_usecase.NewTodoListUsecase(todoListRepo)
 
 	api := app.Group("/api/v1")
 
@@ -104,7 +103,6 @@ func main() {
 	handler.NewTodoListHandler(parser, presenterJson, crudTodoListUsecase).Register(api)
 
 	app.Get("/health-check", healthCheck)
-	app.Get("/metrics", monitor.New())
 
 	// Handle Route not found
 	app.Use(routeNotFound)
@@ -132,7 +130,7 @@ func setupMiddleware(app *fiber.App, cfg *config.Config) {
 			TimeZone:   "Asia/Jakarta",
 		}),
 		recover.New(recover.Config{
-			StackTraceHandler: func(c *fiber.Ctx, e interface{}) {
+			StackTraceHandler: func(c fiber.Ctx, e interface{}) {
 				fmt.Println(c.Request().URI())
 				stacks := fmt.Sprintf("panic: %v\n%s\n", e, debug.Stack())
 				log.Println(stacks)
@@ -177,14 +175,14 @@ func runServerWithGracefulShutdown(app *fiber.App, apiPort string, shutdownTimeo
 	log.Println("All tasks completed. Exiting application.")
 }
 
-var healthCheck = func(c *fiber.Ctx) error {
+var healthCheck = func(c fiber.Ctx) error {
 	return c.JSON(entity.GeneralResponse{
 		Code:    200,
 		Message: "OK!",
 	})
 }
 
-var routeNotFound = func(c *fiber.Ctx) error {
+var routeNotFound = func(c fiber.Ctx) error {
 	return c.Status(404).JSON(entity.GeneralResponse{
 		Code:    404,
 		Message: "Route Not Found!",

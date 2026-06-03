@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/rahmatrdn/go-skeleton/config"
 	"github.com/rahmatrdn/go-skeleton/entity"
@@ -58,7 +58,7 @@ func (j *JWT) GenerateToken(user *mentity.User) (string, error) {
 	return signedToken, nil
 }
 
-func VerifyToken(c *fiber.Ctx) error {
+func VerifyToken(c fiber.Ctx) error {
 	authHeader := c.Get("Authorization")
 	if authHeader == "" {
 		return fmt.Errorf("EMPTY TOKEN")
@@ -90,7 +90,7 @@ func VerifyToken(c *fiber.Ctx) error {
 	return nil
 }
 
-func RefreshToken(c *fiber.Ctx) (string, error) {
+func RefreshToken(c fiber.Ctx) (string, error) {
 	authHeader := c.Get("Authorization")
 	if authHeader == "" {
 		return "", fmt.Errorf("EMPTY TOKEN")
