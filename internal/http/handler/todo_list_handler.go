@@ -9,19 +9,19 @@ import (
 	todo_list_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list/entity"
 
-	fiber "github.com/gofiber/fiber/v2"
+	fiber "github.com/gofiber/fiber/v3"
 )
 
 type TodoListHandler struct {
 	parser              parser.Parser
 	presenter           json.JsonPresenter
-	todoListCrudUsecase todo_list_usecase.ICrudTodoListUsecase
+	todoListCrudUsecase todo_list_usecase.ITodoListUsecase
 }
 
 func NewTodoListHandler(
 	parser parser.Parser,
 	presenter json.JsonPresenter,
-	todoListCrudUsecase todo_list_usecase.ICrudTodoListUsecase,
+	todoListCrudUsecase todo_list_usecase.ITodoListUsecase,
 ) *TodoListHandler {
 	return &TodoListHandler{parser, presenter, todoListCrudUsecase}
 }
@@ -46,7 +46,7 @@ func (w *TodoListHandler) Register(app fiber.Router) {
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/todo-lists/{id} [get]
-func (w *TodoListHandler) GetByID(c *fiber.Ctx) error {
+func (w *TodoListHandler) GetByID(c fiber.Ctx) error {
 	id, err := w.parser.ParserIntIDFromPathParams(c)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
@@ -71,7 +71,7 @@ func (w *TodoListHandler) GetByID(c *fiber.Ctx) error {
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/todo-list [get]
-func (w *TodoListHandler) GetByUserID(c *fiber.Ctx) error {
+func (w *TodoListHandler) GetByUserID(c fiber.Ctx) error {
 	userID, err := w.parser.ParserUserID(c)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
@@ -97,7 +97,7 @@ func (w *TodoListHandler) GetByUserID(c *fiber.Ctx) error {
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/todo-list [post]
-func (w *TodoListHandler) Create(c *fiber.Ctx) error {
+func (w *TodoListHandler) Create(c fiber.Ctx) error {
 	var req entity.TodoListReq
 
 	err := w.parser.ParserBodyRequestWithUserID(c, &req)
@@ -126,7 +126,7 @@ func (w *TodoListHandler) Create(c *fiber.Ctx) error {
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/todo-list [put]
-func (w *TodoListHandler) Update(c *fiber.Ctx) error {
+func (w *TodoListHandler) Update(c fiber.Ctx) error {
 	var req entity.TodoListReq
 	err := w.parser.ParserBodyWithIntIDPathParamsAndUserID(c, &req)
 	if err != nil {
@@ -153,7 +153,7 @@ func (w *TodoListHandler) Update(c *fiber.Ctx) error {
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/todo-lists/{id} [delete]
-func (w *TodoListHandler) Delete(c *fiber.Ctx) error {
+func (w *TodoListHandler) Delete(c fiber.Ctx) error {
 	id, err := w.parser.ParserIntIDFromPathParams(c)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
