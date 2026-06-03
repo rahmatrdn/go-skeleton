@@ -9,7 +9,7 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
 	"github.com/rahmatrdn/go-skeleton/internal/usecase"
 
-	fiber "github.com/gofiber/fiber/v2"
+	fiber "github.com/gofiber/fiber/v3"
 )
 
 type AuthHandler struct {
@@ -43,7 +43,7 @@ func (w *AuthHandler) Register(app fiber.Router) {
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Payload Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/auth/register [post]
-func (w *AuthHandler) CreateAsGuest(c *fiber.Ctx) error {
+func (w *AuthHandler) CreateAsGuest(c fiber.Ctx) error {
 	var req *entity.CreateUserReq
 
 	err := w.parser.ParserBodyRequest(c, &req)
@@ -70,7 +70,7 @@ func (w *AuthHandler) CreateAsGuest(c *fiber.Ctx) error {
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Payload Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/auth/login [post]
-func (w *AuthHandler) Login(c *fiber.Ctx) error {
+func (w *AuthHandler) Login(c fiber.Ctx) error {
 	var req *entity.LoginReq
 
 	err := w.parser.ParserBodyRequest(c, &req)
@@ -97,6 +97,6 @@ func (w *AuthHandler) Login(c *fiber.Ctx) error {
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Payload Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/auth/check-token [get]
-func (w *AuthHandler) CheckToken(c *fiber.Ctx) error {
+func (w *AuthHandler) CheckToken(c fiber.Ctx) error {
 	return w.presenter.BuildSuccess(c, "Token is valid!", "Success", http.StatusOK)
 }

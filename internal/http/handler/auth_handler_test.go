@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	fiber "github.com/gofiber/fiber/v2"
+	fiber "github.com/gofiber/fiber/v3"
 	"github.com/rahmatrdn/go-skeleton/internal/http/handler"
 	"github.com/rahmatrdn/go-skeleton/tests/mocks"
 	"github.com/stretchr/testify/mock"

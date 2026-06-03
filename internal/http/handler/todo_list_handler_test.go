@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	fiber "github.com/gofiber/fiber/v2"
+	fiber "github.com/gofiber/fiber/v3"
 	"github.com/rahmatrdn/go-skeleton/internal/http/handler"
 	"github.com/rahmatrdn/go-skeleton/tests/mocks"
 	"github.com/stretchr/testify/mock"
@@ -14,14 +14,14 @@ import (
 
 type TodoListHandlerTestSuite struct {
 	suite.Suite
-	todoListUsecase *mocks.ICrudTodoListUsecase
+	todoListUsecase *mocks.ITodoListUsecase
 	presenter       *mocks.Presenter
 	parser          *mocks.Parser
 	handler         *handler.TodoListHandler
 }
 
 func (s *TodoListHandlerTestSuite) SetupTest() {
-	s.todoListUsecase = &mocks.ICrudTodoListUsecase{}
+	s.todoListUsecase = &mocks.ITodoListUsecase{}
 	s.presenter = &mocks.Presenter{}
 	s.parser = &mocks.Parser{}
 
