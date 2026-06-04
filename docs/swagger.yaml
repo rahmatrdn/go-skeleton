@@ -109,14 +109,12 @@ definitions:
     type: object
 info:
   contact:
-    email: rahmat.putra@spesolution.com
+    email: rahmatrdn.dev@gmail.com
     name: API Support
   description: This is a sample swagger for Go Skeleton
   license:
     name: Apache 2.0
   termsOfService: http://swagger.io/terms/
-  title: Go Skeleton!
-  version: "1.0"
 paths:
   /api/v1/auth/check-token:
     get:
