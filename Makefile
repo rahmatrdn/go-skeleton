@@ -1,6 +1,6 @@
 APIDOC_BASE = cmd/api
 APIDOC_INFO = internal/http/handler
-MYSQL_URI   = mysql://$(MYSQL_USERNAME):$(MYSQL_PASSWORD)@tcp($(MYSQL_HOST):$(MYSQL_PORT))/$(MYSQL_DATABASE_NAME)
+MYSQL_CONNECTION = mysql://$(MYSQL_URI)
 
 include .env
 
@@ -8,16 +8,16 @@ migrate:
 	migrate create -ext sql -dir database/migration/ -seq $(create)
 
 migrate_up:
-	migrate -path database/migration -database '$(MYSQL_URI)' -verbose up
+	migrate -path database/migration -database '$(MYSQL_CONNECTION)' -verbose up
 
 migrate_down:
-	migrate -path database/migration -database '$(MYSQL_URI)' -verbose down
+	migrate -path database/migration -database '$(MYSQL_CONNECTION)' -verbose down
 
 migrate_rollback:
-	migrate -path database/migration -database '$(MYSQL_URI)' -verbose down $(shell echo ${step}-1 | bc)
+	migrate -path database/migration -database '$(MYSQL_CONNECTION)' -verbose down $(shell echo ${step}-1 | bc)
 
 migrate_fix: 
-	migrate -path database/migration -database '$(MYSQL_URI)' force $(version)
+	migrate -path database/migration -database '$(MYSQL_CONNECTION)' force $(version)
 
 test:
 	go test -cover -coverprofile=coverage.out $$(go list ./...)
@@ -34,3 +34,13 @@ coverage:
 
 mock:
 	mockery
+
+jwt-keygen:
+	openssl genrsa -out private_key.pem 4096
+	openssl rsa -in private_key.pem -pubout -out public_key.pem
+
+api-run:
+	go run cmd/api/main.go
+
+worker-run:
+	go run cmd/worker/main.go $(topic)
