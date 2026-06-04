@@ -27,11 +27,11 @@ func NewTodoListHandler(
 }
 
 func (w *TodoListHandler) Register(app fiber.Router) {
-	app.Get("/todo-lists/:id", middleware.VerifyJWTToken, w.GetByID)
-	app.Get("/todo-lists", middleware.VerifyJWTToken, w.GetByUserID)
-	app.Post("/todo-lists", middleware.VerifyJWTToken, w.Create)
-	app.Put("/todo-lists/:id", middleware.VerifyJWTToken, w.Update)
-	app.Delete("/todo-lists/:id", middleware.VerifyJWTToken, w.Delete)
+	app.Get("/todo-list/:id", middleware.VerifyJWTToken, w.GetByID)
+	app.Get("/todo-list", middleware.VerifyJWTToken, w.GetByUserID)
+	app.Post("/todo-list", middleware.VerifyJWTToken, w.Create)
+	app.Put("/todo-list/:id", middleware.VerifyJWTToken, w.Update)
+	app.Delete("/todo-list/:id", middleware.VerifyJWTToken, w.Delete)
 }
 
 // @Summary         Get Todo List by ID
@@ -45,7 +45,7 @@ func (w *TodoListHandler) Register(app fiber.Router) {
 // @Failure			401 {object} entity.CustomErrorResponse "Unauthorized"
 // @Failure			422 {object} entity.CustomErrorResponse "Invalid Request Body"
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
-// @Router			/api/v1/todo-lists/{id} [get]
+// @Router			/api/v1/todo-list/{id} [get]
 func (w *TodoListHandler) GetByID(c fiber.Ctx) error {
 	id, err := w.parser.ParserIntIDFromPathParams(c)
 	if err != nil {
