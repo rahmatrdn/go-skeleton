@@ -41,7 +41,7 @@ Feel free to contribute to this repository if you'd like!
 ## Development Guide
 ### Prerequisite
 - Git (See [Git Installation](https://git-scm.com/downloads))
-- Go 1.24+ (See [Golang Installation](https://golang.org/doc/install))
+- Go 1.26.1+ (See [Golang Installation](https://golang.org/doc/install))
 - MySQL / MariaDB / PostgreSQL (Download via Docker or Other sources)
 - Mockery (Optional) (See [Mockery Installation](https://github.com/vektra/mockery))
 - Go Migrate CLI (Optional) (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
