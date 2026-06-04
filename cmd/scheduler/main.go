@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-co-op/gocron/v2"
+	"github.com/rahmatrdn/go-skeleton/config"
 	"github.com/rahmatrdn/go-skeleton/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/helper"
 	"github.com/subosito/gotenv"
@@ -16,7 +17,8 @@ func init() {
 }
 
 func main() {
-	location, _ := time.LoadLocation("Asia/Jakarta")
+	cfg := config.NewConfig()
+	location := config.SetTimezone(cfg.AppTimezone)
 
 	s, err := gocron.NewScheduler(
 		gocron.WithLocation(location),

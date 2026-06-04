@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/rahmatrdn/go-skeleton/config"
-	_ "github.com/rahmatrdn/go-skeleton/docs"
+	"github.com/rahmatrdn/go-skeleton/docs"
 	"github.com/rahmatrdn/go-skeleton/entity"
 	"github.com/rahmatrdn/go-skeleton/internal/http/auth"
 	"github.com/rahmatrdn/go-skeleton/internal/http/handler"
@@ -22,6 +22,7 @@ import (
 	todo_list_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list"
 	user_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/user"
 
+	"github.com/gofiber/contrib/v3/monitor"
 	swaggo "github.com/gofiber/contrib/v3/swaggo"
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/logger"
@@ -33,25 +34,37 @@ func init() {
 	_ = gotenv.Load()
 }
 
-// @title 						Go Skeleton!
-// @version 					1.0
 // @description 				This is a sample swagger for Go Skeleton
 // @termsOfService 				http://swagger.io/terms/
 // @contact.name 				API Support
-// @contact.email 				rahmat.putra@spesolution.com
+// @contact.email 				rahmatrdn.dev@gmail.com
 // @license.name				Apache 2.0
 // @securityDefinitions.apikey 	Bearer
 // @in							header
 // @name						Authorization
 // @license.url 				http://www.apache.org/licenses/LICENSE-2.0.html
-// @host 						localhost:7011
 // @BasePath /
 func main() {
 	// Initialize config variable from .env file
 	cfg := config.NewConfig()
+	config.SetTimezone(cfg.AppTimezone)
+
+	// Override Swagger info from env
+	docs.SwaggerInfo.Title = cfg.AppName
+	docs.SwaggerInfo.Version = cfg.AppVersion
+	docs.SwaggerInfo.Host = cfg.ApiHost
 
 	app := fiber.New(config.NewFiberConfiguration(cfg))
-	app.Get("/apidoc/*", swaggo.HandlerDefault)
+	app.Get("/apidoc/*", swaggo.New(swaggo.Config{
+		Title:           cfg.AppName + " API Documentation",
+		Layout:          "StandaloneLayout",
+		URL:             "doc.json",
+		DeepLinking:     false,
+		DocExpansion:    "none",
+		SyntaxHighlight: &swaggo.SyntaxHighlightConfig{Activate: true, Theme: "agate"},
+	}))
+
+	app.Get("/metrics", monitor.New(monitor.Config{Title: cfg.AppName + " Metrics Page"}))
 
 	// Middleware setup
 	setupMiddleware(app, cfg)
@@ -73,7 +86,7 @@ func main() {
 
 	// MySQL/MariaDB Initialization
 	gormLogger := config.NewGormLogMysqlConfig(&cfg.MysqlOption)
-	mysqlDB, err := config.NewMysql(cfg.AppEnv, &cfg.MysqlOption, gormLogger)
+	mysqlDB, err := config.NewMysql(cfg.AppEnv, cfg.AppTimezone, &cfg.MysqlOption, gormLogger)
 	if err != nil {
 		log.Fatal(err)
 	}
