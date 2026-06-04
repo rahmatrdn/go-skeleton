@@ -2,5 +2,5 @@ name: LOCAL
 variables:
   - name: url
     value: http://127.0.0.1:7011
-  - name: token
-    value: ""
+  - secret: true
+    name: token
