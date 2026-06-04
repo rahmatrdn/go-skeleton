@@ -1,5 +1,5 @@
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
-FROM golang:1.26.1-alpine3.21 as builder
+FROM golang:1.26.4-alpine3.22 as builder
 
 WORKDIR /app
 
