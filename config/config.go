@@ -1,6 +1,11 @@
 package config
 
-import "github.com/joeshaw/envdecode"
+import (
+	"log"
+	"time"
+
+	"github.com/joeshaw/envdecode"
+)
 
 var StorageDirectory = "./storage/app/"
 
@@ -8,6 +13,7 @@ type Config struct {
 	AppName                  string   `env:"APP_NAME"`
 	AppVersion               string   `env:"APP_VERSION"`
 	AppEnv                   string   `env:"APP_ENV,default=development"`
+	AppTimezone              string   `env:"APP_TIMEZONE,default=UTC"`
 	ApiHost                  string   `env:"API_HOST"`
 	ApiRpcPort               string   `env:"API_RPC_PORT"`
 	ApiPort                  string   `env:"API_PORT,default=8760"`
@@ -21,6 +27,17 @@ type Config struct {
 	MongodbOption
 	RedisOption
 	PostgreSqlOption
+}
+
+// SetTimezone sets the process-wide default timezone based on the APP_TIMEZONE env value.
+// It panics if the timezone string is invalid.
+func SetTimezone(timezone string) *time.Location {
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		log.Fatalf("invalid APP_TIMEZONE %q: %v", timezone, err)
+	}
+	time.Local = loc
+	return loc
 }
 
 // MysqlOption contains mySQL connection options
