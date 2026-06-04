@@ -26,9 +26,9 @@ func (t *TodoListUsecase) GetByUserID(ctx context.Context, userID int64) (res []
 			ID:          v.ID,
 			Title:       v.Title,
 			Description: v.Description,
-			DoingAt:     helper.ConvertToJakartaDate(v.DoingAt),
-			CreatedAt:   helper.ConvertToJakartaTime(v.CreatedAt),
-			UpdatedAt:   helper.ConvertToJakartaTime(v.UpdatedAt),
+			DoingAt:     v.DoingAt,
+			CreatedAt:   v.CreatedAt,
+			UpdatedAt:   v.UpdatedAt,
 		})
 	}
 

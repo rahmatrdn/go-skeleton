@@ -45,7 +45,7 @@ func (t *TodoListUsecase) Create(ctx context.Context, todoListReq entity.TodoLis
 		ID:          todoListPayload.ID,
 		Title:       todoListPayload.Title,
 		Description: todoListPayload.Description,
-		DoingAt:     helper.ConvertToJakartaDate(todoListPayload.DoingAt),
-		CreatedAt:   helper.ConvertToJakartaTime(todoListPayload.CreatedAt),
+		DoingAt:     todoListPayload.DoingAt,
+		CreatedAt:   todoListPayload.CreatedAt,
 	}, nil
 }

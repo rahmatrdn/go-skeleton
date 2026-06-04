@@ -28,8 +28,8 @@ func (t *TodoListUsecase) GetByID(ctx context.Context, todoListID int64) (*entit
 		ID:          data.ID,
 		Title:       data.Title,
 		Description: data.Description,
-		DoingAt:     helper.ConvertToJakartaDate(data.DoingAt),
-		CreatedAt:   helper.ConvertToJakartaTime(data.CreatedAt),
-		UpdatedAt:   helper.ConvertToJakartaTime(data.UpdatedAt),
+		DoingAt:     data.DoingAt,
+		CreatedAt:   data.CreatedAt,
+		UpdatedAt:   data.UpdatedAt,
 	}, nil
 }
