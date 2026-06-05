@@ -22,6 +22,10 @@ type Config struct {
 	AllowedCredentialOrigins []string `env:"ALLOWED_CREDENTIAL_ORIGINS"`
 	MiddlewareAddress        string   `env:"MIDDLEWARE_ADDR"`
 	JwtExpireDaysCount       int      `env:"JWT_EXPIRE_DAYS_COUNT"`
+	JwtSigningMethod         string   `env:"JWT_SIGNING_METHOD,default=rsa"`
+	JwtPrivateKeyPath        string   `env:"JWT_PRIVATE_KEY_PATH,default=private_key.pem"`
+	JwtPublicKeyPath         string   `env:"JWT_PUBLIC_KEY_PATH,default=public_key.pem"`
+	JwtSecretKey             string   `env:"JWT_SECRET_KEY"`
 	MysqlOption
 	RabbitMQOption
 	MongodbOption
