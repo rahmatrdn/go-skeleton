@@ -44,6 +44,7 @@ func init() {
 // @securityDefinitions.apikey 	Bearer
 // @in							header
 // @name						Authorization
+// @description				    Type "Bearer" followed by a space and JWT token. Example: "Bearer {token}"
 // @license.url 				http://www.apache.org/licenses/LICENSE-2.0.html
 // @BasePath /
 func main() {

@@ -828,6 +828,8 @@ paths:
       - Todo List
 securityDefinitions:
   Bearer:
+    description: 'Type "Bearer" followed by a space and JWT token. Example: "Bearer
+      {token}"'
     in: header
     name: Authorization
     type: apiKey

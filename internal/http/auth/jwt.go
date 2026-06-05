@@ -3,6 +3,7 @@ package auth
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gofiber/fiber/v3"
@@ -63,7 +64,7 @@ func VerifyToken(c fiber.Ctx) error {
 		return fmt.Errorf("EMPTY TOKEN")
 	}
 
-	token := authHeader[7:]
+	token := strings.TrimPrefix(authHeader, "Bearer ")
 	cfg := config.NewConfig()
 
 	keyFunc, err := buildKeyFunc(cfg)
@@ -89,7 +90,7 @@ func RefreshToken(c fiber.Ctx) (string, error) {
 		return "", fmt.Errorf("EMPTY TOKEN")
 	}
 
-	oldToken := authHeader[7:]
+	oldToken := strings.TrimPrefix(authHeader, "Bearer ")
 	cfg := config.NewConfig()
 
 	keyFunc, err := buildKeyFunc(cfg)
