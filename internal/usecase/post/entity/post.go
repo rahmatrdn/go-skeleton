@@ -20,6 +20,7 @@ type PostReq struct {
 type PostResponse struct {
 	ID          int64      `json:"id,omitempty"`
 	UserID      int64      `json:"user_id"`
+	UserName    string     `json:"user_name"`
 	Title       string     `json:"title"`
 	Slug        string     `json:"slug"`
 	Body        string     `json:"body"`

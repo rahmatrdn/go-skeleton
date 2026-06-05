@@ -23,6 +23,7 @@ func (t *PostUsecase) GetAll(ctx context.Context) ([]*entity.PostResponse, error
 		result = append(result, &entity.PostResponse{
 			ID:          d.ID,
 			UserID:      d.UserID,
+			UserName:    d.UserName,
 			Title:       d.Title,
 			Slug:        d.Slug,
 			Body:        d.Body,

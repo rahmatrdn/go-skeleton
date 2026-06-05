@@ -27,6 +27,7 @@ func (t *PostUsecase) GetByID(ctx context.Context, postID int64) (*entity.PostRe
 	return &entity.PostResponse{
 		ID:          data.ID,
 		UserID:      data.UserID,
+		UserName:    data.UserName,
 		Title:       data.Title,
 		Slug:        data.Slug,
 		Body:        data.Body,

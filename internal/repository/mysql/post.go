@@ -39,7 +39,12 @@ func (r *PostRepository) GetAll(ctx context.Context) (result []*entity.Post, err
 		return nil, errwrap.Wrap(err, funcName)
 	}
 
-	err = r.db.Raw("SELECT * FROM posts ORDER BY created_at DESC").Scan(&result).Error
+	err = r.db.Raw(`
+		SELECT p.*, u.name AS user_name
+		FROM posts p
+		LEFT JOIN users u ON u.id = p.user_id
+		ORDER BY p.created_at DESC
+	`).Scan(&result).Error
 	if errwrap.Is(err, gorm.ErrRecordNotFound) {
 		return nil, apperr.ErrRecordNotFound()
 	}
@@ -54,7 +59,12 @@ func (r *PostRepository) GetByID(ctx context.Context, ID int64) (result *entity.
 		return nil, errwrap.Wrap(err, funcName)
 	}
 
-	err = r.db.Raw("SELECT * FROM posts WHERE id = ? LIMIT 1", ID).Scan(&result).Error
+	err = r.db.Raw(`
+		SELECT p.*, u.name AS user_name
+		FROM posts p
+		LEFT JOIN users u ON u.id = p.user_id
+		WHERE p.id = ? LIMIT 1
+	`, ID).Scan(&result).Error
 	if errwrap.Is(err, gorm.ErrRecordNotFound) {
 		return nil, apperr.ErrRecordNotFound()
 	}

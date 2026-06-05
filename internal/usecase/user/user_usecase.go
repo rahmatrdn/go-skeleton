@@ -23,4 +23,5 @@ func NewUserUsecase(
 type IUserUsecase interface {
 	VerifyByEmailAndPassword(ctx context.Context, req *entity.LoginReq) (loginRes *entity.LoginResponse, err error)
 	CreateAsGuest(ctx context.Context, createUserReq *entity.CreateUserReq) (*entity.CreateUserResponse, error)
+	RefreshToken(ctx context.Context, oldToken string) (*entity.RefreshTokenResponse, error)
 }
