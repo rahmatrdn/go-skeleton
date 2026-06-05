@@ -10,11 +10,11 @@ http:
     type: json
     data: |-
       {
-        "email": "asd@asd.asd",
+        "email": "",
         "name": "Rahmat Ramadhan",
         "phone": "213412321",
-        "password": "asdasd",
-        "reenter_password": "asdasd",
+        "password": "",
+        "reenter_password": "",
         "role_access": 1
       }
   auth: inherit
