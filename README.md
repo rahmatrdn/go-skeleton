@@ -42,7 +42,7 @@ Feel free to contribute to this repository if you'd like!
 ### Prerequisite
 - Git (See [Git Installation](https://git-scm.com/downloads))
 - Go 1.26.1+ (See [Golang Installation](https://golang.org/doc/install))
-- MySQL / MariaDB / PostgreSQL (Download via Docker or Other sources)
+- MySQL / MariaDB / PostgreSQL (In this example using MYSQL)
 - Mockery (Optional) (See [Mockery Installation](https://github.com/vektra/mockery))
 - Go Migrate CLI (Optional) (See [Migrate CLI Installation](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate))
 - Redis (Optional based on your requirement) (See [Redis Installation](https://redis.io/docs/getting-started/installation/) or use in Docker)
