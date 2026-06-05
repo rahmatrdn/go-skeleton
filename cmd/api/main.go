@@ -19,6 +19,8 @@ import (
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
 	"github.com/rahmatrdn/go-skeleton/internal/presenter/json"
 	"github.com/rahmatrdn/go-skeleton/internal/repository/mysql"
+	comment_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/comment"
+	post_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/post"
 	todo_list_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/todo_list"
 	user_usecase "github.com/rahmatrdn/go-skeleton/internal/usecase/user"
 
@@ -104,16 +106,22 @@ func main() {
 	// REPOSITORY : Write repository code here (database, cache, etc.)
 	userRepo := mysql.NewUserRepository(mysqlDB)
 	todoListRepo := mysql.NewTodoListRepository(mysqlDB)
+	postRepo := mysql.NewPostRepository(mysqlDB)
+	commentRepo := mysql.NewCommentRepository(mysqlDB)
 
 	// USECASE : Write bussines logic code here (validation, business logic, etc.)
 	// _ = usecase.NewLogUsecase(queue)  // LogUsecase is a sample usecase for sending log to queue (Mongodb, ElasticSearch, etc.)
 	userUsecase := user_usecase.NewUserUsecase(userRepo, jwtAuth)
 	todoListUsecase := todo_list_usecase.NewTodoListUsecase(todoListRepo)
+	postUsecase := post_usecase.NewPostUsecase(postRepo)
+	commentUsecase := comment_usecase.NewCommentUsecase(commentRepo, postRepo)
 
 	api := app.Group("/api/v1")
 
 	handler.NewAuthHandler(parser, presenterJson, userUsecase).Register(api)
 	handler.NewTodoListHandler(parser, presenterJson, todoListUsecase).Register(api)
+	handler.NewPostHandler(parser, presenterJson, postUsecase).Register(api)
+	handler.NewCommentHandler(parser, presenterJson, commentUsecase).Register(api)
 
 	app.Get("/health-check", healthCheck)
 
