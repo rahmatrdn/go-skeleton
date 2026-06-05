@@ -1,0 +1,25 @@
+info:
+  name: Delete
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{url}}/api/v1/posts"
+  body:
+    type: json
+    data: |-
+      {
+        "body": "ini body",
+        "status": 1,
+        "title": "ini judul"
+      }
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

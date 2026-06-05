@@ -1,0 +1,25 @@
+info:
+  name: Update
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{url}}/api/v1/posts/1"
+  body:
+    type: json
+    data: |-
+      {
+        "body": "ini body 2",
+        "status": 1,
+        "title": "ini judul 2"
+      }
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
