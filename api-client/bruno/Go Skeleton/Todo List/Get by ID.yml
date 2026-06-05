@@ -1,11 +1,11 @@
 info:
-  name: Delete
+  name: Get by ID
   type: http
   seq: 4
 
 http:
-  method: DELETE
-  url: "{{url}}/api/v1/posts/1"
+  method: GET
+  url: "{{url}}/api/v1/todo-list/16"
   auth:
     type: bearer
     token: "{{token}}"

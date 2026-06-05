@@ -1,11 +1,11 @@
 info:
-  name: Delete
+  name: Refresh Token
   type: http
   seq: 4
 
 http:
-  method: DELETE
-  url: "{{url}}/api/v1/posts/1"
+  method: POST
+  url: "{{url}}/api/v1/auth/refresh-token"
   auth:
     type: bearer
     token: "{{token}}"

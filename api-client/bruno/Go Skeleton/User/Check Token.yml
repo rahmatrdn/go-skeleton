@@ -1,18 +1,11 @@
 info:
-  name: Update
+  name: Check Token
   type: http
   seq: 3
 
 http:
-  method: PUT
-  url: "{{url}}/api/v1/comment/1"
-  body:
-    type: json
-    data: |-
-      {
-        "body": "updated",
-        "post_id": 2
-      }
+  method: GET
+  url: "{{url}}/api/v1/auth/check-token"
   auth:
     type: bearer
     token: "{{token}}"

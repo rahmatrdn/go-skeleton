@@ -1,11 +1,11 @@
 info:
-  name: Create
+  name: Update
   type: http
   seq: 2
 
 http:
-  method: POST
-  url: "{{url}}/api/v1/todo-list"
+  method: PUT
+  url: "{{url}}/api/v1/todo-list/3"
   body:
     type: json
     data: |-

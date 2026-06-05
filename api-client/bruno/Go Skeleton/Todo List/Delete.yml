@@ -1,17 +1,18 @@
 info:
-  name: Update
+  name: Delete
   type: http
   seq: 3
 
 http:
-  method: PUT
-  url: "{{url}}/api/v1/comment/1"
+  method: DELETE
+  url: "{{url}}/api/v1/todo-list/15"
   body:
     type: json
     data: |-
       {
-        "body": "updated",
-        "post_id": 2
+        "description": "test",
+        "doing_at": "2026-06-01",
+        "title": ""
       }
   auth:
     type: bearer

@@ -1,6 +1,6 @@
 name: DEV
 variables:
   - name: url
-    value: research-and-development-go-skeleton-zud-132bbd-103-150-101-126.sslip.io
+    value: https://go-skeleton.eskalaber.my.id
   - name: token
     value: ""
