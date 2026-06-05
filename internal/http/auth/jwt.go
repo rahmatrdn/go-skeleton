@@ -21,6 +21,7 @@ func NewJWTAuth() *JWT {
 
 type JWTAuth interface {
 	GenerateToken(user *mentity.User) (string, error)
+	RefreshToken(oldToken string) (string, error)
 }
 
 func (j *JWT) GenerateToken(user *mentity.User) (string, error) {
@@ -82,6 +83,45 @@ func VerifyToken(c fiber.Ctx) error {
 	c.Locals("user_id", claims.UserID)
 
 	return nil
+}
+
+func (j *JWT) RefreshToken(oldToken string) (string, error) {
+	cfg := config.NewConfig()
+
+	keyFunc, err := buildKeyFunc(cfg)
+	if err != nil {
+		return "", err
+	}
+
+	claims := &entity.Claims{}
+	tkn, err := jwt.ParseWithClaims(oldToken, claims, keyFunc)
+	if err != nil || !tkn.Valid {
+		return "", fmt.Errorf("invalid token: %w", err)
+	}
+
+	claims.RegisteredClaims.ExpiresAt = jwt.NewNumericDate(time.Now().Add(time.Duration(cfg.JwtExpireDaysCount) * 24 * time.Hour))
+
+	switch cfg.JwtSigningMethod {
+	case "rsa":
+		privateKeyBytes, err := os.ReadFile(cfg.JwtPrivateKeyPath)
+		if err != nil {
+			return "", err
+		}
+		privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKeyBytes)
+		if err != nil {
+			return "", err
+		}
+		newToken := jwt.NewWithClaims(jwt.SigningMethodRS512, claims)
+		return newToken.SignedString(privateKey)
+	case "hmac":
+		if cfg.JwtSecretKey == "" {
+			return "", fmt.Errorf("JWT_SECRET_KEY is required for hmac mode")
+		}
+		newToken := jwt.NewWithClaims(jwt.SigningMethodHS512, claims)
+		return newToken.SignedString([]byte(cfg.JwtSecretKey))
+	default:
+		return "", fmt.Errorf("unsupported JWT signing method: %s", cfg.JwtSigningMethod)
+	}
 }
 
 func RefreshToken(c fiber.Ctx) (string, error) {
