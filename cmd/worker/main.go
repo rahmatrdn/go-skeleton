@@ -37,6 +37,7 @@ func main() {
 
 	app.ctx = context.Background()
 	cfg := config.NewConfig()
+	config.SetTimezone(cfg.AppTimezone)
 
 	app.mongoDB, err = config.NewMongodb(app.ctx, &cfg.MongodbOption)
 	if err != nil {

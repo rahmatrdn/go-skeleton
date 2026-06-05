@@ -95,3 +95,57 @@ func (_c *JWTAuth_GenerateToken_Call) RunAndReturn(run func(user *entity.User) (
 	_c.Call.Return(run)
 	return _c
 }
+
+// RefreshToken provides a mock function for the type JWTAuth
+func (_mock *JWTAuth) RefreshToken(oldToken string) (string, error) {
+	ret := _mock.Called(oldToken)
+
+	if len(ret) == 0 {
+		panic("no return value specified for RefreshToken")
+	}
+
+	var r0 string
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(string) (string, error)); ok {
+		return returnFunc(oldToken)
+	}
+	if returnFunc, ok := ret.Get(0).(func(string) string); ok {
+		r0 = returnFunc(oldToken)
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+	if returnFunc, ok := ret.Get(1).(func(string) error); ok {
+		r1 = returnFunc(oldToken)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
+}
+
+// JWTAuth_RefreshToken_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'RefreshToken'
+type JWTAuth_RefreshToken_Call struct {
+	*mock.Call
+}
+
+// RefreshToken is a helper method to define mock.On call
+//   - oldToken string
+func (_e *JWTAuth_Expecter) RefreshToken(oldToken interface{}) *JWTAuth_RefreshToken_Call {
+	return &JWTAuth_RefreshToken_Call{Call: _e.mock.On("RefreshToken", oldToken)}
+}
+
+func (_c *JWTAuth_RefreshToken_Call) Run(run func(oldToken string)) *JWTAuth_RefreshToken_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(string))
+	})
+	return _c
+}
+
+func (_c *JWTAuth_RefreshToken_Call) Return(s string, err error) *JWTAuth_RefreshToken_Call {
+	_c.Call.Return(s, err)
+	return _c
+}
+
+func (_c *JWTAuth_RefreshToken_Call) RunAndReturn(run func(oldToken string) (string, error)) *JWTAuth_RefreshToken_Call {
+	_c.Call.Return(run)
+	return _c
+}

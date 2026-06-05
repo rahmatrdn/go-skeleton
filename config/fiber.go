@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 )
 
 func NewFiberConfiguration(cfg *Config) fiber.Config {

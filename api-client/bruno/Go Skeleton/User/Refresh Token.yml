@@ -1,0 +1,17 @@
+info:
+  name: Refresh Token
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{url}}/api/v1/auth/refresh-token"
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

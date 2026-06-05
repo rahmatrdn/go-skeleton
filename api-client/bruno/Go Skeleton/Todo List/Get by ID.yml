@@ -1,0 +1,17 @@
+info:
+  name: Get by ID
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{url}}/api/v1/todo-list/16"
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

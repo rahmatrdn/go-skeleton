@@ -127,12 +127,6 @@ func StructToMap(m any, nonZeroVal bool) map[string]any {
 	return out
 }
 
-func NowStrUTC() string {
-	return fmt.Sprintf("%d-%02d-%02dT%02d:%02d:%02d",
-		time.Now().UTC().Year(), time.Now().UTC().Month(), time.Now().UTC().Day(),
-		time.Now().UTC().Hour(), time.Now().UTC().Minute(), time.Now().UTC().Second())
-}
-
 func InArray(val interface{}, array interface{}) (found bool) {
 	values := reflect.ValueOf(array)
 
@@ -198,16 +192,6 @@ func GetDataInStruct(data interface{}, refColumn string, searchValue interface{}
 func VerifyBcryptHash(plaintext, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(plaintext))
 	return err == nil
-}
-
-func ConvertToJakartaTime(t time.Time) string {
-	loc, _ := time.LoadLocation("Asia/Jakarta")
-	return t.In(loc).Format("2006-01-02 15:04:05")
-}
-
-func ConvertToJakartaDate(t time.Time) string {
-	loc, _ := time.LoadLocation("Asia/Jakarta")
-	return t.In(loc).Format("2006-01-02")
 }
 
 func GetAppEnv() string {

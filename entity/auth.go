@@ -49,6 +49,10 @@ type CreateUserResponse struct {
 	Token      string `json:"access_token"`
 }
 
+type RefreshTokenResponse struct {
+	Token string `json:"access_token"`
+}
+
 type Claims struct {
 	jwt.RegisteredClaims
 	UserID     int64  `json:"user_id"`

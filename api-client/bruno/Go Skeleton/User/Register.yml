@@ -1,0 +1,26 @@
+info:
+  name: Register
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{url}}/api/v1/auth/register"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "",
+        "name": "Rahmat Ramadhan",
+        "phone": "213412321",
+        "password": "",
+        "reenter_password": "",
+        "role_access": 1
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

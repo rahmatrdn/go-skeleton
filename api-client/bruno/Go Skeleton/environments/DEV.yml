@@ -1,0 +1,6 @@
+name: DEV
+variables:
+  - name: url
+    value: https://go-skeleton.eskalaber.my.id
+  - name: token
+    value: ""

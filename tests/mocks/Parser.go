@@ -5,7 +5,7 @@
 package mocks
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 	"github.com/rahmatrdn/go-skeleton/internal/parser"
 	mock "github.com/stretchr/testify/mock"
 )
@@ -38,7 +38,7 @@ func (_m *Parser) EXPECT() *Parser_Expecter {
 }
 
 // ParseQueryParams provides a mock function for the type Parser
-func (_mock *Parser) ParseQueryParams(c *fiber.Ctx, req parser.QueryParamsRequest) error {
+func (_mock *Parser) ParseQueryParams(c fiber.Ctx, req parser.QueryParamsRequest) error {
 	ret := _mock.Called(c, req)
 
 	if len(ret) == 0 {
@@ -46,7 +46,7 @@ func (_mock *Parser) ParseQueryParams(c *fiber.Ctx, req parser.QueryParamsReques
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx, parser.QueryParamsRequest) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx, parser.QueryParamsRequest) error); ok {
 		r0 = returnFunc(c, req)
 	} else {
 		r0 = ret.Error(0)
@@ -60,17 +60,17 @@ type Parser_ParseQueryParams_Call struct {
 }
 
 // ParseQueryParams is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 //   - req parser.QueryParamsRequest
 func (_e *Parser_Expecter) ParseQueryParams(c interface{}, req interface{}) *Parser_ParseQueryParams_Call {
 	return &Parser_ParseQueryParams_Call{Call: _e.mock.On("ParseQueryParams", c, req)}
 }
 
-func (_c *Parser_ParseQueryParams_Call) Run(run func(c *fiber.Ctx, req parser.QueryParamsRequest)) *Parser_ParseQueryParams_Call {
+func (_c *Parser_ParseQueryParams_Call) Run(run func(c fiber.Ctx, req parser.QueryParamsRequest)) *Parser_ParseQueryParams_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		var arg1 parser.QueryParamsRequest
 		if args[1] != nil {
@@ -89,13 +89,13 @@ func (_c *Parser_ParseQueryParams_Call) Return(err error) *Parser_ParseQueryPara
 	return _c
 }
 
-func (_c *Parser_ParseQueryParams_Call) RunAndReturn(run func(c *fiber.Ctx, req parser.QueryParamsRequest) error) *Parser_ParseQueryParams_Call {
+func (_c *Parser_ParseQueryParams_Call) RunAndReturn(run func(c fiber.Ctx, req parser.QueryParamsRequest) error) *Parser_ParseQueryParams_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ParserBodyRequest provides a mock function for the type Parser
-func (_mock *Parser) ParserBodyRequest(c *fiber.Ctx, req parser.BodyRequest) error {
+func (_mock *Parser) ParserBodyRequest(c fiber.Ctx, req parser.BodyRequest) error {
 	ret := _mock.Called(c, req)
 
 	if len(ret) == 0 {
@@ -103,7 +103,7 @@ func (_mock *Parser) ParserBodyRequest(c *fiber.Ctx, req parser.BodyRequest) err
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx, parser.BodyRequest) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx, parser.BodyRequest) error); ok {
 		r0 = returnFunc(c, req)
 	} else {
 		r0 = ret.Error(0)
@@ -117,17 +117,17 @@ type Parser_ParserBodyRequest_Call struct {
 }
 
 // ParserBodyRequest is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 //   - req parser.BodyRequest
 func (_e *Parser_Expecter) ParserBodyRequest(c interface{}, req interface{}) *Parser_ParserBodyRequest_Call {
 	return &Parser_ParserBodyRequest_Call{Call: _e.mock.On("ParserBodyRequest", c, req)}
 }
 
-func (_c *Parser_ParserBodyRequest_Call) Run(run func(c *fiber.Ctx, req parser.BodyRequest)) *Parser_ParserBodyRequest_Call {
+func (_c *Parser_ParserBodyRequest_Call) Run(run func(c fiber.Ctx, req parser.BodyRequest)) *Parser_ParserBodyRequest_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		var arg1 parser.BodyRequest
 		if args[1] != nil {
@@ -146,13 +146,13 @@ func (_c *Parser_ParserBodyRequest_Call) Return(err error) *Parser_ParserBodyReq
 	return _c
 }
 
-func (_c *Parser_ParserBodyRequest_Call) RunAndReturn(run func(c *fiber.Ctx, req parser.BodyRequest) error) *Parser_ParserBodyRequest_Call {
+func (_c *Parser_ParserBodyRequest_Call) RunAndReturn(run func(c fiber.Ctx, req parser.BodyRequest) error) *Parser_ParserBodyRequest_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ParserBodyRequestWithUserID provides a mock function for the type Parser
-func (_mock *Parser) ParserBodyRequestWithUserID(c *fiber.Ctx, req parser.WithUserID) error {
+func (_mock *Parser) ParserBodyRequestWithUserID(c fiber.Ctx, req parser.WithUserID) error {
 	ret := _mock.Called(c, req)
 
 	if len(ret) == 0 {
@@ -160,7 +160,7 @@ func (_mock *Parser) ParserBodyRequestWithUserID(c *fiber.Ctx, req parser.WithUs
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx, parser.WithUserID) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx, parser.WithUserID) error); ok {
 		r0 = returnFunc(c, req)
 	} else {
 		r0 = ret.Error(0)
@@ -174,17 +174,17 @@ type Parser_ParserBodyRequestWithUserID_Call struct {
 }
 
 // ParserBodyRequestWithUserID is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 //   - req parser.WithUserID
 func (_e *Parser_Expecter) ParserBodyRequestWithUserID(c interface{}, req interface{}) *Parser_ParserBodyRequestWithUserID_Call {
 	return &Parser_ParserBodyRequestWithUserID_Call{Call: _e.mock.On("ParserBodyRequestWithUserID", c, req)}
 }
 
-func (_c *Parser_ParserBodyRequestWithUserID_Call) Run(run func(c *fiber.Ctx, req parser.WithUserID)) *Parser_ParserBodyRequestWithUserID_Call {
+func (_c *Parser_ParserBodyRequestWithUserID_Call) Run(run func(c fiber.Ctx, req parser.WithUserID)) *Parser_ParserBodyRequestWithUserID_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		var arg1 parser.WithUserID
 		if args[1] != nil {
@@ -203,13 +203,13 @@ func (_c *Parser_ParserBodyRequestWithUserID_Call) Return(err error) *Parser_Par
 	return _c
 }
 
-func (_c *Parser_ParserBodyRequestWithUserID_Call) RunAndReturn(run func(c *fiber.Ctx, req parser.WithUserID) error) *Parser_ParserBodyRequestWithUserID_Call {
+func (_c *Parser_ParserBodyRequestWithUserID_Call) RunAndReturn(run func(c fiber.Ctx, req parser.WithUserID) error) *Parser_ParserBodyRequestWithUserID_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ParserBodyWithIntIDPathParams provides a mock function for the type Parser
-func (_mock *Parser) ParserBodyWithIntIDPathParams(c *fiber.Ctx, req parser.WithPathID) error {
+func (_mock *Parser) ParserBodyWithIntIDPathParams(c fiber.Ctx, req parser.WithPathID) error {
 	ret := _mock.Called(c, req)
 
 	if len(ret) == 0 {
@@ -217,7 +217,7 @@ func (_mock *Parser) ParserBodyWithIntIDPathParams(c *fiber.Ctx, req parser.With
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx, parser.WithPathID) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx, parser.WithPathID) error); ok {
 		r0 = returnFunc(c, req)
 	} else {
 		r0 = ret.Error(0)
@@ -231,17 +231,17 @@ type Parser_ParserBodyWithIntIDPathParams_Call struct {
 }
 
 // ParserBodyWithIntIDPathParams is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 //   - req parser.WithPathID
 func (_e *Parser_Expecter) ParserBodyWithIntIDPathParams(c interface{}, req interface{}) *Parser_ParserBodyWithIntIDPathParams_Call {
 	return &Parser_ParserBodyWithIntIDPathParams_Call{Call: _e.mock.On("ParserBodyWithIntIDPathParams", c, req)}
 }
 
-func (_c *Parser_ParserBodyWithIntIDPathParams_Call) Run(run func(c *fiber.Ctx, req parser.WithPathID)) *Parser_ParserBodyWithIntIDPathParams_Call {
+func (_c *Parser_ParserBodyWithIntIDPathParams_Call) Run(run func(c fiber.Ctx, req parser.WithPathID)) *Parser_ParserBodyWithIntIDPathParams_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		var arg1 parser.WithPathID
 		if args[1] != nil {
@@ -260,13 +260,13 @@ func (_c *Parser_ParserBodyWithIntIDPathParams_Call) Return(err error) *Parser_P
 	return _c
 }
 
-func (_c *Parser_ParserBodyWithIntIDPathParams_Call) RunAndReturn(run func(c *fiber.Ctx, req parser.WithPathID) error) *Parser_ParserBodyWithIntIDPathParams_Call {
+func (_c *Parser_ParserBodyWithIntIDPathParams_Call) RunAndReturn(run func(c fiber.Ctx, req parser.WithPathID) error) *Parser_ParserBodyWithIntIDPathParams_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ParserBodyWithIntIDPathParamsAndUserID provides a mock function for the type Parser
-func (_mock *Parser) ParserBodyWithIntIDPathParamsAndUserID(c *fiber.Ctx, req parser.WithPathIDAndUserID) error {
+func (_mock *Parser) ParserBodyWithIntIDPathParamsAndUserID(c fiber.Ctx, req parser.WithPathIDAndUserID) error {
 	ret := _mock.Called(c, req)
 
 	if len(ret) == 0 {
@@ -274,7 +274,7 @@ func (_mock *Parser) ParserBodyWithIntIDPathParamsAndUserID(c *fiber.Ctx, req pa
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx, parser.WithPathIDAndUserID) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx, parser.WithPathIDAndUserID) error); ok {
 		r0 = returnFunc(c, req)
 	} else {
 		r0 = ret.Error(0)
@@ -288,17 +288,17 @@ type Parser_ParserBodyWithIntIDPathParamsAndUserID_Call struct {
 }
 
 // ParserBodyWithIntIDPathParamsAndUserID is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 //   - req parser.WithPathIDAndUserID
 func (_e *Parser_Expecter) ParserBodyWithIntIDPathParamsAndUserID(c interface{}, req interface{}) *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call {
 	return &Parser_ParserBodyWithIntIDPathParamsAndUserID_Call{Call: _e.mock.On("ParserBodyWithIntIDPathParamsAndUserID", c, req)}
 }
 
-func (_c *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call) Run(run func(c *fiber.Ctx, req parser.WithPathIDAndUserID)) *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call {
+func (_c *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call) Run(run func(c fiber.Ctx, req parser.WithPathIDAndUserID)) *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		var arg1 parser.WithPathIDAndUserID
 		if args[1] != nil {
@@ -317,13 +317,13 @@ func (_c *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call) Return(err error) 
 	return _c
 }
 
-func (_c *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call) RunAndReturn(run func(c *fiber.Ctx, req parser.WithPathIDAndUserID) error) *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call {
+func (_c *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call) RunAndReturn(run func(c fiber.Ctx, req parser.WithPathIDAndUserID) error) *Parser_ParserBodyWithIntIDPathParamsAndUserID_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ParserIntIDFromPathParams provides a mock function for the type Parser
-func (_mock *Parser) ParserIntIDFromPathParams(c *fiber.Ctx) (int64, error) {
+func (_mock *Parser) ParserIntIDFromPathParams(c fiber.Ctx) (int64, error) {
 	ret := _mock.Called(c)
 
 	if len(ret) == 0 {
@@ -332,15 +332,15 @@ func (_mock *Parser) ParserIntIDFromPathParams(c *fiber.Ctx) (int64, error) {
 
 	var r0 int64
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx) (int64, error)); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx) (int64, error)); ok {
 		return returnFunc(c)
 	}
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx) int64); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx) int64); ok {
 		r0 = returnFunc(c)
 	} else {
 		r0 = ret.Get(0).(int64)
 	}
-	if returnFunc, ok := ret.Get(1).(func(*fiber.Ctx) error); ok {
+	if returnFunc, ok := ret.Get(1).(func(fiber.Ctx) error); ok {
 		r1 = returnFunc(c)
 	} else {
 		r1 = ret.Error(1)
@@ -354,16 +354,16 @@ type Parser_ParserIntIDFromPathParams_Call struct {
 }
 
 // ParserIntIDFromPathParams is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 func (_e *Parser_Expecter) ParserIntIDFromPathParams(c interface{}) *Parser_ParserIntIDFromPathParams_Call {
 	return &Parser_ParserIntIDFromPathParams_Call{Call: _e.mock.On("ParserIntIDFromPathParams", c)}
 }
 
-func (_c *Parser_ParserIntIDFromPathParams_Call) Run(run func(c *fiber.Ctx)) *Parser_ParserIntIDFromPathParams_Call {
+func (_c *Parser_ParserIntIDFromPathParams_Call) Run(run func(c fiber.Ctx)) *Parser_ParserIntIDFromPathParams_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		run(
 			arg0,
@@ -377,13 +377,13 @@ func (_c *Parser_ParserIntIDFromPathParams_Call) Return(n int64, err error) *Par
 	return _c
 }
 
-func (_c *Parser_ParserIntIDFromPathParams_Call) RunAndReturn(run func(c *fiber.Ctx) (int64, error)) *Parser_ParserIntIDFromPathParams_Call {
+func (_c *Parser_ParserIntIDFromPathParams_Call) RunAndReturn(run func(c fiber.Ctx) (int64, error)) *Parser_ParserIntIDFromPathParams_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // ParserUserID provides a mock function for the type Parser
-func (_mock *Parser) ParserUserID(c *fiber.Ctx) (int64, error) {
+func (_mock *Parser) ParserUserID(c fiber.Ctx) (int64, error) {
 	ret := _mock.Called(c)
 
 	if len(ret) == 0 {
@@ -392,15 +392,15 @@ func (_mock *Parser) ParserUserID(c *fiber.Ctx) (int64, error) {
 
 	var r0 int64
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx) (int64, error)); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx) (int64, error)); ok {
 		return returnFunc(c)
 	}
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx) int64); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx) int64); ok {
 		r0 = returnFunc(c)
 	} else {
 		r0 = ret.Get(0).(int64)
 	}
-	if returnFunc, ok := ret.Get(1).(func(*fiber.Ctx) error); ok {
+	if returnFunc, ok := ret.Get(1).(func(fiber.Ctx) error); ok {
 		r1 = returnFunc(c)
 	} else {
 		r1 = ret.Error(1)
@@ -414,16 +414,16 @@ type Parser_ParserUserID_Call struct {
 }
 
 // ParserUserID is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 func (_e *Parser_Expecter) ParserUserID(c interface{}) *Parser_ParserUserID_Call {
 	return &Parser_ParserUserID_Call{Call: _e.mock.On("ParserUserID", c)}
 }
 
-func (_c *Parser_ParserUserID_Call) Run(run func(c *fiber.Ctx)) *Parser_ParserUserID_Call {
+func (_c *Parser_ParserUserID_Call) Run(run func(c fiber.Ctx)) *Parser_ParserUserID_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		run(
 			arg0,
@@ -437,7 +437,7 @@ func (_c *Parser_ParserUserID_Call) Return(n int64, err error) *Parser_ParserUse
 	return _c
 }
 
-func (_c *Parser_ParserUserID_Call) RunAndReturn(run func(c *fiber.Ctx) (int64, error)) *Parser_ParserUserID_Call {
+func (_c *Parser_ParserUserID_Call) RunAndReturn(run func(c fiber.Ctx) (int64, error)) *Parser_ParserUserID_Call {
 	_c.Call.Return(run)
 	return _c
 }

@@ -1,6 +1,11 @@
 package config
 
-import "github.com/joeshaw/envdecode"
+import (
+	"log"
+	"time"
+
+	"github.com/joeshaw/envdecode"
+)
 
 var StorageDirectory = "./storage/app/"
 
@@ -8,6 +13,7 @@ type Config struct {
 	AppName                  string   `env:"APP_NAME"`
 	AppVersion               string   `env:"APP_VERSION"`
 	AppEnv                   string   `env:"APP_ENV,default=development"`
+	AppTimezone              string   `env:"APP_TIMEZONE,default=UTC"`
 	ApiHost                  string   `env:"API_HOST"`
 	ApiRpcPort               string   `env:"API_RPC_PORT"`
 	ApiPort                  string   `env:"API_PORT,default=8760"`
@@ -16,11 +22,26 @@ type Config struct {
 	AllowedCredentialOrigins []string `env:"ALLOWED_CREDENTIAL_ORIGINS"`
 	MiddlewareAddress        string   `env:"MIDDLEWARE_ADDR"`
 	JwtExpireDaysCount       int      `env:"JWT_EXPIRE_DAYS_COUNT"`
+	JwtSigningMethod         string   `env:"JWT_SIGNING_METHOD,default=rsa"`
+	JwtPrivateKeyPath        string   `env:"JWT_PRIVATE_KEY_PATH,default=private_key.pem"`
+	JwtPublicKeyPath         string   `env:"JWT_PUBLIC_KEY_PATH,default=public_key.pem"`
+	JwtSecretKey             string   `env:"JWT_SECRET_KEY"`
 	MysqlOption
 	RabbitMQOption
 	MongodbOption
 	RedisOption
 	PostgreSqlOption
+}
+
+// SetTimezone sets the process-wide default timezone based on the APP_TIMEZONE env value.
+// It panics if the timezone string is invalid.
+func SetTimezone(timezone string) *time.Location {
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		log.Fatalf("invalid APP_TIMEZONE %q: %v", timezone, err)
+	}
+	time.Local = loc
+	return loc
 }
 
 // MysqlOption contains mySQL connection options

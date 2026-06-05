@@ -5,7 +5,7 @@
 package mocks
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -37,7 +37,7 @@ func (_m *JsonPresenter) EXPECT() *JsonPresenter_Expecter {
 }
 
 // BuildError provides a mock function for the type JsonPresenter
-func (_mock *JsonPresenter) BuildError(c *fiber.Ctx, err error) error {
+func (_mock *JsonPresenter) BuildError(c fiber.Ctx, err error) error {
 	ret := _mock.Called(c, err)
 
 	if len(ret) == 0 {
@@ -45,7 +45,7 @@ func (_mock *JsonPresenter) BuildError(c *fiber.Ctx, err error) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx, error) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx, error) error); ok {
 		r0 = returnFunc(c, err)
 	} else {
 		r0 = ret.Error(0)
@@ -59,17 +59,17 @@ type JsonPresenter_BuildError_Call struct {
 }
 
 // BuildError is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 //   - err error
 func (_e *JsonPresenter_Expecter) BuildError(c interface{}, err interface{}) *JsonPresenter_BuildError_Call {
 	return &JsonPresenter_BuildError_Call{Call: _e.mock.On("BuildError", c, err)}
 }
 
-func (_c *JsonPresenter_BuildError_Call) Run(run func(c *fiber.Ctx, err error)) *JsonPresenter_BuildError_Call {
+func (_c *JsonPresenter_BuildError_Call) Run(run func(c fiber.Ctx, err error)) *JsonPresenter_BuildError_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		var arg1 error
 		if args[1] != nil {
@@ -88,13 +88,13 @@ func (_c *JsonPresenter_BuildError_Call) Return(err1 error) *JsonPresenter_Build
 	return _c
 }
 
-func (_c *JsonPresenter_BuildError_Call) RunAndReturn(run func(c *fiber.Ctx, err error) error) *JsonPresenter_BuildError_Call {
+func (_c *JsonPresenter_BuildError_Call) RunAndReturn(run func(c fiber.Ctx, err error) error) *JsonPresenter_BuildError_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // BuildSuccess provides a mock function for the type JsonPresenter
-func (_mock *JsonPresenter) BuildSuccess(c *fiber.Ctx, data interface{}, message string, code int) error {
+func (_mock *JsonPresenter) BuildSuccess(c fiber.Ctx, data interface{}, message string, code int) error {
 	ret := _mock.Called(c, data, message, code)
 
 	if len(ret) == 0 {
@@ -102,7 +102,7 @@ func (_mock *JsonPresenter) BuildSuccess(c *fiber.Ctx, data interface{}, message
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(*fiber.Ctx, interface{}, string, int) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(fiber.Ctx, interface{}, string, int) error); ok {
 		r0 = returnFunc(c, data, message, code)
 	} else {
 		r0 = ret.Error(0)
@@ -116,7 +116,7 @@ type JsonPresenter_BuildSuccess_Call struct {
 }
 
 // BuildSuccess is a helper method to define mock.On call
-//   - c *fiber.Ctx
+//   - c fiber.Ctx
 //   - data interface{}
 //   - message string
 //   - code int
@@ -124,11 +124,11 @@ func (_e *JsonPresenter_Expecter) BuildSuccess(c interface{}, data interface{}, 
 	return &JsonPresenter_BuildSuccess_Call{Call: _e.mock.On("BuildSuccess", c, data, message, code)}
 }
 
-func (_c *JsonPresenter_BuildSuccess_Call) Run(run func(c *fiber.Ctx, data interface{}, message string, code int)) *JsonPresenter_BuildSuccess_Call {
+func (_c *JsonPresenter_BuildSuccess_Call) Run(run func(c fiber.Ctx, data interface{}, message string, code int)) *JsonPresenter_BuildSuccess_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 *fiber.Ctx
+		var arg0 fiber.Ctx
 		if args[0] != nil {
-			arg0 = args[0].(*fiber.Ctx)
+			arg0 = args[0].(fiber.Ctx)
 		}
 		var arg1 interface{}
 		if args[1] != nil {
@@ -157,7 +157,7 @@ func (_c *JsonPresenter_BuildSuccess_Call) Return(err error) *JsonPresenter_Buil
 	return _c
 }
 
-func (_c *JsonPresenter_BuildSuccess_Call) RunAndReturn(run func(c *fiber.Ctx, data interface{}, message string, code int) error) *JsonPresenter_BuildSuccess_Call {
+func (_c *JsonPresenter_BuildSuccess_Call) RunAndReturn(run func(c fiber.Ctx, data interface{}, message string, code int) error) *JsonPresenter_BuildSuccess_Call {
 	_c.Call.Return(run)
 	return _c
 }

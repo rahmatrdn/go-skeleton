@@ -1,4 +1,35 @@
 definitions:
+  entity.CommentReq:
+    properties:
+      body:
+        type: string
+      parent_id:
+        description: Optional, for replies to other comments
+        type: integer
+      post_id:
+        description: ID of the post being commented on
+        type: integer
+    required:
+    - body
+    - post_id
+    type: object
+  entity.CommentResponse:
+    properties:
+      body:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      parent_id:
+        type: integer
+      post_id:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
   entity.CreateUserReq:
     properties:
       email:
@@ -76,21 +107,58 @@ definitions:
       user_id:
         type: integer
     type: object
+  entity.PostReq:
+    properties:
+      body:
+        type: string
+      status:
+        description: '1: Draft, 2: Published, 3: Archived'
+        enum:
+        - 1
+        - 2
+        - 3
+        type: integer
+      title:
+        type: string
+    required:
+    - body
+    - status
+    - title
+    type: object
+  entity.PostResponse:
+    properties:
+      body:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      published_at:
+        type: string
+      slug:
+        type: string
+      status:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
   entity.TodoListReq:
     properties:
       description:
         type: string
       doing_at:
+        description: 'Format: YYYY-MM-DD'
         type: string
       title:
         type: string
-      user_id:
-        type: integer
     required:
     - description
     - doing_at
     - title
-    - user_id
     type: object
   entity.TodoListResponse:
     properties:
@@ -109,14 +177,12 @@ definitions:
     type: object
 info:
   contact:
-    email: rahmat.putra@spesolution.com
+    email: rahmatrdn.dev@gmail.com
     name: API Support
   description: This is a sample swagger for Go Skeleton
   license:
     name: Apache 2.0
   termsOfService: http://swagger.io/terms/
-  title: Go Skeleton!
-  version: "1.0"
 paths:
   /api/v1/auth/check-token:
     get:
@@ -223,6 +289,351 @@ paths:
       summary: Create User as Guest
       tags:
       - Auth
+  /api/v1/comment:
+    post:
+      consumes:
+      - application/json
+      description: Create a new comment on a post. The post must exist. Use parent_id
+        to reply to another comment.
+      parameters:
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.CommentReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.CommentResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Create a new Comment
+      tags:
+      - Comment
+  /api/v1/comment/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing comment by its ID
+      parameters:
+      - description: ID of the Comment
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Delete Comment by ID
+      tags:
+      - Comment
+    get:
+      consumes:
+      - application/json
+      description: Get a comment by its ID
+      parameters:
+      - description: ID of the Comment
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.CommentResponse'
+              type: object
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      summary: Get Comment by ID
+      tags:
+      - Comment
+    put:
+      consumes:
+      - application/json
+      description: Update the body of an existing comment
+      parameters:
+      - description: ID of the Comment
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.CommentReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Update a Comment by ID
+      tags:
+      - Comment
+  /api/v1/posts:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all posts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.PostResponse'
+                  type: array
+              type: object
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      summary: Get all Posts
+      tags:
+      - Post
+    post:
+      consumes:
+      - application/json
+      description: Create a new Post. Slug is auto-generated from the title.
+      parameters:
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.PostReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.PostResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Create a new Post
+      tags:
+      - Post
+  /api/v1/posts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing Post by its ID
+      parameters:
+      - description: ID of the Post
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Delete Post by ID
+      tags:
+      - Post
+    get:
+      consumes:
+      - application/json
+      description: Get a Post by its ID
+      parameters:
+      - description: ID of the Post
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.PostResponse'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      summary: Get Post by ID
+      tags:
+      - Post
+    put:
+      consumes:
+      - application/json
+      description: Update an existing Post. If the title changes, slug is regenerated
+        automatically.
+      parameters:
+      - description: ID of the Post
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Payload Request Body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.PostReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Update an existing Post by ID
+      tags:
+      - Post
+  /api/v1/posts/{post_id}/comment:
+    get:
+      consumes:
+      - application/json
+      description: Get all comment for a specific post
+      parameters:
+      - description: ID of the Post
+        in: path
+        name: post_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            allOf:
+            - $ref: '#/definitions/entity.GeneralResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.CommentResponse'
+                  type: array
+              type: object
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      summary: Get Comment by Post ID
+      tags:
+      - Comment
   /api/v1/todo-list:
     get:
       consumes:
@@ -340,41 +751,7 @@ paths:
       summary: Update an existing Todo List by ID
       tags:
       - Todo List
-  /api/v1/todo-lists/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Delete an existing Todo List by its ID
-      parameters:
-      - description: ID of the todo list
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Success
-          schema:
-            $ref: '#/definitions/entity.GeneralResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/entity.CustomErrorResponse'
-        "422":
-          description: Invalid Request Body
-          schema:
-            $ref: '#/definitions/entity.CustomErrorResponse'
-        "500":
-          description: Internal server Error
-          schema:
-            $ref: '#/definitions/entity.CustomErrorResponse'
-      security:
-      - Bearer: []
-      summary: Delete Todo List by ID
-      tags:
-      - Todo List
+  /api/v1/todo-list/{id}:
     get:
       consumes:
       - application/json
@@ -414,8 +791,45 @@ paths:
       summary: Get Todo List by ID
       tags:
       - Todo List
+  /api/v1/todo-lists/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing Todo List by its ID
+      parameters:
+      - description: ID of the todo list
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: '#/definitions/entity.GeneralResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "422":
+          description: Invalid Request Body
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+        "500":
+          description: Internal server Error
+          schema:
+            $ref: '#/definitions/entity.CustomErrorResponse'
+      security:
+      - Bearer: []
+      summary: Delete Todo List by ID
+      tags:
+      - Todo List
 securityDefinitions:
   Bearer:
+    description: 'Type "Bearer" followed by a space and JWT token. Example: "Bearer
+      {token}"'
     in: header
     name: Authorization
     type: apiKey

@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 	apperr "github.com/rahmatrdn/go-skeleton/error"
 	"github.com/rahmatrdn/go-skeleton/internal/helper"
 )
@@ -27,27 +27,27 @@ type QueryParamsRequest interface{}
 // Parser is an interface that defines methods for parsing user input from HTTP requests.
 type Parser interface {
 	// ParserUserID extracts the user ID from the request context
-	ParserUserID(c *fiber.Ctx) (int64, error)
+	ParserUserID(c fiber.Ctx) (int64, error)
 
 	// ParserIntIDFromPathParams extracts an integer ID from the request path parameters
-	ParserIntIDFromPathParams(c *fiber.Ctx) (int64, error)
+	ParserIntIDFromPathParams(c fiber.Ctx) (int64, error)
 
 	// ParserBodyRequest parses the request body into the provided struct and returns an error if parsing fails.
-	ParserBodyRequest(c *fiber.Ctx, req BodyRequest) error
+	ParserBodyRequest(c fiber.Ctx, req BodyRequest) error
 
 	// ParserBodyRequestWithUserID parses the request body into the provided struct and extracts the user ID from the request context.
 	// It returns an error if parsing fails.
-	ParserBodyRequestWithUserID(c *fiber.Ctx, req WithUserID) error
+	ParserBodyRequestWithUserID(c fiber.Ctx, req WithUserID) error
 
 	// ParserBodyWithIntIDPathParams parses the request body into the provided struct and extracts an integer ID from the request path parameters.
 	// It returns an error if parsing fails.
-	ParserBodyWithIntIDPathParams(c *fiber.Ctx, req WithPathID) error
+	ParserBodyWithIntIDPathParams(c fiber.Ctx, req WithPathID) error
 
 	// ParserBodyWithIntIDPathParamsAndUserID parses the request body into the provided struct, extracts an integer ID from the request path parameters,
 	// and extracts the user ID from the request context. It returns an error if parsing fails.
-	ParserBodyWithIntIDPathParamsAndUserID(c *fiber.Ctx, req WithPathIDAndUserID) error
+	ParserBodyWithIntIDPathParamsAndUserID(c fiber.Ctx, req WithPathIDAndUserID) error
 
-	ParseQueryParams(c *fiber.Ctx, req QueryParamsRequest) error
+	ParseQueryParams(c fiber.Ctx, req QueryParamsRequest) error
 }
 
 type RequestParser struct {
@@ -61,7 +61,7 @@ func NewParser() *RequestParser {
 }
 
 // Get User ID from Token
-func (p *RequestParser) ParserUserID(c *fiber.Ctx) (int64, error) {
+func (p *RequestParser) ParserUserID(c fiber.Ctx) (int64, error) {
 	userID := c.Locals("user_id").(int64)
 
 	if userID == 0 {
@@ -72,7 +72,7 @@ func (p *RequestParser) ParserUserID(c *fiber.Ctx) (int64, error) {
 }
 
 // Get ID int64 from Path param
-func (p *RequestParser) ParserIntIDFromPathParams(c *fiber.Ctx) (int64, error) {
+func (p *RequestParser) ParserIntIDFromPathParams(c fiber.Ctx) (int64, error) {
 	ID := c.Params("id")
 
 	if ID == "" {
@@ -83,7 +83,7 @@ func (p *RequestParser) ParserIntIDFromPathParams(c *fiber.Ctx) (int64, error) {
 }
 
 // Get request body and parse to struct
-func (p *RequestParser) ParserBodyRequest(c *fiber.Ctx, req BodyRequest) error {
+func (p *RequestParser) ParserBodyRequest(c fiber.Ctx, req BodyRequest) error {
 	body := c.Body()
 	if err := json.Unmarshal(body, &req); err != nil {
 		return apperr.ErrInvalidRequest()
@@ -93,7 +93,7 @@ func (p *RequestParser) ParserBodyRequest(c *fiber.Ctx, req BodyRequest) error {
 }
 
 // Get Request Body and ID int64 from request param
-func (p *RequestParser) ParserBodyWithIntIDPathParams(c *fiber.Ctx, req WithPathID) error {
+func (p *RequestParser) ParserBodyWithIntIDPathParams(c fiber.Ctx, req WithPathID) error {
 	if err := p.ParserBodyRequest(c, req); err != nil {
 		return err
 	}
@@ -110,7 +110,7 @@ func (p *RequestParser) ParserBodyWithIntIDPathParams(c *fiber.Ctx, req WithPath
 }
 
 // Get Request Body and User ID (from Token)
-func (p *RequestParser) ParserBodyRequestWithUserID(c *fiber.Ctx, req WithUserID) error {
+func (p *RequestParser) ParserBodyRequestWithUserID(c fiber.Ctx, req WithUserID) error {
 	if err := p.ParserBodyRequest(c, req); err != nil {
 		return err
 	}
@@ -123,7 +123,7 @@ func (p *RequestParser) ParserBodyRequestWithUserID(c *fiber.Ctx, req WithUserID
 }
 
 // Get Request Body, ID int64 from request param, and User ID (from Token)
-func (p *RequestParser) ParserBodyWithIntIDPathParamsAndUserID(c *fiber.Ctx, req WithPathIDAndUserID) error {
+func (p *RequestParser) ParserBodyWithIntIDPathParamsAndUserID(c fiber.Ctx, req WithPathIDAndUserID) error {
 	if err := p.ParserBodyWithIntIDPathParams(c, req); err != nil {
 		return err
 	}
@@ -134,8 +134,8 @@ func (p *RequestParser) ParserBodyWithIntIDPathParamsAndUserID(c *fiber.Ctx, req
 	return nil
 }
 
-func (p *RequestParser) ParseQueryParams(c *fiber.Ctx, req QueryParamsRequest) error {
-	if err := c.QueryParser(req); err != nil {
+func (p *RequestParser) ParseQueryParams(c fiber.Ctx, req QueryParamsRequest) error {
+	if err := c.Bind().Query(req); err != nil {
 		return apperr.ErrInvalidRequest()
 	}
 
