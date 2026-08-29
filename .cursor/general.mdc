@@ -229,7 +229,7 @@ import (
     "fmt"
     
     // Third-party packages
-    "github.com/gofiber/fiber/v2"
+    "github.com/gofiber/fiber/v3"
     
     // Project packages
     "github.com/rahmatrdn/go-skeleton/entity"

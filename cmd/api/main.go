@@ -139,8 +139,8 @@ func setupMiddleware(app *fiber.App, cfg *config.Config) {
 	// 		cors.New(cors.Config{
 	// 			AllowCredentials: true,
 	// 			AllowOrigins:     cfg.AllowedCredentialOrigins,
-	// 			AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
-	// 			AllowMethods:     "GET,POST,PUT,DELETE,PATCH",
+	// 			AllowHeaders: []string{"Origin", "Content-Type", "Accept", "Authorization"},
+	// 			AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "PATCH"},
 	// 		}),
 	// 	)
 	// }

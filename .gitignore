@@ -76,3 +76,5 @@ internal/usecase/storage/*
 
 .TODO
 .qodo
+
+vendor/

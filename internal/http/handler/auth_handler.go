@@ -53,7 +53,7 @@ func (w *AuthHandler) CreateAsGuest(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	login, err := w.userUsecase.CreateAsGuest(c.Context(), req)
+	login, err := w.userUsecase.CreateAsGuest(c.RequestCtx(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -80,7 +80,7 @@ func (w *AuthHandler) Login(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	login, err := w.userUsecase.VerifyByEmailAndPassword(c.Context(), req)
+	login, err := w.userUsecase.VerifyByEmailAndPassword(c.RequestCtx(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -115,10 +115,12 @@ func (w *AuthHandler) CheckToken(c fiber.Ctx) error {
 func (w *AuthHandler) RefreshToken(c fiber.Ctx) error {
 	oldToken := strings.TrimPrefix(c.Get("Authorization"), "Bearer ")
 
-	res, err := w.userUsecase.RefreshToken(c.Context(), oldToken)
+	res, err := w.userUsecase.RefreshToken(c.RequestCtx(), oldToken)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
 
 	return w.presenter.BuildSuccess(c, res, "Success", http.StatusOK)
 }
+
+// fiber:context-methods migrated

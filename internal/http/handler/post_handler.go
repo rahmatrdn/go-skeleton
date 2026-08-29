@@ -43,7 +43,7 @@ func (w *PostHandler) Register(app fiber.Router) {
 // @Failure			500 {object} entity.CustomErrorResponse "Internal server Error"
 // @Router			/api/v1/posts [get]
 func (w *PostHandler) GetAll(c fiber.Ctx) error {
-	data, err := w.postUsecase.GetAll(c.Context())
+	data, err := w.postUsecase.GetAll(c.RequestCtx())
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -67,7 +67,7 @@ func (w *PostHandler) GetByID(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.postUsecase.GetByID(c.Context(), id)
+	data, err := w.postUsecase.GetByID(c.RequestCtx(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -95,7 +95,7 @@ func (w *PostHandler) Create(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.postUsecase.Create(c.Context(), req)
+	data, err := w.postUsecase.Create(c.RequestCtx(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -124,7 +124,7 @@ func (w *PostHandler) Update(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.postUsecase.UpdateByID(c.Context(), req)
+	err = w.postUsecase.UpdateByID(c.RequestCtx(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -149,10 +149,12 @@ func (w *PostHandler) Delete(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.postUsecase.DeleteByID(c.Context(), id)
+	err = w.postUsecase.DeleteByID(c.RequestCtx(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
 
 	return w.presenter.BuildSuccess(c, nil, "Success", http.StatusOK)
 }
+
+// fiber:context-methods migrated

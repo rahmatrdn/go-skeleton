@@ -52,7 +52,7 @@ func (w *CommentHandler) GetByPostID(c fiber.Ctx) error {
 	}
 	postID := helper.ToInt64(rawPostID)
 
-	data, err := w.commentUsecase.GetByPostID(c.Context(), postID)
+	data, err := w.commentUsecase.GetByPostID(c.RequestCtx(), postID)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -75,7 +75,7 @@ func (w *CommentHandler) GetByID(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.commentUsecase.GetByID(c.Context(), id)
+	data, err := w.commentUsecase.GetByID(c.RequestCtx(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -103,7 +103,7 @@ func (w *CommentHandler) Create(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.commentUsecase.Create(c.Context(), req)
+	data, err := w.commentUsecase.Create(c.RequestCtx(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -132,7 +132,7 @@ func (w *CommentHandler) Update(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.commentUsecase.UpdateByID(c.Context(), req)
+	err = w.commentUsecase.UpdateByID(c.RequestCtx(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -157,10 +157,12 @@ func (w *CommentHandler) Delete(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.commentUsecase.DeleteByID(c.Context(), id)
+	err = w.commentUsecase.DeleteByID(c.RequestCtx(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
 
 	return w.presenter.BuildSuccess(c, nil, "Success", http.StatusOK)
 }
+
+// fiber:context-methods migrated

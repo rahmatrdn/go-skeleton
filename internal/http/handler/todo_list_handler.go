@@ -52,7 +52,7 @@ func (w *TodoListHandler) GetByID(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.todoListCrudUsecase.GetByID(c.Context(), id)
+	data, err := w.todoListCrudUsecase.GetByID(c.RequestCtx(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -77,7 +77,7 @@ func (w *TodoListHandler) GetByUserID(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.todoListCrudUsecase.GetByUserID(c.Context(), userID)
+	data, err := w.todoListCrudUsecase.GetByUserID(c.RequestCtx(), userID)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -105,7 +105,7 @@ func (w *TodoListHandler) Create(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	data, err := w.todoListCrudUsecase.Create(c.Context(), req)
+	data, err := w.todoListCrudUsecase.Create(c.RequestCtx(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -133,7 +133,7 @@ func (w *TodoListHandler) Update(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.todoListCrudUsecase.UpdateByID(c.Context(), req)
+	err = w.todoListCrudUsecase.UpdateByID(c.RequestCtx(), req)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
@@ -159,10 +159,12 @@ func (w *TodoListHandler) Delete(c fiber.Ctx) error {
 		return w.presenter.BuildError(c, err)
 	}
 
-	err = w.todoListCrudUsecase.DeleteByID(c.Context(), id)
+	err = w.todoListCrudUsecase.DeleteByID(c.RequestCtx(), id)
 	if err != nil {
 		return w.presenter.BuildError(c, err)
 	}
 
 	return w.presenter.BuildSuccess(c, nil, "Success", http.StatusOK)
 }
+
+// fiber:context-methods migrated
